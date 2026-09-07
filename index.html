@@ -30,6 +30,20 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
 .squig{display:inline-block; height:8px; width:110px;
   background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='8' viewBox='0 0 120 8'><path d='M2 5 Q 12 1 22 5 T 42 5 T 62 5 T 82 5 T 102 5 T 118 5' fill='none' stroke='%23FF8A3D' stroke-width='3' stroke-linecap='round'/></svg>") repeat-x}
 
+/* ── 스플래시 ── */
+#splash{position:fixed; inset:0; z-index:100; background:var(--bg);
+  background-image:radial-gradient(rgba(58,66,88,.05) 1.2px, transparent 1.3px); background-size:24px 24px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px;
+  transition:opacity .4s}
+#splash.bye{opacity:0; pointer-events:none}
+#splash svg{width:96px; height:96px; transform:rotate(-6deg); animation:swing 1.2s ease-in-out infinite alternate}
+@keyframes swing{from{transform:rotate(-8deg) scale(1)}to{transform:rotate(6deg) scale(1.05)}}
+#splash .sname{font-family:var(--disp); font-size:34px; color:var(--ink)}
+#splash .sload{width:140px; height:10px; border:2px solid var(--ink); border-radius:999px; overflow:hidden; background:var(--panel)}
+#splash .sload i{display:block; height:100%; background:var(--accent); border-radius:999px; animation:fillup .7s ease-out forwards}
+@keyframes fillup{from{width:8%}to{width:100%}}
+@media (prefers-reduced-motion:reduce){#splash svg,#splash .sload i{animation:none}#splash .sload i{width:100%}}
+
 /* ── 홈 ── */
 #home{max-width:900px; margin:0 auto; padding:20px 16px 40px; display:flex; flex-direction:column; gap:20px}
 .topline{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
@@ -156,6 +170,12 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
   background:var(--panel); color:var(--sub)}
 #acct .cancel{color:var(--sub); font-size:16px; padding:8px}
 </style>
+
+<div id="splash">
+  <svg viewBox="0 0 40 40" aria-hidden="true"><path fill="#FF8A3D" stroke="#3A4258" stroke-width="2" d="M6 8h10c-3-6 8-6 5 0h11v10c6-3 6 8 0 5v11H22c3 6-8 6-5 0H6V23c-6 3-6-8 0-5z"/></svg>
+  <div class="sname">이든의 퍼즐</div>
+  <div class="sload"><i></i></div>
+</div>
 
 <main id="home">
   <div class="topline">
@@ -564,11 +584,13 @@ function openGame(sid,cnt,isDaily){
   G.savedPlaced=saved?saved.placed:[];
   const nm=sid==='photo'?(photoStyle==='art'?'사진 퍼즐 · 그림처럼':'사진 퍼즐'):findScene(sid).name;
   $('gtitle').textContent=(isDaily?'오늘의 퍼즐 · ':'')+nm;
-  $('home').hidden=true;$('game').hidden=false;$('winwrap').hidden=true;
+  $('home').hidden=true;$('game').hidden=false;$('winwrap').hidden=true;$('sheet').hidden=true;$('acct').hidden=true;
   layoutGame();
 }
 function layoutGame(){
+  if(!G.on)return;
   const arena=$('arena'), aw=arena.clientWidth, ah=arena.clientHeight;
+  if(aw<50||ah<50){setTimeout(layoutGame,120);return}
   const availW=aw-28, availH=ah*(G.cols*G.rows>=24?.52:.62);   // 조각 많을수록 트레이 넓게
   let bw=availW, bh=bw*IH/IW;
   if(bh>availH){bh=availH;bw=bh*IW/IH}
@@ -721,7 +743,7 @@ function win(){
   }
   winSnd();$('winwrap').hidden=false;confetti();renderHome();
 }
-$('winAgain').onclick=()=>{$('winwrap').hidden=true;G.savedPlaced=[];G.seed=(Math.random()*1e9)|0;layoutGame()};
+$('winAgain').onclick=()=>{try{$('winwrap').hidden=true;G.savedPlaced=[];G.seed=(Math.random()*1e9)|0;layoutGame()}catch(e){closeGame()}};
 $('winHome').onclick=()=>{$('winwrap').hidden=true;closeGame()};
 $('backBtn').onclick=()=>closeGame();
 function closeGame(){G.on=false;$('game').hidden=true;$('home').hidden=false;renderHome()}
@@ -762,6 +784,7 @@ function setPhotoStyle(s){
 $('chipRaw').onclick=()=>setPhotoStyle('raw');
 $('chipArt').onclick=()=>setPhotoStyle('art');
 function openSheet(sid,isDaily){
+  $('winwrap').hidden=true;
   pendingSid=sid;pendingDaily=isDaily;
   const nm=sid==='photo'?'사진 퍼즐':findScene(sid).name;
   $('sheetTitle').textContent=nm+' — 몇 조각으로 할까?';
@@ -772,7 +795,7 @@ function openSheet(sid,isDaily){
     const saved=store.get('pp:'+sid+':'+cnt.c+'x'+cnt.r,null);
     const b=document.createElement('button');b.className='opt';
     b.innerHTML='<span>'+cnt.n+'조각</span><small>'+cnt.tag+'</small>'+
-      (saved&&saved.placed.length?'<span class="resume">이어서 하기 ('+saved.placed.length+'/'+cnt.n+')</span>':'');
+      (saved&&Array.isArray(saved.placed)&&saved.placed.length?'<span class="resume">이어서 하기 ('+saved.placed.length+'/'+cnt.n+')</span>':'');
     b.onclick=()=>{$('sheet').hidden=true;openGame(pendingSid,cnt,pendingDaily)};
     box.appendChild(b);
   }
@@ -875,4 +898,12 @@ $('acct').addEventListener('click',e=>{if(e.target===$('acct'))$('acct').hidden=
 if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
 
 renderHome();
+addEventListener('error',ev=>{
+  let t=document.getElementById('errbar');
+  if(!t){t=document.createElement('div');t.id='errbar';
+    t.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;background:#B3261E;color:#fff;font:12px/1.4 monospace;padding:8px 10px;border-radius:10px;word-break:break-all';
+    document.body.appendChild(t)}
+  t.textContent='\u26a0 '+ev.message+' @'+String(ev.filename||'').split('/').pop()+':'+ev.lineno;
+});
+setTimeout(()=>{const sp=$('splash');sp.classList.add('bye');setTimeout(()=>{sp.hidden=true},450)},650);
 </script>

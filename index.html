@@ -187,6 +187,12 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
   <div class="grid" id="gallery"></div>
 
   <div class="sect">
+    <div class="row"><h2>명화 퍼즐</h2><span class="chip prem">프리미엄</span><small>진짜 미술관 그림을 심플하게</small></div>
+    <span class="squig"></span>
+  </div>
+  <div class="grid" id="artGallery"></div>
+
+  <div class="sect">
     <div class="row"><h2>사진 퍼즐</h2><span class="chip prem">프리미엄</span><small>그림처럼 바꿔서도 맞출 수 있어요</small></div>
     <span class="squig"></span>
   </div>
@@ -386,6 +392,81 @@ const SCENES=[
   {id:'farm', name:'동물 농장', draw:sceneFarm, free:false},
   {id:'fire', name:'불꽃놀이', draw:sceneFirework,free:false},
 ];
+/* ── 명화 팩: 퍼블릭 도메인 원작의 심플 버전 (전부 코드 드로잉) ── */
+function artStarry(ctx,w,h){
+  sky(ctx,w,h,'#1A2B5F','#274690');
+  const swirl=(sx,sy,rr)=>{ctx.strokeStyle='#F5E27A';ctx.lineWidth=w*.012;ctx.lineCap='round';
+    ctx.beginPath();
+    for(let a=0;a<Math.PI*4;a+=.15){const rad=rr*(1-a/(Math.PI*4.4));
+      const x=sx+Math.cos(a)*rad,y=sy+Math.sin(a)*rad*.7;
+      a===0?ctx.moveTo(x,y):ctx.lineTo(x,y)}
+    ctx.stroke()};
+  swirl(w*.42,h*.28,w*.13);swirl(w*.68,h*.2,w*.08);
+  for(let i=0;i<9;i++){const px2=(i*97)%w,py2=(i*53)%Math.floor(h*.45)+h*.05;
+    disc(ctx,px2,py2,w*.02,'rgba(245,226,122,.25)');disc(ctx,px2,py2,w*.011,'#F5E27A')}
+  disc(ctx,w*.87,h*.14,w*.075,'rgba(245,226,122,.3)');disc(ctx,w*.87,h*.14,w*.05,'#F5E27A');
+  blob(ctx,[[0,h],[0,h*.72],[w*.3,h*.66],[w*.65,h*.74],[w,h*.68],[w,h]],'#152238');
+  ctx.fillStyle='#1F3352';
+  for(const hp of [[.14,.07,.08],[.3,.08,.1],[.52,.07,.07],[.72,.09,.09]])
+    ctx.fillRect(w*hp[0],h*(.82-hp[2]),w*hp[1],h*hp[2]);
+  ctx.fillStyle='#F5E27A';
+  for(const wp of [[.16,.78],[.33,.76],[.54,.79],[.75,.77]])ctx.fillRect(w*wp[0],h*wp[1],w*.018,h*.025);
+  blob(ctx,[[w*.4,h*.78],[w*.43,h*.58],[w*.46,h*.78]],'#1F3352');
+  blob(ctx,[[w*.08,h*.95],[w*.13,h*.2],[w*.18,h*.95]],'#0B1A12');
+  blob(ctx,[[w*.09,h*.6],[w*.13,h*.12],[w*.17,h*.6]],'#0B1A12');
+}
+function artWave(ctx,w,h){
+  sky(ctx,w,h,'#F2E8D5','#E8DCC0');
+  blob(ctx,[[w*.55,h*.62],[w*.7,h*.4],[w*.85,h*.62]],'#7A87A8');
+  blob(ctx,[[w*.63,h*.51],[w*.7,h*.4],[w*.77,h*.51]],'#F4F6F8');
+  ctx.fillStyle='#1F4E79';
+  ctx.beginPath();ctx.moveTo(0,h);
+  ctx.quadraticCurveTo(0,h*.35,w*.18,h*.22);
+  ctx.quadraticCurveTo(w*.42,h*.05,w*.5,h*.28);
+  ctx.quadraticCurveTo(w*.44,h*.2,w*.36,h*.26);
+  ctx.quadraticCurveTo(w*.52,h*.42,w*.75,h*.6);
+  ctx.quadraticCurveTo(w*.5,h*.75,0,h);
+  ctx.closePath();ctx.fill();
+  for(let i=0;i<8;i++){const bx2=w*(.2+i*.045),by2=h*(.2+(i%3)*.03);
+    disc(ctx,bx2,by2,w*.022,'#F4F6F8');disc(ctx,bx2+w*.02,by2+h*.03,w*.014,'#F4F6F8')}
+  ctx.fillStyle='#2E6DA4';
+  ctx.beginPath();ctx.moveTo(w,h);ctx.lineTo(w,h*.66);
+  ctx.quadraticCurveTo(w*.8,h*.6,w*.7,h*.7);ctx.quadraticCurveTo(w*.55,h*.85,0,h*.9);
+  ctx.lineTo(0,h);ctx.closePath();ctx.fill();
+  const boat=(bx3,by3,s)=>{ctx.fillStyle='#8B6A45';
+    ctx.beginPath();ctx.moveTo(bx3-s,by3);ctx.quadraticCurveTo(bx3,by3+s*.5,bx3+s,by3);
+    ctx.quadraticCurveTo(bx3,by3+s*.2,bx3-s,by3);ctx.fill()};
+  boat(w*.6,h*.72,w*.09);boat(w*.3,h*.86,w*.1);
+}
+function artJungle(ctx,w,h){
+  sky(ctx,w,h,'#DCEEC8','#BFE39E');
+  disc(ctx,w*.8,h*.18,h*.09,'#F7E8B0');
+  const leaf=(x,y,len,ang,col)=>{ctx.save();ctx.translate(x,y);ctx.rotate(ang);
+    ctx.fillStyle=col;ctx.beginPath();ctx.ellipse(0,-len/2,len*.18,len/2,0,0,7);ctx.fill();
+    ctx.strokeStyle='rgba(0,60,30,.35)';ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,-len);ctx.stroke();ctx.restore()};
+  const greens=['#2E7D4F','#3E9960','#256B43','#4CAF6E'];
+  for(let i=0;i<16;i++)
+    leaf(w*((i*.07)%1),h*(.65+(i%4)*.08),h*(.3+(i%3)*.12),(i%2?.5:-.5)+(i%5)*.15,greens[i%4]);
+  const tx2=w*.5,ty2=h*.62;
+  ctx.fillStyle='#E8923A';
+  ctx.beginPath();ctx.ellipse(tx2,ty2,w*.16,h*.13,0,0,7);ctx.fill();
+  disc(ctx,tx2-w*.13,ty2-h*.1,w*.075,'#E8923A');
+  disc(ctx,tx2-w*.185,ty2-h*.16,w*.022,'#E8923A');disc(ctx,tx2-w*.075,ty2-h*.16,w*.022,'#E8923A');
+  ctx.strokeStyle='#4A3320';ctx.lineWidth=w*.012;ctx.lineCap='round';
+  for(let i=0;i<5;i++){ctx.beginPath();ctx.moveTo(tx2-w*.04+i*w*.045,ty2-h*.1);
+    ctx.quadraticCurveTo(tx2-w*.03+i*w*.045,ty2,tx2-w*.045+i*w*.045,ty2+h*.09);ctx.stroke()}
+  disc(ctx,tx2-w*.155,ty2-h*.115,w*.008,'#243');disc(ctx,tx2-w*.105,ty2-h*.115,w*.008,'#243');
+  disc(ctx,tx2-w*.13,ty2-h*.07,w*.03,'rgba(255,255,255,.6)');
+  disc(ctx,tx2-w*.13,ty2-h*.085,w*.01,'#4A3320');
+  for(let i=0;i<22;i++)leaf(w*(i/22),h*1.02,h*.28,(i%2?.25:-.25),greens[(i+1)%4]);
+}
+const ARTS=[
+  {id:'starry', name:'별이 빛나는 밤 · 고흐', draw:artStarry},
+  {id:'wave', name:'큰 파도 · 호쿠사이', draw:artWave},
+  {id:'jungle', name:'정글 · 루소', draw:artJungle},
+];
+const findScene=sid=>SCENES.find(x=>x.id===sid)||ARTS.find(x=>x.id===sid);
 const COUNTS=[{n:6,c:3,r:2,tag:'아주 쉬움'},{n:12,c:4,r:3,tag:'쉬움'},{n:24,c:6,r:4,tag:'보통'},{n:48,c:8,r:6,tag:'도전!'}];
 
 /* ── 소리 (WebAudio, 파일 없음) ── */
@@ -444,7 +525,7 @@ function makeRenderer(sid){
     if(!src){ctx.fillStyle='#ccc';ctx.fillRect(0,0,w,h);return}
     ctx.drawImage(src,0,0,src.width,src.height,0,0,w,h);
   };
-  const sc=SCENES.find(s=>s.id===sid);
+  const sc=findScene(sid);
   return (ctx,w,h)=>sc.draw(ctx,w,h);
 }
 function paintThumb(canvas,sid){
@@ -481,7 +562,7 @@ function openGame(sid,cnt,isDaily){
   G.seed=saved?saved.seed:(Math.random()*1e9)|0;
   G.render=makeRenderer(sid);
   G.savedPlaced=saved?saved.placed:[];
-  const nm=sid==='photo'?(photoStyle==='art'?'사진 퍼즐 · 그림처럼':'사진 퍼즐'):SCENES.find(s=>s.id===sid).name;
+  const nm=sid==='photo'?(photoStyle==='art'?'사진 퍼즐 · 그림처럼':'사진 퍼즐'):findScene(sid).name;
   $('gtitle').textContent=(isDaily?'오늘의 퍼즐 · ':'')+nm;
   $('home').hidden=true;$('game').hidden=false;$('winwrap').hidden=true;
   layoutGame();
@@ -682,7 +763,7 @@ $('chipRaw').onclick=()=>setPhotoStyle('raw');
 $('chipArt').onclick=()=>setPhotoStyle('art');
 function openSheet(sid,isDaily){
   pendingSid=sid;pendingDaily=isDaily;
-  const nm=sid==='photo'?'사진 퍼즐':SCENES.find(s=>s.id===sid).name;
+  const nm=sid==='photo'?'사진 퍼즐':findScene(sid).name;
   $('sheetTitle').textContent=nm+' — 몇 조각으로 할까?';
   $('styleRow').hidden=sid!=='photo';
   if(sid==='photo')syncStyleChips();
@@ -731,6 +812,20 @@ function renderHome(){
     b.appendChild(row);
     b.onclick=()=>openSheet(sc.id,false);
     g.appendChild(b);
+    paintThumb(cv,sc.id);
+  }
+  const ag=$('artGallery');ag.innerHTML='';
+  for(const sc of ARTS){
+    const b=document.createElement('button');b.className='card';
+    const cv=document.createElement('canvas');cv.width=360;cv.height=270;
+    b.appendChild(cv);
+    const row=document.createElement('span');row.className='row';
+    row.innerHTML='<span class="name">'+sc.name+'</span>'+
+      (done[sc.id]?'<span class="chip star">⭐</span>':'')+
+      '<span class="chip prem">프리미엄</span>';
+    b.appendChild(row);
+    b.onclick=()=>openSheet(sc.id,false);
+    ag.appendChild(b);
     paintThumb(cv,sc.id);
   }
   // 마지막 사진

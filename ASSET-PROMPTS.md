@@ -13,13 +13,15 @@
 ## 공통 스타일 (모든 프롬프트 앞에)
 
 ```
-Children's jigsaw puzzle illustration for young kids, flat vector style,
+Colorful children's illustration for young kids, flat vector style,
 thick dark outlines, bright crayon colors, cute rounded smiling characters,
 cheerful and friendly, colorful details spread evenly across the ENTIRE image
 with no large empty single-color areas, no text, no letters, no watermark,
 4:3 landscape aspect ratio
 ```
 
+> ⚠️ 프롬프트에 "jigsaw puzzle"을 넣지 말 것 — 생성기가 그림 위에 퍼즐 조각 선을
+> 그려버린다. 조각 나누기는 앱이 한다 (성철 정정 2026-09-08).
 > "no large empty single-color areas"가 퍼즐 핵심 제약 — 넓은 단색 하늘이 있으면
 > 그 구역 조각들이 전부 똑같이 생겨서 못 맞춘다.
 

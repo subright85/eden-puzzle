@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>퍼즐 청소기</title>
+<style>
+body{background:#FEFCF5;color:#3A4258;font-family:'Apple SD Gothic Neo',sans-serif;
+  background-image:radial-gradient(rgba(58,66,88,.05) 1.2px,transparent 1.3px);background-size:24px 24px;
+  margin:0;padding:28px 20px;min-height:100vh;box-sizing:border-box}
+h1{font-size:26px;margin:0 0 14px}
+#log{background:#fff;border:3px solid #3A4258;border-radius:14px 18px 12px 20px/18px 12px 20px 14px;
+  padding:14px 16px;box-shadow:3px 4px 0 rgba(58,66,88,.18)}
+#log p{margin:6px 0;font-size:14px;line-height:1.55;word-break:break-all}
+#log p.ok{color:#2E7D32;font-weight:700}
+#log p.bad{color:#C62828;font-weight:700}
+a.go{display:inline-block;margin-top:18px;background:#FF8A3D;color:#fff;text-decoration:none;
+  font-size:20px;font-weight:700;padding:14px 30px;border:3px solid #3A4258;
+  border-radius:18px 22px 16px 24px/22px 16px 24px 18px;box-shadow:3px 4px 0 rgba(58,66,88,.25)}
+small{display:block;margin-top:12px;color:#8A8672}
+</style></head><body>
+<h1>🧹 퍼즐 청소기</h1>
+<div id="log"></div>
+<a class="go" id="go" href="/" hidden>새 퍼즐로 가기 →</a>
+<small>이 화면이 보인다는 것 자체가 네트워크는 살아있다는 뜻이에요. 위 내용을 스크린샷으로 보내주면 정확한 진단이 돼요.</small>
+<script>
+const log=(m,cls)=>{const p=document.createElement('p');if(cls)p.className=cls;p.textContent=m;document.getElementById('log').appendChild(p)};
+(async()=>{
+  log('시각: '+new Date().toString());
+  log('주소: '+location.href);
+  log('브라우저: '+navigator.userAgent);
+  try{
+    if('serviceWorker' in navigator){
+      const rs=await navigator.serviceWorker.getRegistrations();
+      log('서비스워커 등록: '+rs.length+'개'+(rs.length?' ('+rs.map(r=>r.scope).join(', ')+')':''));
+      for(const r of rs) await r.unregister();
+      if(rs.length) log('→ 전부 해제 완료','ok');
+    } else log('서비스워커: 이 브라우저는 미지원');
+  }catch(e){log('서비스워커 청소 실패: '+e.message,'bad')}
+  try{
+    if(window.caches){
+      const ks=await caches.keys();
+      log('오프라인 캐시: '+(ks.length?ks.join(', '):'없음'));
+      for(const k of ks) await caches.delete(k);
+      if(ks.length) log('→ 전부 삭제 완료','ok');
+    } else log('캐시 API 없음');
+  }catch(e){log('캐시 청소 실패: '+e.message,'bad')}
+  log('별·진행 저장은 그대로 뒀어요');
+  log('청소 끝! 아래 버튼으로 나가면 무조건 새 버전이에요','ok');
+  const a=document.getElementById('go');a.href='/?fresh='+Date.now();a.hidden=false;
+})();
+</script>
+</body></html>

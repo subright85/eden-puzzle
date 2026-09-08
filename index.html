@@ -30,6 +30,10 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
 .squig{display:inline-block; height:8px; width:110px;
   background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='8' viewBox='0 0 120 8'><path d='M2 5 Q 12 1 22 5 T 42 5 T 62 5 T 82 5 T 102 5 T 118 5' fill='none' stroke='%23FF8A3D' stroke-width='3' stroke-linecap='round'/></svg>") repeat-x}
 
+#panicHome{position:fixed; top:10px; right:10px; z-index:5000; background:var(--panel);
+  border:3px solid var(--ink); border-radius:999px; padding:8px 16px; font-family:var(--disp);
+  font-size:16px; box-shadow:var(--shadow)}
+
 /* ── 스플래시 ── */
 #splash{position:fixed; inset:0; z-index:100; background:var(--bg);
   background-image:radial-gradient(rgba(58,66,88,.05) 1.2px, transparent 1.3px); background-size:24px 24px;
@@ -263,6 +267,8 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
   <div id="gprog"><i id="gprogFill"></i></div>
   <div id="arena"><div id="board"><canvas id="ghost"></canvas><canvas id="peek" hidden></canvas></div></div>
 </div>
+
+<button id="panicHome" hidden aria-label="홈으로 나가기">🏠 홈으로</button>
 
 <div id="winwrap" hidden>
   <div class="win">
@@ -585,6 +591,7 @@ function openGame(sid,cnt,isDaily){
   const nm=sid==='photo'?(photoStyle==='art'?'사진 퍼즐 · 그림처럼':'사진 퍼즐'):findScene(sid).name;
   $('gtitle').textContent=(isDaily?'오늘의 퍼즐 · ':'')+nm;
   $('home').hidden=true;$('game').hidden=false;$('winwrap').hidden=true;$('sheet').hidden=true;$('acct').hidden=true;
+  $('panicHome').hidden=false;pushUI('game');
   layoutGame();
 }
 function layoutGame(){
@@ -746,7 +753,20 @@ function win(){
 $('winAgain').onclick=()=>{try{$('winwrap').hidden=true;G.savedPlaced=[];G.seed=(Math.random()*1e9)|0;layoutGame()}catch(e){closeGame()}};
 $('winHome').onclick=()=>{$('winwrap').hidden=true;closeGame()};
 $('backBtn').onclick=()=>closeGame();
-function closeGame(){G.on=false;$('game').hidden=true;$('home').hidden=false;renderHome()}
+function goHome(){
+  G.on=false;
+  for(const id of ['game','winwrap','sheet','acct','splash'])try{$(id).hidden=true}catch(e){}
+  $('panicHome').hidden=true;
+  $('home').hidden=false;
+  renderHome();
+}
+function closeGame(){goHome()}
+$('panicHome').onclick=goHome;
+function pushUI(tag){try{history.pushState({ui:tag},'')}catch(e){}}
+addEventListener('popstate',()=>{
+  if(!$('sheet').hidden||!$('acct').hidden){$('sheet').hidden=true;$('acct').hidden=true;return}
+  if(!$('winwrap').hidden||G.on)goHome();
+});
 let rsT=null;
 addEventListener('resize',()=>{if(!G.on)return;
   G.savedPlaced=G.pieces.filter(p=>p.placed).map(p=>p.idx);
@@ -784,7 +804,7 @@ function setPhotoStyle(s){
 $('chipRaw').onclick=()=>setPhotoStyle('raw');
 $('chipArt').onclick=()=>setPhotoStyle('art');
 function openSheet(sid,isDaily){
-  $('winwrap').hidden=true;
+  $('winwrap').hidden=true;pushUI('sheet');
   pendingSid=sid;pendingDaily=isDaily;
   const nm=sid==='photo'?'사진 퍼즐':findScene(sid).name;
   $('sheetTitle').textContent=nm+' — 몇 조각으로 할까?';
@@ -792,12 +812,14 @@ function openSheet(sid,isDaily){
   if(sid==='photo')syncStyleChips();
   const box=$('sheetOpts');box.innerHTML='';
   for(const cnt of COUNTS){
-    const saved=store.get('pp:'+sid+':'+cnt.c+'x'+cnt.r,null);
-    const b=document.createElement('button');b.className='opt';
-    b.innerHTML='<span>'+cnt.n+'조각</span><small>'+cnt.tag+'</small>'+
-      (saved&&Array.isArray(saved.placed)&&saved.placed.length?'<span class="resume">이어서 하기 ('+saved.placed.length+'/'+cnt.n+')</span>':'');
-    b.onclick=()=>{$('sheet').hidden=true;openGame(pendingSid,cnt,pendingDaily)};
-    box.appendChild(b);
+    try{
+      const saved=store.get('pp:'+sid+':'+cnt.c+'x'+cnt.r,null);
+      const b=document.createElement('button');b.className='opt';
+      b.innerHTML='<span>'+cnt.n+'조각</span><small>'+cnt.tag+'</small>'+
+        (saved&&Array.isArray(saved.placed)&&saved.placed.length?'<span class="resume">이어서 하기 ('+saved.placed.length+'/'+cnt.n+')</span>':'');
+      b.onclick=()=>{$('sheet').hidden=true;openGame(pendingSid,cnt,pendingDaily)};
+      box.appendChild(b);
+    }catch(e){showErr((e&&e.message||e)+' @sheetOpts')}
   }
   $('sheet').hidden=false;
 }
@@ -813,7 +835,15 @@ function todayScene(){
 }
 
 /* ── 홈 렌더 ── */
-function renderHome(){
+function showErr(msg){
+  let t=document.getElementById('errbar');
+  if(!t){t=document.createElement('div');t.id='errbar';
+    t.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;background:#B3261E;color:#fff;font:12px/1.4 monospace;padding:8px 10px;border-radius:10px;word-break:break-all';
+    document.body.appendChild(t)}
+  t.textContent='\u26a0 '+msg;
+}
+function renderHome(){try{renderHomeInner()}catch(e){showErr((e&&e.message||e)+' @renderHome')}}
+function renderHomeInner(){
   $('starN').textContent=store.get('stars',0);
   $('streakN').textContent=store.get('streak',{n:0}).n;
   const ds=todayScene();
@@ -898,12 +928,7 @@ $('acct').addEventListener('click',e=>{if(e.target===$('acct'))$('acct').hidden=
 if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
 
 renderHome();
-addEventListener('error',ev=>{
-  let t=document.getElementById('errbar');
-  if(!t){t=document.createElement('div');t.id='errbar';
-    t.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;background:#B3261E;color:#fff;font:12px/1.4 monospace;padding:8px 10px;border-radius:10px;word-break:break-all';
-    document.body.appendChild(t)}
-  t.textContent='\u26a0 '+ev.message+' @'+String(ev.filename||'').split('/').pop()+':'+ev.lineno;
-});
+addEventListener('error',ev=>showErr(ev.message+' @'+String(ev.filename||'').split('/').pop()+':'+ev.lineno));
+addEventListener('unhandledrejection',ev=>showErr('promise: '+(ev.reason&&ev.reason.message||ev.reason)));
 setTimeout(()=>{const sp=$('splash');sp.classList.add('bye');setTimeout(()=>{sp.hidden=true},450)},650);
 </script>

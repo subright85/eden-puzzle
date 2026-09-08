@@ -314,7 +314,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v8';
+const BUILD='v9';
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
@@ -648,21 +648,27 @@ function rng(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;
 function edgeSegs(e){
   if(G.cut==='wave'){const a=e.wv;
     return [['C',[.25,a],[.4,a],[.5,0]],['C',[.6,-a],[.75,-a],[1,0]]]}
-  const bub=G.cut==='bubble', w=e.w*(bub?1.2:1), h=e.h*(bub?1.25:1);
+  const bub=G.cut==='bubble', w=e.w*(bub?1.1:1), h=e.h*(bub?1.15:1);
   const X=x=>e.u+(x-.5)*w, V=v=>v*h;
+  // 좁은 목 + 둥근 원형 노브 (진짜 다이컷 퍼즐 실루엣): 노브 중심 (.5,.20) 반지름 .13
   return [
-    ['Q',[X(.35)*.5,e.a],[X(.35),0]],
-    ['C',[X(.44),V(.02)],[X(.38),V(.10)],[X(.46),V(.13)]],
-    ['C',[X(.36),V(.24)],[X(.64),V(.24)],[X(.54),V(.13)]],
-    ['C',[X(.62),V(.10)],[X(.56),V(.02)],[X(.65),0]],
-    ['Q',[(X(.65)+1)*.5,e.b],[1,0]]
+    ['Q',[X(.34)*.5,e.a],[X(.34),0]],
+    ['C',[X(.44),V(.01)],[X(.45),V(.06)],[X(.408),V(.108)]],
+    ['C',[X(.384),V(.132)],[X(.37),V(.166)],[X(.37),V(.20)]],
+    ['C',[X(.37),V(.272)],[X(.428),V(.33)],[X(.5),V(.33)]],
+    ['C',[X(.572),V(.33)],[X(.63),V(.272)],[X(.63),V(.20)]],
+    ['C',[X(.63),V(.166)],[X(.616),V(.132)],[X(.592),V(.108)]],
+    ['C',[X(.55),V(.06)],[X(.56),V(.01)],[X(.66),0]],
+    ['Q',[(X(.66)+1)*.5,e.b],[1,0]]
   ]
 }
 /* 같은 엣지를 양쪽 피스가 공유 — flip이면 (1-u)·역순으로 그려 정확히 맞물린다 */
 function jigEdge(ctx,ax,ay,bx,by,e,flip){
   if(!e){ctx.lineTo(bx,by);return}
   const dx=bx-ax, dy=by-ay, sgn=(flip?-1:1)*e.d;
-  const P=pt=>{const uu=flip?1-pt[0]:pt[0], v=pt[1]*sgn;
+  // 노브 크기는 엣지 길이가 아니라 짧은 변 기준으로 통일 — 가로·세로 노브가 같은 크기
+  const ks=(G.kl||Math.hypot(dx,dy))/Math.hypot(dx,dy);
+  const P=pt=>{const uu=flip?1-pt[0]:pt[0], v=pt[1]*sgn*ks;
     return [ax+dx*uu+dy*v, ay+dy*uu-dx*v]};
   const segs=edgeSegs(e);
   if(!flip){
@@ -729,15 +735,19 @@ function computeGeometry(){
   const rand=rng(G.seed);
   const {cols,rows,pw,ph}=G;
   // 컷 스타일: 판(seed)마다 다르게 — 클래식 직소 / 물결 / 통통 버블
-  const roll=rand();G.cut=roll<.4?'classic':(roll<.7?'wave':'bubble');
+  const roll=rand();G.cut=roll<.4?'standard':(roll<.6?'classic':(roll<.8?'wave':'bubble'));
   // 공유 요철 맵: H[r][c]=피스(r,c) 위쪽 변, V[r][c]=왼쪽 변. 엣지마다 탭 위치·폭·높이·어깨 곡률이 다르다
-  const mkE=()=>({d:rand()<.5?1:-1, u:.44+rand()*.12, w:.8+rand()*.35, h:.8+rand()*.35,
+  const std=G.cut==='standard';
+  // standard = 진짜 퍼즐처럼: 탭 정중앙·대칭·균일 (방향만 랜덤)
+  const mkE=()=>std?{d:rand()<.5?1:-1, u:.5, w:1, h:1, a:0, b:0, wv:0}
+    :({d:rand()<.5?1:-1, u:.47+rand()*.06, w:.8+rand()*.35, h:.8+rand()*.35,
     a:(rand()-.5)*.06, b:(rand()-.5)*.06, wv:(rand()<.5?1:-1)*(.07+rand()*.08)});
   const H=[],V=[];
   for(let r=0;r<=rows;r++){H[r]=[];for(let c=0;c<cols;c++)H[r][c]=(r===0||r===rows)?0:mkE()}
   for(let r=0;r<rows;r++){V[r]=[];for(let c=0;c<=cols;c++)V[r][c]=(c===0||c===cols)?0:mkE()}
-  // 꼭짓점 지터: 내부 격자점을 흔들어 조각 크기·모양을 제각각으로 (테두리는 고정)
-  const j=.44*Math.min(pw,ph), PX=[], PY=[];
+  // 꼭짓점 지터: 내부 격자점을 흔들어 조각 크기·모양을 제각각으로 (테두리는 고정, standard는 반듯한 격자)
+  G.kl=Math.min(pw,ph);
+  const j=(std?0:.26)*Math.min(pw,ph), PX=[], PY=[];
   for(let r=0;r<=rows;r++){PX[r]=[];PY[r]=[];
     for(let c=0;c<=cols;c++){
       PX[r][c]=c*pw+((c===0||c===cols)?0:(rand()-.5)*j);

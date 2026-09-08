@@ -314,7 +314,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v9';
+const BUILD='v10';
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
@@ -486,9 +486,9 @@ function sceneFirework(ctx,w,h){
     for(let win=0;win<3;win++)ctx.fillRect(i*bw+bw*.2+win*bw*.22,h-h*b+h*.04,bw*.1,h*.03)});
 }
 const SCENES=[
-  {id:'space', name:'우주 여행', en:'Space Trip', draw:sceneSpace, free:true},
-  {id:'sea', name:'바닷속 친구들', en:'Under the Sea', draw:sceneSea, free:true},
-  {id:'dino', name:'공룡 나라', en:'Dino Land', draw:sceneDino, free:false},
+  {id:'space', name:'우주 여행', en:'Space Trip', draw:sceneSpace, img:'assets/puzzles/space.jpg', free:true},
+  {id:'sea', name:'바닷속 친구들', en:'Under the Sea', draw:sceneSea, img:'assets/puzzles/sea.jpg', free:true},
+  {id:'dino', name:'공룡 나라', en:'Dino Land', draw:sceneDino, img:'assets/puzzles/dino.jpg', free:false},
   {id:'balloon',name:'하늘 기구', en:'Sky Balloons', draw:sceneBalloon,free:false},
   {id:'farm', name:'동물 농장', en:'Animal Farm', draw:sceneFarm, free:false},
   {id:'fire', name:'불꽃놀이', en:'Fireworks', draw:sceneFirework,free:false},
@@ -624,6 +624,20 @@ function photoSource(){
   return photoImg;
 }
 
+/* ── 씬 이미지 에셋: 캐시 + 로드 대기 (실패하면 코드 드로잉 폴백) ── */
+const IMGS={};
+function ensureImg(sc){return new Promise(res=>{
+  if(!sc||!sc.img)return res();
+  let e=IMGS[sc.id];
+  if(!e){e=IMGS[sc.id]={img:new Image(),ok:false,done:false,waiters:[]};
+    e.img.onload=()=>{e.ok=true;e.done=true;e.waiters.splice(0).forEach(f=>f())};
+    e.img.onerror=()=>{e.done=true;e.waiters.splice(0).forEach(f=>f())};
+    e.img.src=sc.img}
+  if(e.done)return res();
+  const tm=setTimeout(res,3000);
+  e.waiters.push(()=>{clearTimeout(tm);res()});
+})}
+
 /* ── 렌더 소스: 그림 or 사진을 W×H로 그린다 ── */
 function makeRenderer(sid){
   if(sid==='photo')return (ctx,w,h)=>{
@@ -632,7 +646,11 @@ function makeRenderer(sid){
     ctx.drawImage(src,0,0,src.width,src.height,0,0,w,h);
   };
   const sc=findScene(sid);
-  return (ctx,w,h)=>sc.draw(ctx,w,h);
+  return (ctx,w,h)=>{
+    const e=sc.img&&IMGS[sc.id];
+    if(e&&e.ok)ctx.drawImage(e.img,0,0,w,h);
+    else sc.draw(ctx,w,h);
+  };
 }
 function paintThumb(canvas,sid){
   const ctx=canvas.getContext('2d');
@@ -701,7 +719,7 @@ function openGame(sid,cnt,isDaily){
   $('gtitle').textContent=(isDaily?t('todayPrefix'):'')+nm;
   $('home').hidden=true;$('game').hidden=false;$('winwrap').hidden=true;$('sheet').hidden=true;$('acct').hidden=true;$('settings').hidden=true;
   $('panicHome').hidden=false;pushUI('game');
-  layoutGame();
+  ensureImg(findScene(sid)).then(layoutGame);   // 이미지 씬이면 로드 후 컷 (폴백 3초)
 }
 function layoutGame(){
   if(!G.on)return;
@@ -1048,6 +1066,7 @@ $('acct').addEventListener('click',e=>{if(e.target===$('acct'))$('acct').hidden=
 if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
 
 applyLang();
+Promise.all(SCENES.filter(s=>s.img).map(ensureImg)).then(renderHome);   // 이미지 씬 프리로드 → 카드 갱신
 addEventListener('pageshow',e=>{if(e.persisted)location.reload()});
 addEventListener('error',ev=>showErr(ev.message+' @'+String(ev.filename||'').split('/').pop()+':'+ev.lineno));
 addEventListener('unhandledrejection',ev=>showErr('promise: '+(ev.reason&&ev.reason.message||ev.reason)));

@@ -314,7 +314,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v7';
+const BUILD='v8';
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
@@ -644,17 +644,40 @@ function paintThumb(canvas,sid){
 function rng(seed){let a=seed>>>0;return()=>{a|=0;a=a+0x6D2B79F5|0;
   let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 
-/* ── 직소 요철 경로 ── */
-function jigEdge(ctx,ax,ay,bx,by,tab){
-  if(!tab){ctx.lineTo(bx,by);return}
-  const dx=bx-ax, dy=by-ay, nx=dy*tab, ny=-dx*tab;
-  const P=(u,v)=>[ax+dx*u+nx*v, ay+dy*u+ny*v];
-  const B=(p,q,r)=>ctx.bezierCurveTo(p[0],p[1],q[0],q[1],r[0],r[1]);
-  ctx.lineTo(...P(.35,0));
-  B(P(.44,.02),P(.38,.10),P(.46,.13));
-  B(P(.36,.24),P(.64,.24),P(.54,.13));
-  B(P(.62,.10),P(.56,.02),P(.65,0));
-  ctx.lineTo(bx,by);
+/* ── 직소 요철 경로: 컷 스타일별 세그먼트 (u,v 파라미터 공간) ── */
+function edgeSegs(e){
+  if(G.cut==='wave'){const a=e.wv;
+    return [['C',[.25,a],[.4,a],[.5,0]],['C',[.6,-a],[.75,-a],[1,0]]]}
+  const bub=G.cut==='bubble', w=e.w*(bub?1.2:1), h=e.h*(bub?1.25:1);
+  const X=x=>e.u+(x-.5)*w, V=v=>v*h;
+  return [
+    ['Q',[X(.35)*.5,e.a],[X(.35),0]],
+    ['C',[X(.44),V(.02)],[X(.38),V(.10)],[X(.46),V(.13)]],
+    ['C',[X(.36),V(.24)],[X(.64),V(.24)],[X(.54),V(.13)]],
+    ['C',[X(.62),V(.10)],[X(.56),V(.02)],[X(.65),0]],
+    ['Q',[(X(.65)+1)*.5,e.b],[1,0]]
+  ]
+}
+/* 같은 엣지를 양쪽 피스가 공유 — flip이면 (1-u)·역순으로 그려 정확히 맞물린다 */
+function jigEdge(ctx,ax,ay,bx,by,e,flip){
+  if(!e){ctx.lineTo(bx,by);return}
+  const dx=bx-ax, dy=by-ay, sgn=(flip?-1:1)*e.d;
+  const P=pt=>{const uu=flip?1-pt[0]:pt[0], v=pt[1]*sgn;
+    return [ax+dx*uu+dy*v, ay+dy*uu-dx*v]};
+  const segs=edgeSegs(e);
+  if(!flip){
+    for(const s of segs){
+      if(s[0]==='Q'){const c=P(s[1]),p=P(s[2]);ctx.quadraticCurveTo(c[0],c[1],p[0],p[1])}
+      else{const c1=P(s[1]),c2=P(s[2]),p=P(s[3]);ctx.bezierCurveTo(c1[0],c1[1],c2[0],c2[1],p[0],p[1])}
+    }
+  }else{
+    const starts=[[0,0]];
+    for(let i=0;i<segs.length-1;i++){const s=segs[i];starts.push(s[s.length-1])}
+    for(let i=segs.length-1;i>=0;i--){const s=segs[i],st=P(starts[i]);
+      if(s[0]==='Q'){const c=P(s[1]);ctx.quadraticCurveTo(c[0],c[1],st[0],st[1])}
+      else{const c1=P(s[2]),c2=P(s[1]);ctx.bezierCurveTo(c1[0],c1[1],c2[0],c2[1],st[0],st[1])}
+    }
+  }
 }
 /* ── 게임 상태 ── */
 const G={on:false, sid:null, cols:0, rows:0, seed:0, isDaily:false,
@@ -705,10 +728,14 @@ function layoutGame(){
 function computeGeometry(){
   const rand=rng(G.seed);
   const {cols,rows,pw,ph}=G;
-  // 공유 요철 맵: H[r][c]=피스(r,c) 위쪽 변, V[r][c]=왼쪽 변. +1 = 위/왼쪽으로 돌출
+  // 컷 스타일: 판(seed)마다 다르게 — 클래식 직소 / 물결 / 통통 버블
+  const roll=rand();G.cut=roll<.4?'classic':(roll<.7?'wave':'bubble');
+  // 공유 요철 맵: H[r][c]=피스(r,c) 위쪽 변, V[r][c]=왼쪽 변. 엣지마다 탭 위치·폭·높이·어깨 곡률이 다르다
+  const mkE=()=>({d:rand()<.5?1:-1, u:.44+rand()*.12, w:.8+rand()*.35, h:.8+rand()*.35,
+    a:(rand()-.5)*.06, b:(rand()-.5)*.06, wv:(rand()<.5?1:-1)*(.07+rand()*.08)});
   const H=[],V=[];
-  for(let r=0;r<=rows;r++){H[r]=[];for(let c=0;c<cols;c++)H[r][c]=(r===0||r===rows)?0:(rand()<.5?1:-1)}
-  for(let r=0;r<rows;r++){V[r]=[];for(let c=0;c<=cols;c++)V[r][c]=(c===0||c===cols)?0:(rand()<.5?1:-1)}
+  for(let r=0;r<=rows;r++){H[r]=[];for(let c=0;c<cols;c++)H[r][c]=(r===0||r===rows)?0:mkE()}
+  for(let r=0;r<rows;r++){V[r]=[];for(let c=0;c<=cols;c++)V[r][c]=(c===0||c===cols)?0:mkE()}
   // 꼭짓점 지터: 내부 격자점을 흔들어 조각 크기·모양을 제각각으로 (테두리는 고정)
   const j=.44*Math.min(pw,ph), PX=[], PY=[];
   for(let r=0;r<=rows;r++){PX[r]=[];PY[r]=[];
@@ -720,23 +747,23 @@ function computeGeometry(){
 }
 function quadPath(ctx,q,e){
   ctx.beginPath();ctx.moveTo(q[0][0],q[0][1]);
-  jigEdge(ctx,q[0][0],q[0][1],q[1][0],q[1][1],e.t);
-  jigEdge(ctx,q[1][0],q[1][1],q[2][0],q[2][1],e.r);
-  jigEdge(ctx,q[2][0],q[2][1],q[3][0],q[3][1],e.b);
-  jigEdge(ctx,q[3][0],q[3][1],q[0][0],q[0][1],e.l);
+  jigEdge(ctx,q[0][0],q[0][1],q[1][0],q[1][1],e.t,false);
+  jigEdge(ctx,q[1][0],q[1][1],q[2][0],q[2][1],e.r,false);
+  jigEdge(ctx,q[2][0],q[2][1],q[3][0],q[3][1],e.b,true);
+  jigEdge(ctx,q[3][0],q[3][1],q[0][0],q[0][1],e.l,true);
   ctx.closePath();
 }
 function buildPieces(arena,R){
   arena.querySelectorAll('.piece').forEach(el=>el.remove());
   const {cols,rows,pw,ph,H,V,PX,PY}=G;
-  const bleed=Math.ceil(.38*Math.max(pw,ph))+1;G.bleed=bleed;   // 지터+요철 여유
+  const bleed=Math.ceil(.48*Math.max(pw,ph))+1;G.bleed=bleed;   // 지터+요철 여유
   const savedSet=new Set(G.savedPlaced||[]);
   G.pieces=[];G.placed=0;G.zTop=10;
   const trayTop=G.by+G.bh+10, trayH=Math.max(60,arena.clientHeight-trayTop-10);
   const scatter=rng(G.seed^0x9E3779B9);
   for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
     const idx=r*cols+c;
-    const e={t:H[r][c], b:-H[r+1][c], l:V[r][c], r:-V[r][c+1]};
+    const e={t:H[r][c], r:V[r][c+1], b:H[r+1][c], l:V[r][c]};
     const q0=[[PX[r][c],PY[r][c]],[PX[r][c+1],PY[r][c+1]],
               [PX[r+1][c+1],PY[r+1][c+1]],[PX[r+1][c],PY[r+1][c]]];
     const minx=Math.min(q0[0][0],q0[1][0],q0[2][0],q0[3][0]);

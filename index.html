@@ -839,8 +839,11 @@ function showErr(msg){
   let t=document.getElementById('errbar');
   if(!t){t=document.createElement('div');t.id='errbar';
     t.style.cssText='position:fixed;left:8px;right:8px;bottom:8px;z-index:9999;background:#B3261E;color:#fff;font:12px/1.4 monospace;padding:8px 10px;border-radius:10px;word-break:break-all';
+    t.onclick=()=>{t.hidden=true};
     document.body.appendChild(t)}
-  t.textContent='\u26a0 '+msg;
+  t.hidden=false;
+  t.textContent='\u26a0 '+msg+'  (탭하면 닫혀요)';
+  clearTimeout(t._t);t._t=setTimeout(()=>{t.hidden=true},8000);
 }
 function renderHome(){try{renderHomeInner()}catch(e){showErr((e&&e.message||e)+' @renderHome')}}
 function renderHomeInner(){

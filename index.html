@@ -63,6 +63,14 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
 .stat{display:flex; align-items:center; gap:5px; background:var(--panel); border:3px solid var(--ink);
   border-radius:var(--wob); padding:4px 13px; font-family:var(--disp); font-size:16px; box-shadow:var(--shadow)}
 .stat b{font-variant-numeric:tabular-nums}
+/* 관련 스탯끼리 한 알약으로 묶기: [기록 🏆🔥] [코인 ⭐🌈] */
+.statgrp{display:flex; align-items:stretch; background:var(--panel); border:3px solid var(--ink);
+  border-radius:999px; box-shadow:var(--shadow); overflow:hidden}
+.statgrp .seg{display:flex; align-items:center; gap:5px; padding:4px 12px; font-family:var(--disp); font-size:16px}
+.statgrp .seg+.seg{border-left:2px dashed var(--line)}
+.statgrp .seg b{font-variant-numeric:tabular-nums}
+/* 게스트: 아직 로그인 전 임시 상태 — 점선·뮤트로 다르게 */
+.stat.guest{border-style:dashed; border-color:var(--sub); color:var(--sub); background:transparent; box-shadow:none; font-size:15px}
 
 .daily{background:var(--panel); border-radius:var(--wob-big); box-shadow:var(--shadow); padding:18px;
   display:flex; gap:18px; align-items:center; border:4px solid var(--accent); transform:rotate(-.4deg)}
@@ -206,11 +214,15 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
       <span id="logoName">이든의 퍼즐</span>
     </div>
     <div class="spacer"></div>
-    <div class="stat" title="완성한 퍼즐">🏆 <b id="starN">0</b></div>
-    <div class="stat" title="오늘의 퍼즐 연속 기록">🔥 <b id="streakN">0</b>일</div>
-    <div class="stat" title="별코인 — 퍼즐을 맞추면 모여요">⭐ <b id="coinSN">0</b></div>
-    <div class="stat" title="무지개코인 — 매일 3개, 프리미엄 그림을 열어요">🌈 <b id="coinRN">3</b></div>
-    <button class="stat" id="acctBtn" aria-label="계정">👤 게스트</button>
+    <div class="statgrp" aria-label="기록">
+      <span class="seg" title="완성한 퍼즐">🏆 <b id="starN">0</b></span>
+      <span class="seg" title="오늘의 퍼즐 연속 기록">🔥 <b id="streakN">0</b></span>
+    </div>
+    <div class="statgrp" aria-label="코인">
+      <span class="seg" title="별코인 — 퍼즐을 맞추면 모여요">⭐ <b id="coinSN">0</b></span>
+      <span class="seg" title="무지개코인 — 매일 3개, 프리미엄 그림을 열어요">🌈 <b id="coinRN">3</b></span>
+    </div>
+    <button class="stat guest" id="acctBtn" aria-label="계정">👤 게스트</button>
     <button class="stat" id="setBtn" aria-label="설정">⚙️</button>
   </div>
 
@@ -343,7 +355,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v15';
+const BUILD='v16';
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',

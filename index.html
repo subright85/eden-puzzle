@@ -166,15 +166,16 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
 }
 
 /* ── 계정 시트 ── */
-#acct,#settings{position:fixed; inset:0; background:rgba(58,66,88,.45); display:flex; align-items:flex-end;
+#acct,#settings,#packview{position:fixed; inset:0; background:rgba(58,66,88,.45); display:flex; align-items:flex-end;
   justify-content:center; z-index:50}
-#acct .box,#settings .box{background:var(--panel); border-radius:26px 30px 0 0/30px 26px 0 0; border:3px solid var(--ink);
+#acct .box,#settings .box,#packview .box{background:var(--panel); border-radius:26px 30px 0 0/30px 26px 0 0; border:3px solid var(--ink);
   border-bottom:0; padding:22px 18px 30px; width:min(560px,100%); display:flex; flex-direction:column; gap:12px}
-#acct h3,#settings h3{font-size:22px; text-align:center}
+#acct h3,#settings h3,#packview h3{font-size:22px; text-align:center}
+#packGrid{overflow-y:auto; max-height:62vh; -webkit-overflow-scrolling:touch}
 .acct-note{margin:0; text-align:center; color:var(--sub); font-size:14px; line-height:1.6; font-family:var(--body)}
 .acct-btn{border:3px solid var(--line); border-radius:var(--wob); padding:13px; font-size:18px;
   background:var(--panel); color:var(--sub)}
-#acct .cancel,#settings .cancel{color:var(--sub); font-size:16px; padding:8px}
+#acct .cancel,#settings .cancel,#packview .cancel{color:var(--sub); font-size:16px; padding:8px}
 </style>
 
 <div id="splash">
@@ -252,6 +253,14 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
   </div>
 </div>
 
+<div id="packview" hidden>
+  <div class="box">
+    <h3 id="packTitle"></h3>
+    <div class="grid" id="packGrid"></div>
+    <button class="cancel" id="packCancel">닫기</button>
+  </div>
+</div>
+
 <div id="acct" hidden>
   <div class="box">
     <h3 id="acctTitle">계정</h3>
@@ -315,7 +324,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v12';
+const BUILD='v13';
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
@@ -362,7 +371,7 @@ function applyLang(){
     acctTitle:'acctTitle',acctG:'acctG',acctA:'acctA',acctCancel:'close',
     backBtn:'backBtn',peekBtn:'peekBtn',panicHome:'panicHome',
     winMsg:'winMsg',winAgain:'winAgain',winHome:'winHome',
-    splashName:'appName',setTitle:'setTitle',setCancel:'close'};
+    splashName:'appName',setTitle:'setTitle',setCancel:'close',packCancel:'close'};
   for(const id in M){const el=document.getElementById(id);if(el)el.textContent=t(M[id])}
   $('acctNote').innerHTML=t('acctNote');
   $('acctBtn').textContent=t('guest');
@@ -612,6 +621,28 @@ function syncSndBtn(){$('setSnd').textContent=soundOn?t('sndOn'):t('sndOff')}
 $('setSnd').onclick=()=>{soundOn=!soundOn;store.set('snd',soundOn);syncSndBtn();popSnd()};
 $('setBtn').onclick=()=>{pushUI('sheet');$('settings').hidden=false};
 $('setCancel').onclick=()=>{$('settings').hidden=true};
+let curPack=null;
+function openPack(pid){
+  curPack=pid;const pk=PACKS.find(p=>p.id===pid);
+  $('packTitle').textContent=sceneName(pk);
+  const pg=$('packGrid');pg.innerHTML='';
+  const done=store.get('done',{});
+  for(const sc of ARTS.filter(a=>a.pack===pid)){
+    const b=document.createElement('button');b.className='card';
+    const cv=document.createElement('canvas');cv.width=360;cv.height=270;
+    b.appendChild(cv);
+    const row=document.createElement('span');row.className='row';
+    row.innerHTML='<span class="name">'+sceneName(sc)+'</span>'+
+      (done[sc.id]?'<span class="chip star">⭐</span>':'');
+    b.appendChild(row);
+    b.onclick=()=>{$('packview').hidden=true;openSheet(sc.id,false)};
+    pg.appendChild(b);
+    paintThumb(cv,sc.id);
+  }
+  pushUI('packview');$('packview').hidden=false;
+}
+$('packCancel').onclick=()=>{$('packview').hidden=true};
+$('packview').addEventListener('click',e=>{if(e.target===$('packview'))$('packview').hidden=true});
 $('settings').addEventListener('click',e=>{if(e.target===$('settings'))$('settings').hidden=true});
 $('langKo').onclick=()=>setLang('ko');
 $('langEn').onclick=()=>setLang('en');
@@ -742,7 +773,7 @@ function openGame(sid,cnt,isDaily){
   G.savedPlaced=saved?saved.placed:[];
   const nm=sid==='photo'?(photoStyle==='art'?t('photoArt'):t('photoName')):sceneName(findScene(sid));
   $('gtitle').textContent=(isDaily?t('todayPrefix'):'')+nm;
-  $('home').hidden=true;$('game').hidden=false;$('winwrap').hidden=true;$('sheet').hidden=true;$('acct').hidden=true;$('settings').hidden=true;
+  $('home').hidden=true;$('game').hidden=false;$('winwrap').hidden=true;$('sheet').hidden=true;$('acct').hidden=true;$('settings').hidden=true;$('packview').hidden=true;
   $('panicHome').hidden=false;pushUI('game');
   ensureImg(findScene(sid)).then(layoutGame);   // 이미지 씬이면 로드 후 컷 (폴백 3초)
 }
@@ -916,7 +947,7 @@ $('winHome').onclick=()=>{$('winwrap').hidden=true;closeGame()};
 $('backBtn').onclick=()=>closeGame();
 function goHome(){
   G.on=false;
-  for(const id of ['game','winwrap','sheet','acct','settings','splash'])try{$(id).hidden=true}catch(e){}
+  for(const id of ['game','winwrap','sheet','acct','settings','packview','splash'])try{$(id).hidden=true}catch(e){}
   $('panicHome').hidden=true;
   $('home').hidden=false;
   renderHome();
@@ -925,7 +956,7 @@ function closeGame(){goHome()}
 $('panicHome').onclick=goHome;
 function pushUI(tag){try{history.pushState({ui:tag},'')}catch(e){}}
 addEventListener('popstate',()=>{
-  if(!$('sheet').hidden||!$('acct').hidden||!$('settings').hidden){$('sheet').hidden=true;$('acct').hidden=true;$('settings').hidden=true;return}
+  if(!$('sheet').hidden||!$('acct').hidden||!$('settings').hidden||!$('packview').hidden){$('sheet').hidden=true;$('acct').hidden=true;$('settings').hidden=true;$('packview').hidden=true;return}
   if(!$('winwrap').hidden||G.on)goHome();
 });
 let rsT=null;
@@ -1033,20 +1064,24 @@ function renderHomeInner(){
   }
   const ag=$('artGallery');ag.innerHTML='';
   for(const pk of PACKS){
-  const ph=document.createElement('div');ph.className='packhead';ph.textContent=sceneName(pk);ag.appendChild(ph);
-  for(const sc of ARTS.filter(a=>a.pack===pk.id)){
+    const items=ARTS.filter(a=>a.pack===pk.id);
     const b=document.createElement('button');b.className='card';
     const cv=document.createElement('canvas');cv.width=360;cv.height=270;
     b.appendChild(cv);
     const row=document.createElement('span');row.className='row';
-    row.innerHTML='<span class="name">'+sceneName(sc)+'</span>'+
-      (done[sc.id]?'<span class="chip star">⭐</span>':'')+
-      '<span class="chip prem">'+t('prem')+'</span>';
+    row.innerHTML='<span class="name">'+sceneName(pk)+'</span>'+
+      (items.every(a=>done[a.id])?'<span class="chip star">⭐</span>':'')+
+      '<span class="chip prem">'+items.length+'</span>';
     b.appendChild(row);
-    b.onclick=()=>openSheet(sc.id,false);
+    b.onclick=()=>openPack(pk.id);
     ag.appendChild(b);
-    paintThumb(cv,sc.id);
-  }}
+    const cx=cv.getContext('2d');cx.fillStyle='#EFE8DA';cx.fillRect(0,0,360,270);
+    items.slice(0,4).forEach((sc,i)=>{
+      const x=(i%2)*181, y=(i>>1)*136;
+      const e=sc.img&&IMGS[sc.id];
+      if(e&&e.ok)cx.drawImage(e.img,x,y,179,134);
+    });
+  }
   // 마지막 사진
   const pd=store.get('photo',null);
   if(pd&&!photoImg){

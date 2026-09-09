@@ -184,12 +184,12 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
 }
 
 /* ── 계정 시트 ── */
-#acct,#settings,#packview,#collview{position:fixed; inset:0; background:rgba(58,66,88,.45); display:flex; align-items:flex-end;
+#acct,#settings,#packview,#collview,#themeview{position:fixed; inset:0; background:rgba(58,66,88,.45); display:flex; align-items:flex-end;
   justify-content:center; z-index:50}
-#acct .box,#settings .box,#packview .box,#collview .box{background:var(--panel); border-radius:26px 30px 0 0/30px 26px 0 0; border:3px solid var(--ink);
+#acct .box,#settings .box,#packview .box,#collview .box,#themeview .box{background:var(--panel); border-radius:26px 30px 0 0/30px 26px 0 0; border:3px solid var(--ink);
   border-bottom:0; padding:22px 18px 30px; width:min(560px,100%); display:flex; flex-direction:column; gap:12px}
-#acct h3,#settings h3,#packview h3,#collview h3{font-size:22px; text-align:center}
-#packGrid,#collGrid{overflow-y:auto; max-height:62vh; -webkit-overflow-scrolling:touch}
+#acct h3,#settings h3,#packview h3,#collview h3,#themeview h3{font-size:22px; text-align:center}
+#packGrid,#collGrid,#themeGrid{overflow-y:auto; max-height:62vh; -webkit-overflow-scrolling:touch}
 .collcard{display:flex; align-items:center; gap:12px; width:100%; margin:14px 0 2px; padding:12px 16px;
   background:var(--panel); border:3px solid var(--ink); border-radius:var(--wob); box-shadow:var(--shadow);
   cursor:pointer; font:inherit; color:inherit; text-align:left}
@@ -205,7 +205,7 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
 .acct-note{margin:0; text-align:center; color:var(--sub); font-size:14px; line-height:1.6; font-family:var(--body)}
 .acct-btn{border:3px solid var(--line); border-radius:var(--wob); padding:13px; font-size:18px;
   background:var(--panel); color:var(--sub)}
-#acct .cancel,#settings .cancel,#packview .cancel,#collview .cancel{color:var(--sub); font-size:16px; padding:8px}
+#acct .cancel,#settings .cancel,#packview .cancel,#collview .cancel,#themeview .cancel{color:var(--sub); font-size:16px; padding:8px}
 </style>
 
 <div id="splash">
@@ -300,6 +300,14 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
   </div>
 </div>
 
+<div id="themeview" hidden>
+  <div class="box">
+    <h3 id="themeTitle"></h3>
+    <div class="grid" id="themeGrid"></div>
+    <button class="cancel" id="themeCancel">닫기</button>
+  </div>
+</div>
+
 <div id="packview" hidden>
   <div class="box">
     <h3 id="packTitle"></h3>
@@ -381,11 +389,11 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v19';
+const BUILD='v20';
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
-  secArts:'명화 퍼즐',secArtsS:'진짜 미술관 그림을 심플하게',secColl:'콜렉션',
+  secArts:'테마 퍼즐',secArtsS:'동화책부터 미술관까지',secColl:'콜렉션',
   secPhoto:'사진 퍼즐',secPhotoS:'그림처럼 바꿔서도 맞출 수 있어요',
   photoBtnName:'사진 고르기',lastPhotoName:'마지막 사진',
   footNote:'광고 없음 · 사진도 그림 변환도 전부 기기 안에서만 · 프리미엄 그림은 무지개코인 🌈 으로 열어요 (매일 3개)',
@@ -402,7 +410,7 @@ ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPl
   tag6:'아주 쉬움',tag12:'쉬움',tag24:'보통',tag48:'도전!',build:'빌드',start:'시작!'},
 en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle · Free",dailyPlay:"Let's Play!",
   secScenes:'Pick a Picture',secScenesS:'A new free picture every day',
-  secArts:'Masterpieces',secArtsS:'Real museum art, made simple',
+  secArts:'Theme Puzzles',secArtsS:'From storybooks to the museum',
   secPhoto:'Photo Puzzle',secPhotoS:'Turn your photos into drawings too',
   photoBtnName:'Choose a Photo',lastPhotoName:'Last Photo',
   footNote:'No ads · Photos never leave your device · Premium pictures open with rainbow coins 🌈 (3 a day)',
@@ -432,7 +440,7 @@ function applyLang(){
     acctTitle:'acctTitle',acctG:'acctG',acctA:'acctA',acctCancel:'close',
     backBtn:'backBtn',peekBtn:'peekBtn',panicHome:'panicHome',
     winMsg:'winMsg',winAgain:'winAgain',winHome:'winHome',
-    splashName:'appName',titleStart:'start',setTitle:'setTitle',setCancel:'close',packCancel:'close',secColl:'secColl',collCancel:'close'};
+    splashName:'appName',titleStart:'start',setTitle:'setTitle',setCancel:'close',packCancel:'close',secColl:'secColl',collCancel:'close',themeCancel:'close'};
   for(const id in M){const el=document.getElementById(id);if(el)el.textContent=t(M[id])}
   $('acctNote').innerHTML=t('acctNote');
   $('acctBtn').textContent=t('guest');
@@ -638,56 +646,78 @@ const ARTS=[
   {id:'sunflower', pack:'gogh', name:'해바라기 · 고흐', en:'Sunflowers · Van Gogh', img:'assets/arts/sunflower.jpg'},
   {id:'bedroom', pack:'gogh', name:'아를의 침실 · 고흐', en:'The Bedroom · Van Gogh', img:'assets/arts/bedroom.jpg'},
   {id:'cafeterrace', pack:'gogh', name:'밤의 카페 테라스 · 고흐', en:'Café Terrace at Night · Van Gogh', img:'assets/arts/cafeterrace.jpg'},
-  {id:'lilies', pack:'impress', name:'수련 · 모네', en:'Water Lilies · Monet', img:'assets/arts/lilies.jpg'},
-  {id:'sunrise', pack:'impress', name:'인상, 해돋이 · 모네', en:'Impression, Sunrise · Monet', img:'assets/arts/sunrise.jpg'},
-  {id:'jatte', pack:'impress', name:'그랑드 자트 섬 · 쇠라', en:'La Grande Jatte · Seurat', img:'assets/arts/jatte.jpg'},
-  {id:'circus', pack:'impress', name:'서커스 · 쇠라', en:'The Circus · Seurat', img:'assets/arts/circus.jpg'},
+  {id:'lilies', pack:'monet', name:'수련 · 모네', en:'Water Lilies · Monet', img:'assets/arts/lilies.jpg'},
+  {id:'sunrise', pack:'monet', name:'인상, 해돋이 · 모네', en:'Impression, Sunrise · Monet', img:'assets/arts/sunrise.jpg'},
+  {id:'jatte', pack:'seurat', name:'그랑드 자트 섬 · 쇠라', en:'La Grande Jatte · Seurat', img:'assets/arts/jatte.jpg'},
+  {id:'circus', pack:'seurat', name:'서커스 · 쇠라', en:'The Circus · Seurat', img:'assets/arts/circus.jpg'},
   {id:'dance', pack:'impress', name:'무용 수업 · 드가', en:'The Dance Class · Degas', img:'assets/arts/dance.jpg'},
   {id:'sisters', pack:'impress', name:'테라스의 두 자매 · 르누아르', en:'Two Sisters · Renoir', img:'assets/arts/sisters.jpg'},
-  {id:'wave', pack:'ukiyoe', name:'큰 파도 · 호쿠사이', en:'The Great Wave · Hokusai', draw:artWave, img:'assets/arts/wave.jpg'},
-  {id:'redfuji', pack:'ukiyoe', name:'붉은 후지산 · 호쿠사이', en:'Red Fuji · Hokusai', img:'assets/arts/redfuji.jpg'},
-  {id:'shower', pack:'ukiyoe', name:'소나기 · 히로시게', en:'Sudden Shower · Hiroshige', img:'assets/arts/shower.jpg'},
-  {id:'plum', pack:'ukiyoe', name:'매화 정원 · 히로시게', en:'Plum Garden · Hiroshige', img:'assets/arts/plum.jpg'},
-  {id:'jungle', pack:'story', name:'정글 · 루소', en:'Jungle · Rousseau', draw:artJungle, img:'assets/arts/jungle.jpg'},
-  {id:'tiger', pack:'story', name:'호랑이! · 루소', en:'Surprised! · Rousseau', img:'assets/arts/tiger.jpg'},
-  {id:'bath', pack:'story', name:'아이의 목욕 · 커샛', en:"The Child's Bath · Cassatt", img:'assets/arts/bath.jpg'},
-  {id:'milkmaid', pack:'story', name:'우유 따르는 여인 · 페르메이르', en:'The Milkmaid · Vermeer', img:'assets/arts/milkmaid.jpg'},
-  {id:'games', pack:'story', name:'아이들의 놀이 · 브뤼헐', en:"Children's Games · Bruegel", img:'assets/arts/games.jpg'},
+  {id:'wave', pack:'hokusai', name:'큰 파도 · 호쿠사이', en:'The Great Wave · Hokusai', draw:artWave, img:'assets/arts/wave.jpg'},
+  {id:'redfuji', pack:'hokusai', name:'붉은 후지산 · 호쿠사이', en:'Red Fuji · Hokusai', img:'assets/arts/redfuji.jpg'},
+  {id:'shower', pack:'hiroshige', name:'소나기 · 히로시게', en:'Sudden Shower · Hiroshige', img:'assets/arts/shower.jpg'},
+  {id:'plum', pack:'hiroshige', name:'매화 정원 · 히로시게', en:'Plum Garden · Hiroshige', img:'assets/arts/plum.jpg'},
+  {id:'jungle', pack:'rousseau', name:'정글 · 루소', en:'Jungle · Rousseau', draw:artJungle, img:'assets/arts/jungle.jpg'},
+  {id:'tiger', pack:'rousseau', name:'호랑이! · 루소', en:'Surprised! · Rousseau', img:'assets/arts/tiger.jpg'},
+  {id:'bath', pack:'treasure', name:'아이의 목욕 · 커샛', en:"The Child's Bath · Cassatt", img:'assets/arts/bath.jpg'},
+  {id:'milkmaid', pack:'treasure', name:'우유 따르는 여인 · 페르메이르', en:'The Milkmaid · Vermeer', img:'assets/arts/milkmaid.jpg'},
+  {id:'games', pack:'bruegel', name:'아이들의 놀이 · 브뤼헐', en:"Children's Games · Bruegel", img:'assets/arts/games.jpg'},
   {id:'bluehorse', pack:'animal', name:'파란 말 · 마르크', en:'Blue Horse I · Franz Marc', img:'assets/arts/bluehorse.jpg'},
   {id:'yellowcow', pack:'animal', name:'노란 소 · 마르크', en:'The Yellow Cow · Franz Marc', img:'assets/arts/yellowcow.jpg'},
   {id:'bluehorses', pack:'animal', name:'커다란 파란 말들 · 마르크', en:'The Large Blue Horses · Franz Marc', img:'assets/arts/bluehorses.jpg'},
   {id:'flamingos', pack:'animal', name:'플라밍고 · 루소', en:'The Flamingoes · Rousseau', img:'assets/arts/flamingos.jpg'},
   {id:'audubon', pack:'animal', name:'홍학 · 오듀본', en:'American Flamingo · Audubon', img:'assets/arts/audubon.jpg'},
-  {id:'whiterabbit', pack:'tales', name:'하얀 토끼 · 테니얼', en:'The White Rabbit · Tenniel', img:'assets/arts/whiterabbit.jpg'},
-  {id:'alice', pack:'tales', name:'앨리스 · 테니얼', en:'Alice · Tenniel', img:'assets/arts/alice.jpg'},
-  {id:'peterrabbit', pack:'tales', name:'피터 래빗 · 포터', en:'Peter Rabbit · Potter', img:'assets/arts/peterrabbit.jpg'},
-  {id:'frogprince', pack:'tales', name:'개구리 왕자 · 크레인', en:'The Frog Prince · Crane', img:'assets/arts/frogprince.jpg'},
+  {id:'whiterabbit', pack:'wonderland', name:'하얀 토끼 · 테니얼', en:'The White Rabbit · Tenniel', img:'assets/arts/whiterabbit.jpg'},
+  {id:'alice', pack:'wonderland', name:'앨리스 · 테니얼', en:'Alice · Tenniel', img:'assets/arts/alice.jpg'},
+  {id:'peterrabbit', pack:'oldtales', name:'피터 래빗 · 포터', en:'Peter Rabbit · Potter', img:'assets/arts/peterrabbit.jpg'},
+  {id:'frogprince', pack:'oldtales', name:'개구리 왕자 · 크레인', en:'The Frog Prince · Crane', img:'assets/arts/frogprince.jpg'},
   {id:'ssireum', pack:'korea', name:'씨름 · 김홍도', en:'Ssireum Wrestling · Kim Hong-do', img:'assets/arts/ssireum.jpg'},
   {id:'mudong', pack:'korea', name:'무동 · 김홍도', en:'Dancing Boy · Kim Hong-do', img:'assets/arts/mudong.jpg'},
   {id:'seodang', pack:'korea', name:'서당 · 김홍도', en:'Village School · Kim Hong-do', img:'assets/arts/seodang.jpg'},
   {id:'minhwa', pack:'korea', name:'까치와 호랑이 · 민화', en:'Magpie and Tiger · Minhwa', img:'assets/arts/minhwa.jpg'},
-  {id:'comp8', pack:'master', name:'콤포지션 8 · 칸딘스키', en:'Composition VIII · Kandinsky', img:'assets/arts/comp8.jpg'},
-  {id:'hunters', pack:'master', name:'눈 속의 사냥꾼 · 브뤼헐', en:'Hunters in the Snow · Bruegel', img:'assets/arts/hunters.jpg'},
-  {id:'vertumnus', pack:'master', name:'과일 얼굴 · 아르침볼도', en:'Vertumnus · Arcimboldo', img:'assets/arts/vertumnus.jpg'},
-  {id:'parasol', pack:'master', name:'파라솔 쓴 여인 · 모네', en:'Woman with a Parasol · Monet', img:'assets/arts/parasol.jpg'},
-  {id:'noah', pack:'bible', name:'노아의 방주 · 힉스', en:"Noah's Ark · Hicks", img:'assets/arts/noah.jpg'},
-  {id:'peaceable', pack:'bible', name:'평화의 왕국 · 힉스', en:'Peaceable Kingdom · Hicks', img:'assets/arts/peaceable.jpg'},
-  {id:'eden', pack:'bible', name:'에덴 동산 · 브뤼헐', en:'Garden of Eden · Brueghel', img:'assets/arts/eden.jpg'},
-  {id:'nativity', pack:'bible', name:'아기 예수 · 혼토르스트', en:'The Nativity · Honthorst', img:'assets/arts/nativity.jpg'},
-  {id:'magi', pack:'bible', name:'동방박사의 경배 · 젠틸레', en:'Adoration of the Magi · Gentile', img:'assets/arts/magi.jpg'},
+  {id:'comp8', pack:'treasure', name:'콤포지션 8 · 칸딘스키', en:'Composition VIII · Kandinsky', img:'assets/arts/comp8.jpg'},
+  {id:'hunters', pack:'bruegel', name:'눈 속의 사냥꾼 · 브뤼헐', en:'Hunters in the Snow · Bruegel', img:'assets/arts/hunters.jpg'},
+  {id:'vertumnus', pack:'treasure', name:'과일 얼굴 · 아르침볼도', en:'Vertumnus · Arcimboldo', img:'assets/arts/vertumnus.jpg'},
+  {id:'parasol', pack:'monet', name:'파라솔 쓴 여인 · 모네', en:'Woman with a Parasol · Monet', img:'assets/arts/parasol.jpg'},
+  {id:'noah', pack:'noahark', name:'노아의 방주 · 힉스', en:"Noah's Ark · Hicks", img:'assets/arts/noah.jpg'},
+  {id:'peaceable', pack:'peace', name:'평화의 왕국 · 힉스', en:'Peaceable Kingdom · Hicks', img:'assets/arts/peaceable.jpg'},
+  {id:'eden', pack:'creation', name:'에덴 동산 · 브뤼헐', en:'Garden of Eden · Brueghel', img:'assets/arts/eden.jpg'},
+  {id:'nativity', pack:'christmas', name:'아기 예수 · 혼토르스트', en:'The Nativity · Honthorst', img:'assets/arts/nativity.jpg'},
+  {id:'magi', pack:'christmas', name:'동방박사의 경배 · 젠틸레', en:'Adoration of the Magi · Gentile', img:'assets/arts/magi.jpg'},
 ];
 /* 명화 테마 팩 (성철 지시 9/8: 테마별 패키지) */
-const PACKS=[
-  {id:'animal', name:'알록달록 동물 팩', en:'Colorful Animals Pack'},
-  {id:'tales', name:'옛날 동화책 팩', en:'Storybook Pack'},
-  {id:'bible', name:'성경 이야기 팩', en:'Bible Stories Pack'},
-  {id:'gogh', name:'고흐 팩', en:'Van Gogh Pack'},
-  {id:'impress', name:'인상파 팩', en:'Impressionist Pack'},
-  {id:'ukiyoe', name:'우키요에 팩', en:'Ukiyo-e Pack'},
-  {id:'story', name:'이야기 그림 팩', en:'Story Pack'},
-  {id:'korea', name:'한국 옛그림 팩', en:'Korean Classics Pack'},
-  {id:'master', name:'도전 명화 팩', en:'Masterpiece Challenge Pack'},
+const THEMES=[
+  {id:'fairy', name:'동화 나라', en:'Storybook Land'},
+  {id:'bible', name:'성경 이야기', en:'Bible Stories'},
+  {id:'museum', name:'미술관', en:'Museum'},
 ];
+const PACKS=[
+  {id:'animal', theme:'fairy', name:'알록달록 동물', en:'Colorful Animals'},
+  {id:'wonderland', theme:'fairy', name:'이상한 나라의 앨리스', en:'Alice in Wonderland'},
+  {id:'oldtales', theme:'fairy', name:'옛날 동화책', en:'Old Storybooks'},
+  {id:'creation', theme:'bible', name:'에덴 동산', en:'Garden of Eden'},
+  {id:'noahark', theme:'bible', name:'노아의 방주', en:"Noah's Ark"},
+  {id:'peace', theme:'bible', name:'평화의 왕국', en:'Peaceable Kingdom'},
+  {id:'christmas', theme:'bible', name:'아기 예수', en:'Baby Jesus'},
+  {id:'gogh', theme:'museum', name:'고흐', en:'Van Gogh'},
+  {id:'monet', theme:'museum', name:'모네', en:'Monet'},
+  {id:'seurat', theme:'museum', name:'쇠라', en:'Seurat'},
+  {id:'impress', theme:'museum', name:'인상파 친구들', en:'Impressionist Friends'},
+  {id:'hokusai', theme:'museum', name:'호쿠사이', en:'Hokusai'},
+  {id:'hiroshige', theme:'museum', name:'히로시게', en:'Hiroshige'},
+  {id:'rousseau', theme:'museum', name:'루소', en:'Rousseau'},
+  {id:'bruegel', theme:'museum', name:'브뤼헐', en:'Bruegel'},
+  {id:'korea', theme:'museum', name:'한국 옛그림', en:'Korean Classics'},
+  {id:'treasure', theme:'museum', name:'신기한 보물', en:'Curious Treasures'},
+];
+const packOf=id=>PACKS.find(p=>p.id===id);
+const themeArts=tid=>ARTS.filter(a=>{const p=packOf(a.pack);return p&&p.theme===tid});
+function collage(cv,items){
+  const cx=cv.getContext('2d');cx.fillStyle='#EFE8DA';cx.fillRect(0,0,360,270);
+  const draw=(sc,x,y,w,h)=>{const e=sc.img&&IMGS[sc.id];if(e&&e.ok)cx.drawImage(e.img,x,y,w,h)};
+  if(items.length===1)draw(items[0],0,0,360,270);
+  else if(items.length<4){draw(items[0],0,0,179,270);if(items[1])draw(items[1],181,0,179,270)}
+  else items.slice(0,4).forEach((sc,i)=>draw(sc,(i%2)*181,(i>>1)*136,179,134));
+}
 const findScene=sid=>SCENES.find(x=>x.id===sid)||ARTS.find(x=>x.id===sid);
 const COUNTS=[{n:6,c:3,r:2,tag:'아주 쉬움'},{n:12,c:4,r:3,tag:'쉬움'},{n:24,c:6,r:4,tag:'보통'},{n:48,c:8,r:6,tag:'도전!'}];
 
@@ -709,6 +739,31 @@ function syncSndBtn(){$('setSnd').textContent=soundOn?t('sndOn'):t('sndOff')}
 $('setSnd').onclick=()=>{soundOn=!soundOn;store.set('snd',soundOn);syncSndBtn();popSnd()};
 $('setBtn').onclick=()=>{pushUI('sheet');$('settings').hidden=false};
 $('setCancel').onclick=()=>{$('settings').hidden=true};
+let curTheme=null;
+function openTheme(tid){
+  curTheme=tid;const th=THEMES.find(x=>x.id===tid);
+  $('themeTitle').textContent=sceneName(th);
+  const tg=$('themeGrid');tg.innerHTML='';
+  const done=store.get('done',{});
+  for(const pk of PACKS.filter(p=>p.theme===tid)){
+    const items=ARTS.filter(a=>a.pack===pk.id);
+    const b=document.createElement('button');b.className='card';
+    const cv=document.createElement('canvas');cv.width=360;cv.height=270;
+    b.appendChild(cv);
+    const row=document.createElement('span');row.className='row';
+    row.innerHTML='<span class="name">'+sceneName(pk)+'</span>'+
+      (items.length&&items.every(a=>done[a.id])?'<span class="chip star">⭐</span>':'')+
+      '<span class="chip prem">'+items.length+'</span>';
+    b.appendChild(row);
+    b.onclick=()=>{$('themeview').hidden=true;openPack(pk.id)};
+    tg.appendChild(b);
+    collage(cv,items);
+    items.filter(x=>x.img).forEach(x=>ensureImg(x).then(()=>{if(!$('themeview').hidden)collage(cv,items)}));
+  }
+  pushUI('themeview');$('themeview').hidden=false;
+}
+$('themeCancel').onclick=()=>{$('themeview').hidden=true};
+$('themeview').addEventListener('click',e=>{if(e.target===$('themeview'))$('themeview').hidden=true});
 let curPack=null;
 function openPack(pid){
   curPack=pid;const pk=PACKS.find(p=>p.id===pid);
@@ -726,10 +781,11 @@ function openPack(pid){
     b.onclick=()=>{$('packview').hidden=true;openSheet(sc.id,false)};
     pg.appendChild(b);
     paintThumb(cv,sc.id);
+    if(sc.img)ensureImg(sc).then(()=>{if(!$('packview').hidden)paintThumb(cv,sc.id)});
   }
   pushUI('packview');$('packview').hidden=false;
 }
-$('packCancel').onclick=()=>{$('packview').hidden=true};
+$('packCancel').onclick=()=>{$('packview').hidden=true;if(curTheme)openTheme(curTheme)};
 $('packview').addEventListener('click',e=>{if(e.target===$('packview'))$('packview').hidden=true});
 function openColl(){
   const cg=$('collGrid');cg.innerHTML='';
@@ -745,6 +801,7 @@ function openColl(){
     b.appendChild(row);
     b.onclick=()=>{$('collview').hidden=true;openSheet(sc.id,false)};
     cg.appendChild(b);paintThumb(cv,sc.id);
+    if(sc.img)ensureImg(sc).then(()=>{if(!$('collview').hidden)paintThumb(cv,sc.id)});
     if(done[sc.id])dn++;
   }
   $('collTitle').textContent=t('secColl')+' · '+dn+' / '+all.length;
@@ -883,7 +940,7 @@ function openGame(sid,cnt,isDaily){
   G.savedPlaced=saved?saved.placed:[];
   const nm=sid==='photo'?(photoStyle==='art'?t('photoArt'):t('photoName')):sceneName(findScene(sid));
   $('gtitle').textContent=(isDaily?t('todayPrefix'):'')+nm;
-  $('home').hidden=true;$('game').hidden=false;$('winwrap').hidden=true;$('sheet').hidden=true;$('acct').hidden=true;$('settings').hidden=true;$('packview').hidden=true;$('collview').hidden=true;
+  $('home').hidden=true;$('game').hidden=false;$('winwrap').hidden=true;$('sheet').hidden=true;$('acct').hidden=true;$('settings').hidden=true;$('packview').hidden=true;$('collview').hidden=true;$('themeview').hidden=true;
   $('panicHome').hidden=false;pushUI('game');
   const sc=findScene(sid);
   ensureImg(sc).then(()=>{
@@ -1093,7 +1150,7 @@ $('winHome').onclick=()=>{$('winwrap').hidden=true;closeGame()};
 $('backBtn').onclick=()=>closeGame();
 function goHome(){
   G.on=false;
-  for(const id of ['game','winwrap','sheet','acct','settings','packview','collview','splash'])try{$(id).hidden=true}catch(e){}
+  for(const id of ['game','winwrap','sheet','acct','settings','packview','collview','themeview','splash'])try{$(id).hidden=true}catch(e){}
   $('panicHome').hidden=true;
   $('home').hidden=false;
   renderHome();
@@ -1102,7 +1159,7 @@ function closeGame(){goHome()}
 $('panicHome').onclick=goHome;
 function pushUI(tag){try{history.pushState({ui:tag},'')}catch(e){}}
 addEventListener('popstate',()=>{
-  if(!$('sheet').hidden||!$('acct').hidden||!$('settings').hidden||!$('packview').hidden||!$('collview').hidden){$('sheet').hidden=true;$('acct').hidden=true;$('settings').hidden=true;$('packview').hidden=true;$('collview').hidden=true;return}
+  if(!$('sheet').hidden||!$('acct').hidden||!$('settings').hidden||!$('packview').hidden||!$('collview').hidden){$('sheet').hidden=true;$('acct').hidden=true;$('settings').hidden=true;$('packview').hidden=true;$('collview').hidden=true;$('themeview').hidden=true;return}
   if(!$('winwrap').hidden||G.on)goHome();
 });
 let rsT=null;
@@ -1241,24 +1298,20 @@ function renderHomeInner(){
     paintThumb(cv,sc.id);
   }
   const ag=$('artGallery');ag.innerHTML='';
-  for(const pk of PACKS){
-    const items=ARTS.filter(a=>a.pack===pk.id);
+  for(const th of THEMES){
+    const items=themeArts(th.id);
+    const nPacks=PACKS.filter(p=>p.theme===th.id).length;
     const b=document.createElement('button');b.className='card';
     const cv=document.createElement('canvas');cv.width=360;cv.height=270;
     b.appendChild(cv);
     const row=document.createElement('span');row.className='row';
-    row.innerHTML='<span class="name">'+sceneName(pk)+'</span>'+
-      (items.every(a=>done[a.id])?'<span class="chip star">⭐</span>':'')+
-      '<span class="chip prem">'+items.length+'</span>';
+    row.innerHTML='<span class="name">'+sceneName(th)+'</span>'+
+      (items.length&&items.every(a=>done[a.id])?'<span class="chip star">⭐</span>':'')+
+      '<span class="chip prem">'+nPacks+' · '+items.length+'</span>';
     b.appendChild(row);
-    b.onclick=()=>openPack(pk.id);
+    b.onclick=()=>{curTheme=null;openTheme(th.id)};
     ag.appendChild(b);
-    const cx=cv.getContext('2d');cx.fillStyle='#EFE8DA';cx.fillRect(0,0,360,270);
-    items.slice(0,4).forEach((sc,i)=>{
-      const x=(i%2)*181, y=(i>>1)*136;
-      const e=sc.img&&IMGS[sc.id];
-      if(e&&e.ok)cx.drawImage(e.img,x,y,179,134);
-    });
+    collage(cv,items);
   }
   // 마지막 사진
   const pd=store.get('photo',null);

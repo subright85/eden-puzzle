@@ -355,7 +355,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v16';
+const BUILD='v17';
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
@@ -810,7 +810,16 @@ function openGame(sid,cnt,isDaily){
   $('gtitle').textContent=(isDaily?t('todayPrefix'):'')+nm;
   $('home').hidden=true;$('game').hidden=false;$('winwrap').hidden=true;$('sheet').hidden=true;$('acct').hidden=true;$('settings').hidden=true;$('packview').hidden=true;
   $('panicHome').hidden=false;pushUI('game');
-  ensureImg(findScene(sid)).then(layoutGame);   // 이미지 씬이면 로드 후 컷 (폴백 3초)
+  const sc=findScene(sid);
+  ensureImg(sc).then(()=>{
+    layoutGame();   // 이미지 씬이면 로드 후 컷 (폴백 3초)
+    // 3초 타임아웃으로 먼저 시작된 뒤 이미지가 늦게 도착하면 재베이크 (안 하면 게임 내내 플레이스홀더 조각)
+    const e=sc&&sc.img&&IMGS[sc.id];
+    if(e&&!e.done)e.waiters.push(()=>{if(G.on&&G.sid===sid&&e.ok){
+      G.savedPlaced=G.pieces?G.pieces.filter(p=>p.placed).map(p=>p.idx):[];
+      layoutGame();
+    }});
+  });
 }
 function layoutGame(){
   if(!G.on)return;

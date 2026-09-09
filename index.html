@@ -314,7 +314,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v10';
+const BUILD='v11';
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
@@ -563,9 +563,9 @@ function artJungle(ctx,w,h){
   for(let i=0;i<22;i++)leaf(w*(i/22),h*1.02,h*.28,(i%2?.25:-.25),greens[(i+1)%4]);
 }
 const ARTS=[
-  {id:'starry', name:'별이 빛나는 밤 · 고흐', en:'The Starry Night · Van Gogh', draw:artStarry},
-  {id:'wave', name:'큰 파도 · 호쿠사이', en:'The Great Wave · Hokusai', draw:artWave},
-  {id:'jungle', name:'정글 · 루소', en:'Jungle · Rousseau', draw:artJungle},
+  {id:'starry', name:'별이 빛나는 밤 · 고흐', en:'The Starry Night · Van Gogh', draw:artStarry, img:'assets/arts/starry.jpg'},
+  {id:'wave', name:'큰 파도 · 호쿠사이', en:'The Great Wave · Hokusai', draw:artWave, img:'assets/arts/wave.jpg'},
+  {id:'jungle', name:'정글 · 루소', en:'Jungle · Rousseau', draw:artJungle, img:'assets/arts/jungle.jpg'},
 ];
 const findScene=sid=>SCENES.find(x=>x.id===sid)||ARTS.find(x=>x.id===sid);
 const COUNTS=[{n:6,c:3,r:2,tag:'아주 쉬움'},{n:12,c:4,r:3,tag:'쉬움'},{n:24,c:6,r:4,tag:'보통'},{n:48,c:8,r:6,tag:'도전!'}];
@@ -753,7 +753,8 @@ function computeGeometry(){
   const rand=rng(G.seed);
   const {cols,rows,pw,ph}=G;
   // 컷 스타일: 판(seed)마다 다르게 — 클래식 직소 / 물결 / 통통 버블
-  const roll=rand();G.cut=roll<.4?'standard':(roll<.6?'classic':(roll<.8?'wave':'bubble'));
+  // 성철 지시 9/8: 일단 standard만. 다른 스타일 재개 조건 = 직선 구간까지 곡선화 (roll 소비는 seed 스트림 유지용)
+  const roll=rand();G.cut='standard';
   // 공유 요철 맵: H[r][c]=피스(r,c) 위쪽 변, V[r][c]=왼쪽 변. 엣지마다 탭 위치·폭·높이·어깨 곡률이 다르다
   const std=G.cut==='standard';
   // standard = 진짜 퍼즐처럼: 탭 정중앙·대칭·균일 (방향만 랜덤)
@@ -1066,7 +1067,7 @@ $('acct').addEventListener('click',e=>{if(e.target===$('acct'))$('acct').hidden=
 if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
 
 applyLang();
-Promise.all(SCENES.filter(s=>s.img).map(ensureImg)).then(renderHome);   // 이미지 씬 프리로드 → 카드 갱신
+Promise.all([...SCENES,...ARTS].filter(s=>s.img).map(ensureImg)).then(renderHome);   // 이미지 씬 프리로드 → 카드 갱신
 addEventListener('pageshow',e=>{if(e.persisted)location.reload()});
 addEventListener('error',ev=>showErr(ev.message+' @'+String(ev.filename||'').split('/').pop()+':'+ev.lineno));
 addEventListener('unhandledrejection',ev=>showErr('promise: '+(ev.reason&&ev.reason.message||ev.reason)));

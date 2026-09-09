@@ -355,7 +355,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v17';
+const BUILD='v18';
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
@@ -825,10 +825,21 @@ function layoutGame(){
   if(!G.on)return;
   const arena=$('arena'), aw=arena.clientWidth, ah=arena.clientHeight;
   if(aw<50||ah<50){setTimeout(layoutGame,120);return}
-  const availW=aw-28, availH=ah*(G.cols*G.rows>=24?.52:.62);   // 조각 많을수록 트레이 넓게
-  let bw=availW, bh=bw*IH/IW;
-  if(bh>availH){bh=availH;bw=bh*IW/IH}
-  G.bw=bw;G.bh=bh;G.bx=(aw-bw)/2;G.by=12;
+  const availW=aw-28;
+  let bw,bh;
+  G.side=aw>ah*1.15;   // 가로 화면(패드 가로 등): 트레이를 아래가 아니라 오른쪽에 — 보드를 화면 높이만큼 크게
+  if(G.side){
+    bh=ah-24;bw=bh*IW/IH;
+    const maxW=Math.min(availW-170,aw*.62);   // 오른쪽 트레이 자리 확보
+    if(bw>maxW){bw=maxW;bh=bw*IH/IW}
+    G.bx=14;G.by=(ah-bh)/2;
+  }else{
+    const availH=ah*(G.cols*G.rows>=24?.52:.62);   // 조각 많을수록 트레이 넓게
+    bw=availW;bh=bw*IH/IW;
+    if(bh>availH){bh=availH;bw=bh*IW/IH}
+    G.bx=(aw-bw)/2;G.by=12;
+  }
+  G.bw=bw;G.bh=bh;
   const board=$('board');
   board.style.left=G.bx+'px';board.style.top=G.by+'px';
   board.style.width=bw+'px';board.style.height=bh+'px';
@@ -888,8 +899,15 @@ function buildPieces(arena,R){
   const bleed=Math.ceil(.48*Math.max(pw,ph))+1;G.bleed=bleed;   // 지터+요철 여유
   const savedSet=new Set(G.savedPlaced||[]);
   G.pieces=[];G.placed=0;G.zTop=10;
-  const trayTop=G.by+G.bh+10, trayH=Math.max(60,arena.clientHeight-trayTop-10);
+  // 흩어놓는 영역: 세로 = 보드 아래 띠, 가로(G.side) = 보드 오른쪽 세로 띠
+  let sx0,sx1,sy0,sy1;
+  if(G.side){sx0=G.bx+G.bw+14;sx1=arena.clientWidth-14;sy0=12;sy1=arena.clientHeight-12}
+  else{sx0=14;sx1=arena.clientWidth-14;sy0=G.by+G.bh+10;sy1=arena.clientHeight-10}
   const scatter=rng(G.seed^0x9E3779B9);
+  // 슬롯 격자 + 지터: 순수 랜덤은 한 자리에 떼로 쌓인다. 순서대로 채우면 이웃 조각이 트레이에서도 이웃 — 유아에게 힌트
+  const N=cols*rows, tw=Math.max(60,sx1-sx0), th=Math.max(60,sy1-sy0);
+  const slotC=Math.max(1,Math.round(Math.sqrt(N*tw/th))), slotR=Math.ceil(N/slotC);
+  let slotK=0;
   for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
     const idx=r*cols+c;
     const e={t:H[r][c], r:V[r][c+1], b:H[r+1][c], l:V[r][c]};
@@ -917,8 +935,13 @@ function buildPieces(arena,R){
       p.placed=true;G.placed++;cv.classList.add('placed');
       setPos(p,p.tx,p.ty);
     }else{
-      const fx=14+scatter()*(arena.clientWidth-cw-28);
-      const fy=trayTop+scatter()*Math.max(10,trayH-ch);
+      // 좌표계 주의: fx/fy는 조각 bbox(bwp×bhp) 좌상단 — 캔버스(cw×ch)는 bleed만큼 더 크다
+      const col=slotK%slotC, row=(slotK/slotC)|0;slotK++;
+      let fx=sx0+(col+.5)*tw/slotC-bwp/2+(scatter()-.5)*30;
+      let fy=sy0+(row+.5)*th/slotR-bhp/2+(scatter()-.5)*30;
+      // 화면 밖 잘림 방지 (보드 위 살짝 겹치는 건 허용)
+      fx=Math.max(24,Math.min(fx,arena.clientWidth-bwp-24));   // 노브 돌출분 여유
+      fy=Math.max(24,Math.min(fy,arena.clientHeight-bhp-24));
       setPos(p,fx,fy);
       if(!reduceMotion)cv.style.transform='rotate('+((scatter()*12-6)|0)+'deg)';
       cv.style.zIndex=2+((scatter()*8)|0);

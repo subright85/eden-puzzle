@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap">
 <style>
 [hidden]{display:none!important}
+.packhead{grid-column:1/-1;font-weight:800;font-size:15px;color:#8A8672;margin:8px 2px -6px}
 :root{
   --bg:#FEFCF5; --panel:#FFFFFF; --ink:#3A4258; --sub:#8A8672;
   --accent:#FF8A3D; --accent-deep:#E86F1E; --mint:#3FBF8F; --gold:#F2B01E; --line:#DED6C2;
@@ -314,7 +315,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v11';
+const BUILD='v12';
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
@@ -563,9 +564,32 @@ function artJungle(ctx,w,h){
   for(let i=0;i<22;i++)leaf(w*(i/22),h*1.02,h*.28,(i%2?.25:-.25),greens[(i+1)%4]);
 }
 const ARTS=[
-  {id:'starry', name:'별이 빛나는 밤 · 고흐', en:'The Starry Night · Van Gogh', draw:artStarry, img:'assets/arts/starry.jpg'},
-  {id:'wave', name:'큰 파도 · 호쿠사이', en:'The Great Wave · Hokusai', draw:artWave, img:'assets/arts/wave.jpg'},
-  {id:'jungle', name:'정글 · 루소', en:'Jungle · Rousseau', draw:artJungle, img:'assets/arts/jungle.jpg'},
+  {id:'starry', pack:'gogh', name:'별이 빛나는 밤 · 고흐', en:'The Starry Night · Van Gogh', draw:artStarry, img:'assets/arts/starry.jpg'},
+  {id:'sunflower', pack:'gogh', name:'해바라기 · 고흐', en:'Sunflowers · Van Gogh', img:'assets/arts/sunflower.jpg'},
+  {id:'bedroom', pack:'gogh', name:'아를의 침실 · 고흐', en:'The Bedroom · Van Gogh', img:'assets/arts/bedroom.jpg'},
+  {id:'cafeterrace', pack:'gogh', name:'밤의 카페 테라스 · 고흐', en:'Café Terrace at Night · Van Gogh', img:'assets/arts/cafeterrace.jpg'},
+  {id:'lilies', pack:'impress', name:'수련 · 모네', en:'Water Lilies · Monet', img:'assets/arts/lilies.jpg'},
+  {id:'sunrise', pack:'impress', name:'인상, 해돋이 · 모네', en:'Impression, Sunrise · Monet', img:'assets/arts/sunrise.jpg'},
+  {id:'jatte', pack:'impress', name:'그랑드 자트 섬 · 쇠라', en:'La Grande Jatte · Seurat', img:'assets/arts/jatte.jpg'},
+  {id:'circus', pack:'impress', name:'서커스 · 쇠라', en:'The Circus · Seurat', img:'assets/arts/circus.jpg'},
+  {id:'dance', pack:'impress', name:'무용 수업 · 드가', en:'The Dance Class · Degas', img:'assets/arts/dance.jpg'},
+  {id:'sisters', pack:'impress', name:'테라스의 두 자매 · 르누아르', en:'Two Sisters · Renoir', img:'assets/arts/sisters.jpg'},
+  {id:'wave', pack:'ukiyoe', name:'큰 파도 · 호쿠사이', en:'The Great Wave · Hokusai', draw:artWave, img:'assets/arts/wave.jpg'},
+  {id:'redfuji', pack:'ukiyoe', name:'붉은 후지산 · 호쿠사이', en:'Red Fuji · Hokusai', img:'assets/arts/redfuji.jpg'},
+  {id:'shower', pack:'ukiyoe', name:'소나기 · 히로시게', en:'Sudden Shower · Hiroshige', img:'assets/arts/shower.jpg'},
+  {id:'plum', pack:'ukiyoe', name:'매화 정원 · 히로시게', en:'Plum Garden · Hiroshige', img:'assets/arts/plum.jpg'},
+  {id:'jungle', pack:'story', name:'정글 · 루소', en:'Jungle · Rousseau', draw:artJungle, img:'assets/arts/jungle.jpg'},
+  {id:'tiger', pack:'story', name:'호랑이! · 루소', en:'Surprised! · Rousseau', img:'assets/arts/tiger.jpg'},
+  {id:'bath', pack:'story', name:'아이의 목욕 · 커샛', en:"The Child's Bath · Cassatt", img:'assets/arts/bath.jpg'},
+  {id:'milkmaid', pack:'story', name:'우유 따르는 여인 · 페르메이르', en:'The Milkmaid · Vermeer', img:'assets/arts/milkmaid.jpg'},
+  {id:'games', pack:'story', name:'아이들의 놀이 · 브뤼헐', en:"Children's Games · Bruegel", img:'assets/arts/games.jpg'},
+];
+/* 명화 테마 팩 (성철 지시 9/8: 테마별 패키지) */
+const PACKS=[
+  {id:'gogh', name:'고흐 팩', en:'Van Gogh Pack'},
+  {id:'impress', name:'인상파 팩', en:'Impressionist Pack'},
+  {id:'ukiyoe', name:'우키요에 팩', en:'Ukiyo-e Pack'},
+  {id:'story', name:'이야기 그림 팩', en:'Story Pack'},
 ];
 const findScene=sid=>SCENES.find(x=>x.id===sid)||ARTS.find(x=>x.id===sid);
 const COUNTS=[{n:6,c:3,r:2,tag:'아주 쉬움'},{n:12,c:4,r:3,tag:'쉬움'},{n:24,c:6,r:4,tag:'보통'},{n:48,c:8,r:6,tag:'도전!'}];
@@ -649,7 +673,8 @@ function makeRenderer(sid){
   return (ctx,w,h)=>{
     const e=sc.img&&IMGS[sc.id];
     if(e&&e.ok)ctx.drawImage(e.img,0,0,w,h);
-    else sc.draw(ctx,w,h);
+    else if(sc.draw)sc.draw(ctx,w,h);
+    else{ctx.fillStyle='#EFE8DA';ctx.fillRect(0,0,w,h)}   // 이미지 로드 전 플레이스홀더
   };
 }
 function paintThumb(canvas,sid){
@@ -1007,7 +1032,9 @@ function renderHomeInner(){
     paintThumb(cv,sc.id);
   }
   const ag=$('artGallery');ag.innerHTML='';
-  for(const sc of ARTS){
+  for(const pk of PACKS){
+  const ph=document.createElement('div');ph.className='packhead';ph.textContent=sceneName(pk);ag.appendChild(ph);
+  for(const sc of ARTS.filter(a=>a.pack===pk.id)){
     const b=document.createElement('button');b.className='card';
     const cv=document.createElement('canvas');cv.width=360;cv.height=270;
     b.appendChild(cv);
@@ -1019,7 +1046,7 @@ function renderHomeInner(){
     b.onclick=()=>openSheet(sc.id,false);
     ag.appendChild(b);
     paintThumb(cv,sc.id);
-  }
+  }}
   // 마지막 사진
   const pd=store.get('photo',null);
   if(pd&&!photoImg){
@@ -1067,7 +1094,10 @@ $('acct').addEventListener('click',e=>{if(e.target===$('acct'))$('acct').hidden=
 if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js')}catch(e){}}
 
 applyLang();
-Promise.all([...SCENES,...ARTS].filter(s=>s.img).map(ensureImg)).then(renderHome);   // 이미지 씬 프리로드 → 카드 갱신
+// 이미지 씬 프리로드 — 도착하는 대로 카드 갱신 (디바운스)
+{let rhq=null;
+[...SCENES,...ARTS].filter(s=>s.img).forEach(s=>ensureImg(s).then(()=>{
+  clearTimeout(rhq);rhq=setTimeout(renderHome,180)}));}
 addEventListener('pageshow',e=>{if(e.persisted)location.reload()});
 addEventListener('error',ev=>showErr(ev.message+' @'+String(ev.filename||'').split('/').pop()+':'+ev.lineno));
 addEventListener('unhandledrejection',ev=>showErr('promise: '+(ev.reason&&ev.reason.message||ev.reason)));

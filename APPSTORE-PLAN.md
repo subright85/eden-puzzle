@@ -15,7 +15,7 @@
 | PWA 메타 | ✅ viewport-fit=cover, apple-mobile-web-app-*, 아이콘 180/512, 매니페스트 |
 | 광고/추적 | ✅ 0 (SDK 없음, 외부 요청은 구글 폰트뿐 — Capacitor 번들 시 로컬화 권장) |
 
-## Capacitor 래핑 절차 (Robin이 실행 가능한 부분)
+## Capacitor 래핑 — ✅ 완료 (2026-09-10, Robin)
 
 1. `npm init -y && npm i @capacitor/core @capacitor/cli @capacitor/ios`
 2. `npx cap init "이든의 퍼즐" com.astrolabe.edenpuzzle --web-dir www`
@@ -24,6 +24,8 @@
 5. `npx cap add ios && npx cap sync`
 6. 앱 아이콘 1024×1024 + 스플래시 에셋 생성 (`@capacitor/assets`) — 타이틀 아트 마스코트 활용
 7. Xcode 프로젝트 열어 서명 → 이 단계부터 성철
+
+실행 기록: Capacitor 8.5.1, SPM 모드(CocoaPods 불필요), `build-www.sh`가 www/ 생성(폰트 로컬 8.5MB·계정 버튼 숨김·원본 제외), 아이콘 13종 생성(@capacitor/assets, resources/), 시뮬레이터 빌드 BUILD SUCCEEDED. 성철 다음 단계: `npx cap open ios` → Signing & Capabilities에서 팀 선택.
 
 ## 성철만 할 수 있는 것
 
@@ -51,7 +53,4 @@
 
 ## 남은 결정 (성철)
 
-1. 번들 ID `com.astrolabe.edenpuzzle` OK?
-2. 제출 시 로그인 버튼 숨김 OK?
-3. 앱 이름 최종: 이든의 퍼즐 vs Ethan's Puzzle 병기 방식
-4. Capacitor 래핑 시작 타이밍 (Robin이 www 빌드까지 만들어두고 Xcode만 넘기는 방식 추천)
+~~전부 결정됨~~ (msg 2158 "뭐든 ㄱㄱ", 2026-09-10): 번들 ID com.astrolabe.edenpuzzle · 제출 시 로그인 버튼 숨김(빌드 스크립트가 www에서만 숨김, 웹은 유지) · 이름 이든의 퍼즐/Ethan's Puzzle 병기 · Capacitor 완료.

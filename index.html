@@ -1,6 +1,6 @@
 <!doctype html>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>이든의 퍼즐</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -25,6 +25,7 @@
 }
 *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
 html{-webkit-text-size-adjust:100%; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; overscroll-behavior:none}
+html,body{touch-action:pan-x pan-y}
 button,a{touch-action:manipulation}
 body{background:var(--bg); color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.5;
   background-image:radial-gradient(rgba(58,66,88,.05) 1.2px, transparent 1.3px); background-size:24px 24px}
@@ -466,7 +467,8 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v27';
+const BUILD='v28';
+['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',

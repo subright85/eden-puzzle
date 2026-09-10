@@ -69,8 +69,12 @@ body.adult .statgrp .seg+.seg{border-left:1px solid var(--line)}
 body.adult .statgrp .seg,body.adult .stat{font-family:var(--body); font-size:14px}
 body.adult .modebar .mseg{font-family:var(--body); font-size:14px; letter-spacing:.08em}
 body.adult .modebar .mseg.on{background:var(--ink); color:#141416}
-body.adult .ctab{border:1px solid var(--line); background:var(--panel); font-family:var(--body); font-size:13px; letter-spacing:.05em; box-shadow:none}
-body.adult .ctab.on{border-color:var(--accent); color:var(--accent); background:none; box-shadow:none}
+body.adult #pickSec{background:none; border:none; padding:0}
+body.adult #pickSec .caro{margin:0; padding:0}
+body.adult .ctab{border:none; border-bottom:2px solid transparent; border-radius:0; background:none;
+  font-family:var(--body); font-size:13px; letter-spacing:.08em; box-shadow:none; padding:7px 5px}
+body.adult .ctab .tico{display:none}
+body.adult .ctab.on{border-bottom-color:var(--accent); color:var(--accent); background:none; box-shadow:none}
 body.adult .caro .card{width:min(56vw,250px)}
 body.adult .pkchip{border:1px solid var(--line); font-family:var(--body); font-size:12px; letter-spacing:.05em}
 body.adult .pkchip.on{border-color:var(--accent); color:var(--accent); background:none}
@@ -162,12 +166,16 @@ body.adult #winwrap h2{color:var(--ink)}
 .sect h2{font-size:20px}
 .sect small{color:var(--sub)}
 .sec{display:flex; flex-direction:column; gap:12px}
+#pickSec{background:var(--ctint,var(--panel)); border:2px solid var(--cacc,var(--line)); border-radius:22px;
+  padding:12px 10px; transition:background .35s,border-color .35s}
+#pickSec .caro{margin:0 -10px; padding:0 10px 4px}
 .ctabs{display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding:2px 2px 4px}
 .ctabs::-webkit-scrollbar{display:none}
 .ctab{flex:none; display:flex; align-items:center; gap:6px; padding:7px 13px; border:2px solid var(--line);
   border-radius:999px; background:var(--panel); font-family:var(--disp); font-size:14px; color:var(--sub); transition:transform .1s}
 .ctab .tico{font-size:15px}
-.ctab.on{border-color:var(--ink); color:var(--ink); background:#FFF3E4; box-shadow:var(--shadow)}
+.ctab{background:rgba(255,255,255,.72)}
+.ctab.on{border-color:var(--cacc,var(--ink)); color:var(--cdeep,var(--ink)); background:#fff; box-shadow:var(--shadow)}
 .ctab:active{transform:scale(.96)}
 .caro{display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px;
   -webkit-overflow-scrolling:touch; scrollbar-width:none}
@@ -178,7 +186,8 @@ body.adult #winwrap h2{color:var(--ink)}
 .pkchip{flex:none; padding:5px 12px; border:2px solid var(--line); border-radius:999px; background:var(--panel);
   font-family:var(--disp); font-size:13px; color:var(--sub); transition:transform .1s}
 .pkchip small{font-size:11px; opacity:.75; margin-left:3px; font-family:var(--body)}
-.pkchip.on{border-color:var(--accent); color:var(--accent-deep); background:#FFF3E6}
+.pkchip{background:rgba(255,255,255,.72)}
+.pkchip.on{border-color:var(--cacc,var(--accent)); color:var(--cdeep,var(--accent-deep)); background:#fff}
 .pkchip:active{transform:scale(.95)}
 .card .pbar{display:block; height:6px; background:var(--line); border-radius:99px; overflow:hidden; margin:0 4px 5px}
 .card .pbar i{display:block; height:100%; background:linear-gradient(90deg,var(--gold),var(--accent)); border-radius:99px}
@@ -482,7 +491,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v33';
+const BUILD='v34';
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
@@ -1452,6 +1461,8 @@ function renderHomeInner(){
   }
 }
 const CICO={scenes:'\uD83E\uDDF8',fairy:'\uD83D\uDCD6',bible:'\u271D\uFE0F',world:'\uD83C\uDF0D',museum:'\uD83C\uDFDB\uFE0F',photo:'\uD83D\uDCF7'};
+const CACC={scenes:['#FF8A3D','#FFF1E6','#C25A14'],fairy:['#F7A8C4','#FDEFF5','#C2517E'],bible:['#F2B01E','#FCF4DC','#A87708'],
+  world:['#7EC8F0','#EAF6FD','#2E7FAB'],museum:['#3FBF8F','#E8F8F1','#1F8862'],photo:['#8B93A7','#F0F2F5','#555E73']};
 function collList(){
   const base=[{id:'scenes',nm:()=>t('tabScenes')},
     ...THEMES.map(th=>({id:th.id,nm:()=>sceneName(th)})),
@@ -1466,6 +1477,8 @@ function renderCaro(){
   curColl=store.get('coll:'+mode,mode==='adult'?'museum':'scenes');
   if(!colls.find(c=>c.id===curColl))curColl=mode==='adult'?'museum':'scenes';
   const done=store.get('done',{});
+  const cc=CACC[curColl]||CACC.photo, ps=$('pickSec');
+  ps.style.setProperty('--cacc',cc[0]);ps.style.setProperty('--ctint',cc[1]);ps.style.setProperty('--cdeep',cc[2]);
   const tb=$('cTabs');tb.innerHTML='';
   for(const c of colls){
     const b=document.createElement('button');b.className='ctab'+(c.id===curColl?' on':'');

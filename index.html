@@ -198,6 +198,9 @@ body.adult #winwrap h2{color:var(--ink)}
 #gcount{font-family:var(--disp); background:var(--panel); border:3px solid var(--ink);
   border-radius:var(--wob); padding:6px 13px; font-size:15px; font-variant-numeric:tabular-nums; box-shadow:var(--shadow)}
 #arena{position:relative; flex:1; overflow:hidden; touch-action:none}
+#peekpop{position:fixed; inset:0; z-index:70; background:rgba(0,0,0,.72);
+  display:flex; align-items:center; justify-content:center; padding:4vh 4vw; cursor:pointer}
+#peekpop canvas{max-width:92vw; max-height:84vh; border-radius:10px; box-shadow:0 22px 60px rgba(0,0,0,.5)}
 #board{position:absolute; border-radius:12px; background:var(--panel);
   box-shadow:inset 0 0 0 3px var(--line), var(--shadow)}
 #ghost{position:absolute; inset:0; width:100%; height:100%; border-radius:12px}
@@ -418,10 +421,12 @@ body.adult #winwrap h2{color:var(--ink)}
   <div id="gtop">
     <button class="gbtn" id="backBtn">← 그만하기</button>
     <span id="gtitle"></span>
+    <button class="gbtn" id="peekBtn" hidden>🔍 원본 보기</button>
     <span id="gcount">0 / 0</span>
   </div>
   <div id="gprog"><i id="gprogFill"></i></div>
   <div id="arena"><div id="board"><canvas id="ghost"></canvas></div></div>
+  <div id="peekpop" hidden><canvas id="peekCv" width="800" height="600"></canvas></div>
 </div>
 
 <button id="panicHome" hidden aria-label="홈으로 나가기">🏠 홈으로</button>
@@ -455,7 +460,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v25';
+const BUILD='v26';
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
@@ -473,7 +478,7 @@ ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPl
   setTitle:'설정',sndOn:'\uD83D\uDD0A 소리 켜짐',sndOff:'\uD83D\uDD07 소리 꺼짐',
   free:'무료',prem:'프리미엄',photoName:'사진 퍼즐',photoArt:'사진 퍼즐 · 그림처럼',
   todayPrefix:'오늘의 퍼즐 · ',howMany:'몇 조각으로 할까?',resume:'이어서 하기',pcs:'조각',
-  tag6:'아주 쉬움',tag12:'쉬움',tag24:'보통',tag48:'도전!',tag96:'전문가',tag150:'마스터',modeKid:'이든',modeAdult:'갤러리',swHint:'← 옆으로 밀면 모드가 바뀌어요 →',build:'빌드',start:'시작!'},
+  tag6:'아주 쉬움',tag12:'쉬움',tag24:'보통',tag48:'도전!',tag96:'전문가',tag150:'마스터',modeKid:'이든',modeAdult:'갤러리',peekBtn:'\uD83D\uDD0D 원본 보기',swHint:'← 옆으로 밀면 모드가 바뀌어요 →',build:'빌드',start:'시작!'},
 en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle · Free",dailyPlay:"Let's Play!",
   secScenes:'Pick a Picture',secScenesS:'A new free picture every day',
   secArts:'Theme Puzzles',secArtsS:'From storybooks to the museum',
@@ -490,7 +495,7 @@ en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle ·
   setTitle:'Settings',sndOn:'\uD83D\uDD0A Sound on',sndOff:'\uD83D\uDD07 Sound off',
   free:'Free',prem:'Premium',photoName:'Photo Puzzle',photoArt:'Photo Puzzle · Drawing',
   todayPrefix:"Today's Puzzle · ",howMany:'How many pieces?',resume:'Continue',pcs:' pcs',
-  tag6:'Super easy',tag12:'Easy',tag24:'Medium',tag48:'Challenge!',tag96:'Expert',tag150:'Master',modeKid:'Kids',modeAdult:'Gallery',swHint:'← Swipe to switch modes →',build:'Build',start:'Start!'}
+  tag6:'Super easy',tag12:'Easy',tag24:'Medium',tag48:'Challenge!',tag96:'Expert',tag150:'Master',modeKid:'Kids',modeAdult:'Gallery',peekBtn:'\uD83D\uDD0D View picture',swHint:'← Swipe to switch modes →',build:'Build',start:'Start!'}
 };
 let lang=store.get('lang','ko');
 let mode=store.get('mode','kid');
@@ -512,7 +517,7 @@ function applyLang(){
     photoBtnName:'photoBtnName',lastPhotoName:'lastPhotoName',footNote:'footNote',
     chipRaw:'chipRaw',chipArt:'chipArt',sheetCancel:'close',
     acctTitle:'acctTitle',acctG:'acctG',acctA:'acctA',acctCancel:'close',
-    backBtn:'backBtn',panicHome:'panicHome',
+    backBtn:'backBtn',peekBtn:'peekBtn',panicHome:'panicHome',
     winMsg:'winMsg',winAgain:'winAgain',winHome:'winHome',
     splashName:'appName',titleStart:'start',setTitle:'setTitle',setCancel:'close',packCancel:'close',secColl:'secColl',collCancel:'close',themeCancel:'close',modeKidL:'modeKid',modeAdultL:'modeAdult',swHint:'swHint'};
   for(const id in M){const el=document.getElementById(id);if(el)el.textContent=t(M[id])}
@@ -1046,6 +1051,7 @@ function openGame(sid,cnt,isDaily){
   $('gtitle').textContent=(isDaily?t('todayPrefix'):'')+nm;
   $('home').hidden=true;$('game').hidden=false;$('winwrap').hidden=true;$('sheet').hidden=true;$('acct').hidden=true;$('settings').hidden=true;$('packview').hidden=true;$('collview').hidden=true;$('themeview').hidden=true;
   $('panicHome').hidden=false;pushUI('game');
+  $('peekBtn').hidden=mode!=='adult';$('peekpop').hidden=true;
   const sc=findScene(sid);
   ensureImg(sc).then(()=>{
     layoutGame();   // 이미지 씬이면 로드 후 컷 (폴백 3초)
@@ -1141,6 +1147,8 @@ function buildPieces(arena,R){
   // 슬롯 격자 + 지터: 순수 랜덤은 한 자리에 떼로 쌓인다. 순서대로 채우면 이웃 조각이 트레이에서도 이웃 — 유아에게 힌트
   const N=cols*rows, tw=Math.max(60,sx1-sx0), th=Math.max(60,sy1-sy0);
   const slotC=Math.max(1,Math.round(Math.sqrt(N*tw/th))), slotR=Math.ceil(N/slotC);
+  const perm=[...Array(N).keys()];
+  for(let i=N-1;i>0;i--){const j=(scatter()*(i+1))|0;[perm[i],perm[j]]=[perm[j],perm[i]]}
   let slotK=0;
   for(let r=0;r<rows;r++)for(let c=0;c<cols;c++){
     const idx=r*cols+c;
@@ -1170,7 +1178,7 @@ function buildPieces(arena,R){
       setPos(p,p.tx,p.ty);
     }else{
       // 좌표계 주의: fx/fy는 조각 bbox(bwp×bhp) 좌상단 — 캔버스(cw×ch)는 bleed만큼 더 크다
-      const col=slotK%slotC, row=(slotK/slotC)|0;slotK++;
+      const sk=perm[slotK++], col=sk%slotC, row=(sk/slotC)|0;
       let fx=sx0+(col+.5)*tw/slotC-bwp/2+(scatter()-.5)*30;
       let fy=sy0+(row+.5)*th/slotR-bhp/2+(scatter()-.5)*30;
       // 화면 밖 잘림 방지 (보드 위 살짝 겹치는 건 허용)
@@ -1219,11 +1227,17 @@ function updateCount(){
   $('gcount').textContent=G.placed+' / '+G.pieces.length;
   $('gprogFill').style.width=(G.pieces.length?100*G.placed/G.pieces.length:0)+'%';
 }
+$('peekBtn').onclick=()=>{
+  const c=$('peekCv'),x=c.getContext('2d');
+  x.setTransform(1,0,0,1,0,0);x.clearRect(0,0,800,600);G.render(x,800,600);
+  $('peekpop').hidden=false;
+};
+$('peekpop').onclick=()=>{$('peekpop').hidden=true};
 function saveProg(){
   store.set(progKey(),{seed:G.seed,placed:G.pieces.filter(p=>p.placed).map(p=>p.idx)});
 }
 function win(){
-  store.del(progKey());
+  store.del(progKey());$('peekpop').hidden=true;
   const wp=$('winPic');wp.hidden=false;
   G.render(wp.getContext('2d'),wp.width,wp.height);
   const stars=store.get('stars',0)+1;store.set('stars',stars);$('starN').textContent=stars;

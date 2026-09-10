@@ -72,8 +72,8 @@ body.adult .modebar .mseg.on{background:var(--ink); color:#141416}
 body.adult .ctab{border:1px solid var(--line); background:var(--panel); font-family:var(--body); font-size:13px; letter-spacing:.05em; box-shadow:none}
 body.adult .ctab.on{border-color:var(--accent); color:var(--accent); background:none; box-shadow:none}
 body.adult .caro .card{width:min(56vw,250px)}
-body.adult .caro .pkblock{border:1px solid var(--line); background:none; border-radius:4px}
-body.adult .pktitle{font-size:15px; letter-spacing:.08em}
+body.adult .pkchip{border:1px solid var(--line); font-family:var(--body); font-size:12px; letter-spacing:.05em}
+body.adult .pkchip.on{border-color:var(--accent); color:var(--accent); background:none}
 body.adult .playbtn{border-radius:8px; font-family:var(--body); font-weight:600; font-size:16px; letter-spacing:.02em; box-shadow:none; color:#191307}
 body.adult .eyebrow{color:var(--sub); font-family:var(--body); font-size:11px; letter-spacing:.22em; text-transform:uppercase}
 body.adult .sect small{font-family:var(--body)}
@@ -173,12 +173,16 @@ body.adult #winwrap h2{color:var(--ink)}
   -webkit-overflow-scrolling:touch; scrollbar-width:none}
 .caro::-webkit-scrollbar{display:none}
 .caro .card{flex:none; width:min(46vw,205px); scroll-snap-align:start}
-.caro .pkblock{flex:none; display:flex; flex-direction:column; gap:8px; padding:10px 10px 12px;
-  border:2px dashed var(--line); border-radius:18px; background:rgba(255,255,255,.6); scroll-snap-align:start; max-width:88vw; overflow:hidden}
-.pktitle{display:flex; align-items:baseline; gap:7px; padding:0 3px; font-family:var(--disp); font-size:15px; color:var(--ink)}
-.pktitle small{color:var(--sub); font-size:12px; font-family:var(--body)}
-.pkrow{display:flex; gap:10px; overflow-x:auto; scrollbar-width:none}
-.pkrow::-webkit-scrollbar{display:none}
+.pkchips{display:flex; gap:7px; overflow-x:auto; scrollbar-width:none; padding:0 2px}
+.pkchips::-webkit-scrollbar{display:none}
+.pkchip{flex:none; padding:5px 12px; border:2px solid var(--line); border-radius:999px; background:var(--panel);
+  font-family:var(--disp); font-size:13px; color:var(--sub); transition:transform .1s}
+.pkchip small{font-size:11px; opacity:.75; margin-left:3px; font-family:var(--body)}
+.pkchip.on{border-color:var(--accent); color:var(--accent-deep); background:#FFF3E6}
+.pkchip:active{transform:scale(.95)}
+.card .pbar{display:block; height:6px; background:var(--line); border-radius:99px; overflow:hidden; margin:0 4px 5px}
+.card .pbar i{display:block; height:100%; background:linear-gradient(90deg,var(--gold),var(--accent)); border-radius:99px}
+.optlabel{grid-column:1/-1; font-family:var(--disp); font-size:14px; color:var(--sub); margin:2px 2px -6px}
 .tvsub{margin:-8px 0 0; text-align:center; color:var(--sub); font-size:13px}
 .pksect{display:flex; align-items:baseline; gap:8px; margin:8px 2px 0}
 .pksect b{font-family:var(--disp); font-size:17px}
@@ -218,6 +222,10 @@ body.adult #winwrap h2{color:var(--ink)}
   display:flex; flex-direction:column; gap:2px; background:var(--panel)}
 #sheet .opt small{font-family:var(--body); color:var(--sub); font-size:13px}
 #sheet .opt .resume{color:var(--accent-deep); font-family:var(--disp); font-size:13px}
+#sheet .opt.resumeBig{grid-column:1/-1; display:flex; align-items:center; justify-content:center; gap:8px;
+  border-color:var(--accent); background:#FFF3E6}
+#sheet .opt.resumeBig small{color:var(--accent-deep)}
+body.adult #sheet .opt.resumeBig{background:none; border-color:var(--accent)}
 #sheet .opt:hover{border-color:var(--accent)}
 #sheet .cancel{color:var(--sub); font-size:16px; padding:8px}
 #privLink{color:var(--sub); font-size:13px}
@@ -336,6 +344,12 @@ body.adult #winwrap h2{color:var(--ink)}
   </div>
 
 
+  <div class="sec" id="pickSec">
+    <div class="ctabs" id="cTabs"></div>
+    <div class="pkchips" id="pkChips" hidden></div>
+    <div class="caro" id="caro"></div>
+  </div>
+
   <section class="daily" id="dailyCard">
     <canvas id="dailyThumb" width="400" height="300"></canvas>
     <div class="info">
@@ -345,11 +359,6 @@ body.adult #winwrap h2{color:var(--ink)}
       <button class="playbtn" id="dailyPlay">맞추러 가기</button>
     </div>
   </section>
-
-  <div class="sec" id="pickSec">
-    <div class="ctabs" id="cTabs"></div>
-    <div class="caro" id="caro"></div>
-  </div>
 
   <button class="collcard" id="collCard">
     <span class="collico">🖼️</span>
@@ -473,7 +482,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v31';
+const BUILD='v32';
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
@@ -491,7 +500,7 @@ ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPl
   winMsg:'와! 다 맞췄어!',winAgain:'한 번 더',winHome:'다른 그림',
   setTitle:'설정',sndOn:'\uD83D\uDD0A 소리 켜짐',sndOff:'\uD83D\uDD07 소리 꺼짐',
   free:'무료',prem:'프리미엄',photoName:'사진 퍼즐',photoArt:'사진 퍼즐 · 그림처럼',
-  todayPrefix:'오늘의 퍼즐 · ',howMany:'몇 조각으로 할까?',resume:'이어서 하기',pcs:'조각',
+  todayPrefix:'오늘의 퍼즐 · ',howMany:'몇 조각으로 할까?',resume:'이어서 하기',newGame:'새로 시작',pcs:'조각',
   tag6:'아주 쉬움',tag12:'쉬움',tag24:'보통',tag48:'도전!',tag96:'전문가',tag150:'마스터',modeKid:'이든',modeAdult:'어른',peekBtn:'\uD83D\uDD0D 원본 보기',privLink:'개인정보 처리방침',swHint:'← 옆으로 밀면 모드가 바뀌어요 →',build:'빌드',start:'시작!'},
 en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle · Free",dailyPlay:"Let's Play!",
   secScenes:'Pick a Picture',secScenesS:'A new free picture every day',
@@ -508,7 +517,7 @@ en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle ·
   winMsg:'You did it!',winAgain:'Once More',winHome:'New Picture',
   setTitle:'Settings',sndOn:'\uD83D\uDD0A Sound on',sndOff:'\uD83D\uDD07 Sound off',
   free:'Free',prem:'Premium',photoName:'Photo Puzzle',photoArt:'Photo Puzzle · Drawing',
-  todayPrefix:"Today's Puzzle · ",howMany:'How many pieces?',resume:'Continue',pcs:' pcs',
+  todayPrefix:"Today's Puzzle · ",howMany:'How many pieces?',resume:'Continue',newGame:'Start fresh',pcs:' pcs',
   tag6:'Super easy',tag12:'Easy',tag24:'Medium',tag48:'Challenge!',tag96:'Expert',tag150:'Master',modeKid:'Kids',modeAdult:'Grown-ups',peekBtn:'\uD83D\uDD0D View picture',privLink:'Privacy Policy',swHint:'← Swipe to switch modes →',build:'Build',start:'Start!'}
 };
 let lang=store.get('lang','ko');
@@ -1360,20 +1369,34 @@ function openSheet(sid,isDaily){
   coinEl.hidden=!prem;
   if(prem)coinEl.textContent=t('sheetRain').replace('{n}',rainState().n);
   const box=$('sheetOpts');box.innerHTML='';
+  const deny=()=>{
+    coinEl.textContent=t('rainOut');
+    coinEl.classList.add('deny');coinEl.classList.remove('shake');void coinEl.offsetWidth;coinEl.classList.add('shake');
+    beep(220,.16,0,.12);beep(180,.2,.13,.12);
+  };
+  // 이어하기: 저장된 판이 있으면 맨 위에 크게 (코인 무료 — 이미 낸 판)
+  const seen={};
+  for(const cnt of COUNTS.concat(COUNTS_A)){
+    const key=cnt.c+'x'+cnt.r;if(seen[key])continue;seen[key]=1;
+    const saved=store.get('pp:'+sid+':'+key,null);
+    if(!(saved&&Array.isArray(saved.placed)&&saved.placed.length))continue;
+    const b=document.createElement('button');b.className='opt resumeBig';
+    b.innerHTML='<span>\u25B6 '+t('resume')+'</span><small>'+cnt.n+t('pcs')+' \u00B7 '+saved.placed.length+'/'+cnt.n+'</small>';
+    b.onclick=()=>{$('sheet').hidden=true;openGame(pendingSid,cnt,pendingDaily)};
+    box.appendChild(b);
+  }
+  const hasAnySave=!!box.childElementCount;
+  if(hasAnySave){
+    const lb=document.createElement('div');lb.className='optlabel';lb.textContent=t('newGame');
+    box.appendChild(lb);
+  }
   for(const cnt of (mode==='adult'?COUNTS.filter(c=>c.n>=24).concat(COUNTS_A):COUNTS)){
     try{
-      const saved=store.get('pp:'+sid+':'+cnt.c+'x'+cnt.r,null);
-      const hasResume=!!(saved&&Array.isArray(saved.placed)&&saved.placed.length);
       const b=document.createElement('button');b.className='opt';
-      b.innerHTML='<span>'+cnt.n+t('pcs')+'</span><small>'+t('tag'+cnt.n)+'</small>'+
-        (hasResume?'<span class="resume">'+t('resume')+' ('+saved.placed.length+'/'+cnt.n+')</span>':'');
+      b.innerHTML='<span>'+cnt.n+t('pcs')+'</span><small>'+t('tag'+cnt.n)+'</small>';
       b.onclick=()=>{
-        if(prem&&!hasResume&&!spendRain()){  // 이어하기는 무료 (이미 코인 낸 판)
-          coinEl.textContent=t('rainOut');
-          coinEl.classList.add('deny');coinEl.classList.remove('shake');void coinEl.offsetWidth;coinEl.classList.add('shake');
-          beep(220,.16,0,.12);beep(180,.2,.13,.12);
-          return;
-        }
+        if(prem&&!spendRain()){deny();return}
+        store.del('pp:'+sid+':'+cnt.c+'x'+cnt.r);  // 새로 시작 = 기존 판 버림
         $('sheet').hidden=true;openGame(pendingSid,cnt,pendingDaily);
       };
       box.appendChild(b);
@@ -1462,14 +1485,19 @@ function renderCaro(){
     row.innerHTML='<span class="name">'+sceneName(sc)+'</span>'+
       (done[sc.id]?'<span class="chip star">\u2B50</span>':'')+(chips||'');
     b.appendChild(row);
+    const pg=savedProg(sc.id);
+    if(pg&&!done[sc.id]){const pb=document.createElement('span');pb.className='pbar';
+      pb.innerHTML='<i style="width:'+Math.round(pg*100)+'%"></i>';b.appendChild(pb)}
     b.onclick=()=>openSheet(sc.id,false);
     (into||ca).appendChild(b);
     paintThumb(cv,sc.id);
     if(sc.img)ensureImg(sc).then(()=>{if(document.body.contains(cv))paintThumb(cv,sc.id)});
   };
   if(curColl==='scenes'){
+    $('pkChips').hidden=true;
     for(const sc of SCENES)addCard(sc,sc.free?'<span class="chip free">'+t('free')+'</span>':'<span class="chip prem">'+t('prem')+'</span>');
   }else if(curColl==='photo'){
+    $('pkChips').hidden=true;
     const b=document.createElement('button');b.className='card photo-card';
     b.innerHTML='<span class="ph">\uD83D\uDCF7</span><span class="row"><span class="name">'+t('photoBtnName')+'</span><span class="chip prem">\uFF0B</span></span>';
     b.onclick=()=>$('photoInput').click();
@@ -1486,20 +1514,30 @@ function renderCaro(){
       paintThumb(cv,'photo');
     }
   }else{
-    for(const pk of PACKS.filter(p=>p.theme===curColl)){
+    const packs=PACKS.filter(p=>p.theme===curColl&&ARTS.some(a=>a.pack===p.id));
+    let curPk=store.get('pk:'+curColl,packs[0]&&packs[0].id);
+    if(!packs.find(p=>p.id===curPk))curPk=packs[0]&&packs[0].id;
+    const pc=$('pkChips');pc.hidden=false;pc.innerHTML='';
+    for(const pk of packs){
       const items=ARTS.filter(a=>a.pack===pk.id);
-      if(!items.length)continue;
-      const blk=document.createElement('div');blk.className='pkblock';
-      const tt=document.createElement('div');tt.className='pktitle';
       const dn=items.filter(a=>done[a.id]).length;
-      tt.innerHTML='<b>'+sceneName(pk)+'</b><small>'+dn+' / '+items.length+'</small>'+(dn===items.length?' \u2B50':'');
-      blk.appendChild(tt);
-      const rw=document.createElement('div');rw.className='pkrow';
-      for(const sc of items)addCard(sc,null,rw);
-      blk.appendChild(rw);
-      ca.appendChild(blk);
+      const b=document.createElement('button');b.className='pkchip'+(pk.id===curPk?' on':'');
+      b.innerHTML=sceneName(pk)+'<small>'+(dn===items.length&&items.length?'\u2B50':dn+'/'+items.length)+'</small>';
+      b.onclick=()=>{store.set('pk:'+curColl,pk.id);renderCaro()};
+      pc.appendChild(b);
     }
+    const onp=pc.querySelector('.on');
+    if(onp&&onp.scrollIntoView)try{onp.scrollIntoView({inline:'nearest',block:'nearest'})}catch(e){}
+    for(const sc of ARTS.filter(a=>a.pack===curPk))addCard(sc);
   }
+}
+function savedProg(sid){
+  let best=null;
+  for(const c of COUNTS.concat(COUNTS_A)){
+    const sv=store.get('pp:'+sid+':'+c.c+'x'+c.r,null);
+    if(sv&&Array.isArray(sv.placed)&&sv.placed.length){const r=sv.placed.length/(c.c*c.r);if(best==null||r>best)best=r}
+  }
+  return best;
 }
 $('photoInput').addEventListener('change',e=>{
   const f=e.target.files&&e.target.files[0];

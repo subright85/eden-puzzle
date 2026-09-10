@@ -1,2 +1,5 @@
-# 원본 소스 이미지 (배포 불필요 — 처리본만 서빙)
 assets/puzzles/[0-9][0-9]_*.jpg
+assets/fonts
+ios
+node_modules
+www

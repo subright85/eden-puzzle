@@ -1476,7 +1476,7 @@ $('photoInput').addEventListener('change',e=>{
 $('acctBtn').onclick=()=>{$('acct').hidden=false};
 $('acctCancel').onclick=()=>{$('acct').hidden=true};
 $('acct').addEventListener('click',e=>{if(e.target===$('acct'))$('acct').hidden=true});
-if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js').catch(()=>{})}catch(e){}}
+if('serviceWorker' in navigator && location.protocol.indexOf('http')===0){try{navigator.serviceWorker.register('/sw.js').catch(()=>{})}catch(e){}}
 
 /* ── 애기/어른 모드 (홈 스와이프 전환, msg 2112-2113) ── */
 function applyMode(){

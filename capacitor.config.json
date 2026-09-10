@@ -1,0 +1,10 @@
+{
+  "appId": "com.astrolabe.edenpuzzle",
+  "appName": "이든의 퍼즐",
+  "webDir": "www",
+  "backgroundColor": "#13513A",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#13513A"
+  }
+}

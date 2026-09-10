@@ -32,6 +32,29 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
 .squig{display:inline-block; height:8px; width:110px;
   background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='8' viewBox='0 0 120 8'><path d='M2 5 Q 12 1 22 5 T 42 5 T 62 5 T 82 5 T 102 5 T 118 5' fill='none' stroke='%23FF8A3D' stroke-width='3' stroke-linecap='round'/></svg>") repeat-x}
 
+/* ── 애기/어른 모드 ── */
+.modebar{display:flex; width:max-content; margin:2px auto 0; background:var(--panel);
+  border:3px solid var(--ink); border-radius:999px; box-shadow:var(--shadow); overflow:hidden}
+.modebar .mseg{padding:5px 18px; font-family:var(--disp); font-size:15px; color:var(--sub)}
+.modebar .mseg.on{background:var(--accent); color:#fff}
+.modebar .mseg+.mseg{border-left:2px solid var(--line)}
+@keyframes modeL{from{opacity:.25; transform:translateX(46px)}to{opacity:1; transform:none}}
+@keyframes modeR{from{opacity:.25; transform:translateX(-46px)}to{opacity:1; transform:none}}
+#home.slideL{animation:modeL .32s ease}
+#home.slideR{animation:modeR .32s ease}
+body.adult{
+  --bg:#2B2823; --panel:#39352D; --ink:#EDE7DA; --sub:#A79E8C;
+  --accent:#C9A227; --accent-deep:#A8861D; --mint:#8FAF98; --gold:#D9B54A; --line:#544E42;
+  --shadow:0 8px 20px rgba(0,0,0,.35);
+  --wob:14px; --wob-big:18px;
+  background-image:none;
+}
+body.adult .squig{opacity:.25; filter:grayscale(1) invert(.9)}
+body.adult .daily{transform:none}
+body.adult .chip.free{background:#2E4636; color:#9FD8B4; border-color:#3E5A48}
+body.adult .chip.prem{background:#4A3F22; color:#E8CE7A; border-color:#6A5B30}
+body.adult .modebar .mseg.on{color:#241F16}
+
 #panicHome{position:fixed; top:10px; right:10px; z-index:5000; background:var(--panel);
   border:3px solid var(--ink); border-radius:999px; padding:8px 16px; font-family:var(--disp);
   font-size:16px; box-shadow:var(--shadow)}
@@ -145,7 +168,6 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
 .piece.placed{filter:none; pointer-events:none; z-index:1!important}
 @keyframes snapPop{0%{transform:scale(1)}45%{transform:scale(1.14)}100%{transform:scale(1)}}
 .piece.pop{animation:snapPop .16s ease-out}
-#peek{position:absolute; inset:0; width:100%; height:100%; border-radius:12px; z-index:1000; pointer-events:none}
 #gprog{height:10px; margin:0 14px 8px; border:2px solid var(--ink); border-radius:999px;
   background:var(--panel); overflow:hidden; flex:none}
 #gprogFill{display:block; height:100%; width:0; background:var(--mint); border-radius:999px; transition:width .25s}
@@ -236,6 +258,11 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
     </div>
     <button class="stat guest" id="acctBtn" aria-label="계정">👤 게스트</button>
     <button class="stat" id="setBtn" aria-label="설정">⚙️</button>
+  </div>
+
+  <div class="modebar" id="modeBar" aria-label="모드 — 좌우로 스와이프해도 바뀌어요">
+    <button class="mseg on" id="modeKid">🧒 <span id="modeKidL">이든</span></button>
+    <button class="mseg" id="modeAdult">🖼️ <span id="modeAdultL">갤러리</span></button>
   </div>
 
   <section class="daily" id="dailyCard">
@@ -351,11 +378,10 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
   <div id="gtop">
     <button class="gbtn" id="backBtn">← 그만하기</button>
     <span id="gtitle"></span>
-    <button class="gbtn" id="peekBtn" aria-label="완성 그림 잠깐 보기">🔍 그림</button>
     <span id="gcount">0 / 0</span>
   </div>
   <div id="gprog"><i id="gprogFill"></i></div>
-  <div id="arena"><div id="board"><canvas id="ghost"></canvas><canvas id="peek" hidden></canvas></div></div>
+  <div id="arena"><div id="board"><canvas id="ghost"></canvas></div></div>
 </div>
 
 <button id="panicHome" hidden aria-label="홈으로 나가기">🏠 홈으로</button>
@@ -389,7 +415,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v21';
+const BUILD='v22';
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
@@ -402,12 +428,12 @@ ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPl
   chipRaw:'사진 그대로',chipArt:'그림처럼 🖍️',close:'닫기',
   acctTitle:'계정',acctNote:'지금은 <b>게스트 모드</b> — 진행과 별은 이 기기에 저장돼요.<br>로그인이 열리면 계정으로 이어서 저장할 수 있어요.',
   acctG:'구글로 계속하기 · 준비 중',acctA:'Apple로 계속하기 · 준비 중',guest:'\uD83D\uDC64 게스트',
-  backBtn:'\u2190 그만하기',peekBtn:'\uD83D\uDD0D 그림',panicHome:'\uD83C\uDFE0 홈으로',
+  backBtn:'\u2190 그만하기',panicHome:'\uD83C\uDFE0 홈으로',
   winMsg:'와! 다 맞췄어!',winAgain:'한 번 더',winHome:'다른 그림',
   setTitle:'설정',sndOn:'\uD83D\uDD0A 소리 켜짐',sndOff:'\uD83D\uDD07 소리 꺼짐',
   free:'무료',prem:'프리미엄',photoName:'사진 퍼즐',photoArt:'사진 퍼즐 · 그림처럼',
   todayPrefix:'오늘의 퍼즐 · ',howMany:'몇 조각으로 할까?',resume:'이어서 하기',pcs:'조각',
-  tag6:'아주 쉬움',tag12:'쉬움',tag24:'보통',tag48:'도전!',build:'빌드',start:'시작!'},
+  tag6:'아주 쉬움',tag12:'쉬움',tag24:'보통',tag48:'도전!',tag96:'전문가',tag150:'마스터',modeKid:'이든',modeAdult:'갤러리',build:'빌드',start:'시작!'},
 en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle · Free",dailyPlay:"Let's Play!",
   secScenes:'Pick a Picture',secScenesS:'A new free picture every day',
   secArts:'Theme Puzzles',secArtsS:'From storybooks to the museum',
@@ -419,14 +445,15 @@ en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle ·
   chipRaw:'Original photo',chipArt:'Like a drawing 🖍️',close:'Close',
   acctTitle:'Account',acctNote:"You're in <b>guest mode</b> — progress is saved on this device.<br>Sign-in will sync to your account soon.",
   acctG:'Continue with Google · Coming soon',acctA:'Continue with Apple · Coming soon',guest:'\uD83D\uDC64 Guest',
-  backBtn:'\u2190 Quit',peekBtn:'\uD83D\uDD0D Peek',panicHome:'\uD83C\uDFE0 Home',
+  backBtn:'\u2190 Quit',panicHome:'\uD83C\uDFE0 Home',
   winMsg:'You did it!',winAgain:'Once More',winHome:'New Picture',
   setTitle:'Settings',sndOn:'\uD83D\uDD0A Sound on',sndOff:'\uD83D\uDD07 Sound off',
   free:'Free',prem:'Premium',photoName:'Photo Puzzle',photoArt:'Photo Puzzle · Drawing',
   todayPrefix:"Today's Puzzle · ",howMany:'How many pieces?',resume:'Continue',pcs:' pcs',
-  tag6:'Super easy',tag12:'Easy',tag24:'Medium',tag48:'Challenge!',build:'Build',start:'Start!'}
+  tag6:'Super easy',tag12:'Easy',tag24:'Medium',tag48:'Challenge!',tag96:'Expert',tag150:'Master',modeKid:'Kids',modeAdult:'Gallery',build:'Build',start:'Start!'}
 };
 let lang=store.get('lang','ko');
+let mode=store.get('mode','kid');
 const t=k=>(L[lang]&&L[lang][k]!==undefined?L[lang][k]:L.ko[k]||k);
 const sceneName=sc=>(lang==='en'&&sc.en?sc.en:sc.name);
 function setLang(l){lang=l;store.set('lang',l);applyLang()}
@@ -438,9 +465,9 @@ function applyLang(){
     photoBtnName:'photoBtnName',lastPhotoName:'lastPhotoName',footNote:'footNote',
     chipRaw:'chipRaw',chipArt:'chipArt',sheetCancel:'close',
     acctTitle:'acctTitle',acctG:'acctG',acctA:'acctA',acctCancel:'close',
-    backBtn:'backBtn',peekBtn:'peekBtn',panicHome:'panicHome',
+    backBtn:'backBtn',panicHome:'panicHome',
     winMsg:'winMsg',winAgain:'winAgain',winHome:'winHome',
-    splashName:'appName',titleStart:'start',setTitle:'setTitle',setCancel:'close',packCancel:'close',secColl:'secColl',collCancel:'close',themeCancel:'close'};
+    splashName:'appName',titleStart:'start',setTitle:'setTitle',setCancel:'close',packCancel:'close',secColl:'secColl',collCancel:'close',themeCancel:'close',modeKidL:'modeKid',modeAdultL:'modeAdult'};
   for(const id in M){const el=document.getElementById(id);if(el)el.textContent=t(M[id])}
   $('acctNote').innerHTML=t('acctNote');
   $('acctBtn').textContent=t('guest');
@@ -745,6 +772,7 @@ function collage(cv,items){
 }
 const findScene=sid=>SCENES.find(x=>x.id===sid)||ARTS.find(x=>x.id===sid);
 const COUNTS=[{n:6,c:3,r:2,tag:'아주 쉬움'},{n:12,c:4,r:3,tag:'쉬움'},{n:24,c:6,r:4,tag:'보통'},{n:48,c:8,r:6,tag:'도전!'}];
+const COUNTS_A=[{n:96,c:12,r:8},{n:150,c:15,r:10}];
 
 /* ── 소리 (WebAudio, 파일 없음) ── */
 let audioCtx=null, soundOn=store.get('snd',true);
@@ -1003,10 +1031,8 @@ function layoutGame(){
   const R=Math.min(2,window.devicePixelRatio||1);
   const ghost=$('ghost');ghost.width=bw*R;ghost.height=bh*R;
   const gc=ghost.getContext('2d');gc.setTransform(R,0,0,R,0,0);
-  gc.globalAlpha=.16;G.render(gc,bw,bh);gc.globalAlpha=1;
-  const peek=$('peek');peek.hidden=true;peek.width=bw*R;peek.height=bh*R;
-  const pkc=peek.getContext('2d');pkc.setTransform(R,0,0,R,0,0);G.render(pkc,bw,bh);
-  gc.strokeStyle='rgba(58,66,88,.18)';gc.setLineDash([5,5]);gc.lineWidth=1;
+  if(mode!=='adult'){gc.globalAlpha=.16;G.render(gc,bw,bh);gc.globalAlpha=1}
+  gc.strokeStyle=mode==='adult'?'rgba(237,231,218,.14)':'rgba(58,66,88,.18)';gc.setLineDash([5,5]);gc.lineWidth=1;
   G.pw=bw/G.cols;G.ph=bh/G.rows;
   computeGeometry();
   const PX=G.PX,PY=G.PY;
@@ -1142,11 +1168,6 @@ function updateCount(){
   $('gcount').textContent=G.placed+' / '+G.pieces.length;
   $('gprogFill').style.width=(G.pieces.length?100*G.placed/G.pieces.length:0)+'%';
 }
-let peekT=null;
-$('peekBtn').onclick=()=>{
-  const pk=$('peek');pk.hidden=false;
-  clearTimeout(peekT);peekT=setTimeout(()=>{pk.hidden=true},1600);
-};
 function saveProg(){
   store.set(progKey(),{seed:G.seed,placed:G.pieces.filter(p=>p.placed).map(p=>p.idx)});
 }
@@ -1248,7 +1269,7 @@ function openSheet(sid,isDaily){
   coinEl.hidden=!prem;
   if(prem)coinEl.textContent=t('sheetRain').replace('{n}',rainState().n);
   const box=$('sheetOpts');box.innerHTML='';
-  for(const cnt of COUNTS){
+  for(const cnt of (mode==='adult'?COUNTS.concat(COUNTS_A):COUNTS)){
     try{
       const saved=store.get('pp:'+sid+':'+cnt.c+'x'+cnt.r,null);
       const hasResume=!!(saved&&Array.isArray(saved.placed)&&saved.placed.length);
@@ -1384,6 +1405,30 @@ $('acctCancel').onclick=()=>{$('acct').hidden=true};
 $('acct').addEventListener('click',e=>{if(e.target===$('acct'))$('acct').hidden=true});
 if('serviceWorker' in navigator){try{navigator.serviceWorker.register('/sw.js').catch(()=>{})}catch(e){}}
 
+/* ── 애기/어른 모드 (홈 스와이프 전환, msg 2112-2113) ── */
+function applyMode(){
+  document.body.classList.toggle('adult',mode==='adult');
+  $('modeKid').classList.toggle('on',mode!=='adult');
+  $('modeAdult').classList.toggle('on',mode==='adult');
+}
+function setMode(m){
+  if(m===mode)return;
+  const dir=m==='adult'?'slideL':'slideR';
+  mode=m;store.set('mode',m);
+  applyMode();renderHome();
+  const h=$('home');h.classList.remove('slideL','slideR');void h.offsetWidth;h.classList.add(dir);
+  beep(m==='adult'?392:523,.09,0,.1);
+}
+$('modeKid').onclick=()=>setMode('kid');
+$('modeAdult').onclick=()=>setMode('adult');
+{let mx0=null,my0=null;
+ $('home').addEventListener('touchstart',e=>{mx0=e.touches[0].clientX;my0=e.touches[0].clientY},{passive:true});
+ $('home').addEventListener('touchend',e=>{
+   if(mx0==null)return;
+   const dx=e.changedTouches[0].clientX-mx0, dy=e.changedTouches[0].clientY-my0;mx0=null;
+   if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.6)setMode(dx<0?'adult':'kid');
+ },{passive:true});}
+applyMode();
 applyLang();
 // 이미지 씬 프리로드 — 도착하는 대로 카드 갱신 (디바운스)
 {let rhq=null;

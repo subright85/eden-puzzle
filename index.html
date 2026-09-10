@@ -24,6 +24,8 @@
   --body:'Gowun Dodum','Apple SD Gothic Neo',sans-serif;
 }
 *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; overscroll-behavior:none}
+button,a{touch-action:manipulation}
 body{background:var(--bg); color:var(--ink); font-family:var(--body); font-size:16px; line-height:1.5;
   background-image:radial-gradient(rgba(58,66,88,.05) 1.2px, transparent 1.3px); background-size:24px 24px}
 button{font-family:var(--disp); border:0; cursor:pointer; color:var(--ink); background:none}
@@ -79,7 +81,7 @@ body.adult #gtop .gbtn{border:1px solid var(--line); border-radius:8px; font-fam
 body.adult #winwrap .win{border:1px solid var(--line); box-shadow:none}
 body.adult #winwrap h2{color:var(--ink)}
 
-#panicHome{position:fixed; top:10px; right:10px; z-index:5000; background:var(--panel);
+#panicHome{position:fixed; top:calc(10px + env(safe-area-inset-top)); right:calc(10px + env(safe-area-inset-right)); z-index:5000; background:var(--panel);
   border:3px solid var(--ink); border-radius:999px; padding:8px 16px; font-family:var(--disp);
   font-size:16px; box-shadow:var(--shadow)}
 
@@ -87,7 +89,7 @@ body.adult #winwrap h2{color:var(--ink)}
 #splash{position:fixed; inset:0; z-index:100; background:var(--bg);
   background-image:url('assets/title.jpg'); background-size:cover; background-position:center;
   display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
-  padding-bottom:11vh; gap:18px; overflow:hidden; transition:opacity .4s}
+  padding-bottom:calc(11vh + env(safe-area-inset-bottom)); gap:18px; overflow:hidden; transition:opacity .4s}
 #splash .tlogo,#splash .sname,#splash .tp{display:none}
 @media (min-aspect-ratio:5/4){#splash{align-items:flex-start; padding-left:10vw; padding-bottom:8vh}}
 #splash.bye{opacity:0; pointer-events:none}
@@ -104,7 +106,8 @@ body.adult #winwrap h2{color:var(--ink)}
 @media (prefers-reduced-motion:reduce){#splash .tlogo,#splash .tstart,#splash .tp{animation:none}}
 
 /* ── 홈 ── */
-#home{max-width:900px; margin:0 auto; padding:20px 16px 40px; display:flex; flex-direction:column; gap:20px}
+#home{max-width:900px; margin:0 auto; display:flex; flex-direction:column; gap:20px;
+  padding:calc(20px + env(safe-area-inset-top)) calc(16px + env(safe-area-inset-right)) calc(40px + env(safe-area-inset-bottom)) calc(16px + env(safe-area-inset-left))}
 .topline{display:flex; align-items:center; gap:10px; flex-wrap:nowrap}
 .topline>*{flex:none}
 .topline .spacer{flex:1 1 0}
@@ -186,11 +189,13 @@ body.adult #winwrap h2{color:var(--ink)}
 #sheet .opt .resume{color:var(--accent-deep); font-family:var(--disp); font-size:13px}
 #sheet .opt:hover{border-color:var(--accent)}
 #sheet .cancel{color:var(--sub); font-size:16px; padding:8px}
+#privLink{color:var(--sub); font-size:13px}
 
 /* ── 게임 ── */
 #game{position:fixed; inset:0; background:var(--bg); display:flex; flex-direction:column; z-index:20;
   background-image:radial-gradient(rgba(58,66,88,.05) 1.2px, transparent 1.3px); background-size:24px 24px}
-#gtop{display:flex; align-items:center; gap:10px; padding:10px 14px}
+#gtop{display:flex; align-items:center; gap:10px;
+  padding:calc(10px + env(safe-area-inset-top)) calc(14px + env(safe-area-inset-right)) 10px calc(14px + env(safe-area-inset-left))}
 #gtop .gbtn{background:var(--panel); border:3px solid var(--ink); border-radius:var(--wob);
   padding:6px 15px; font-size:16px; box-shadow:var(--shadow)}
 #gtitle{font-family:var(--disp); font-size:18px; flex:1; text-align:center; min-width:0;
@@ -365,6 +370,7 @@ body.adult #winwrap h2{color:var(--ink)}
     <div class="stylerow">
       <button class="stylechip" id="setSnd">🔊</button>
     </div>
+    <p class="acct-note"><a id="privLink" href="/privacy.html" target="_blank" rel="noopener">개인정보 처리방침</a></p>
     <p class="acct-note" id="buildLine"></p>
     <button class="cancel" id="setCancel">닫기</button>
   </div>
@@ -460,7 +466,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v26';
+const BUILD='v27';
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
@@ -478,7 +484,7 @@ ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPl
   setTitle:'설정',sndOn:'\uD83D\uDD0A 소리 켜짐',sndOff:'\uD83D\uDD07 소리 꺼짐',
   free:'무료',prem:'프리미엄',photoName:'사진 퍼즐',photoArt:'사진 퍼즐 · 그림처럼',
   todayPrefix:'오늘의 퍼즐 · ',howMany:'몇 조각으로 할까?',resume:'이어서 하기',pcs:'조각',
-  tag6:'아주 쉬움',tag12:'쉬움',tag24:'보통',tag48:'도전!',tag96:'전문가',tag150:'마스터',modeKid:'이든',modeAdult:'갤러리',peekBtn:'\uD83D\uDD0D 원본 보기',swHint:'← 옆으로 밀면 모드가 바뀌어요 →',build:'빌드',start:'시작!'},
+  tag6:'아주 쉬움',tag12:'쉬움',tag24:'보통',tag48:'도전!',tag96:'전문가',tag150:'마스터',modeKid:'이든',modeAdult:'갤러리',peekBtn:'\uD83D\uDD0D 원본 보기',privLink:'개인정보 처리방침',swHint:'← 옆으로 밀면 모드가 바뀌어요 →',build:'빌드',start:'시작!'},
 en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle · Free",dailyPlay:"Let's Play!",
   secScenes:'Pick a Picture',secScenesS:'A new free picture every day',
   secArts:'Theme Puzzles',secArtsS:'From storybooks to the museum',
@@ -495,7 +501,7 @@ en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle ·
   setTitle:'Settings',sndOn:'\uD83D\uDD0A Sound on',sndOff:'\uD83D\uDD07 Sound off',
   free:'Free',prem:'Premium',photoName:'Photo Puzzle',photoArt:'Photo Puzzle · Drawing',
   todayPrefix:"Today's Puzzle · ",howMany:'How many pieces?',resume:'Continue',pcs:' pcs',
-  tag6:'Super easy',tag12:'Easy',tag24:'Medium',tag48:'Challenge!',tag96:'Expert',tag150:'Master',modeKid:'Kids',modeAdult:'Gallery',peekBtn:'\uD83D\uDD0D View picture',swHint:'← Swipe to switch modes →',build:'Build',start:'Start!'}
+  tag6:'Super easy',tag12:'Easy',tag24:'Medium',tag48:'Challenge!',tag96:'Expert',tag150:'Master',modeKid:'Kids',modeAdult:'Gallery',peekBtn:'\uD83D\uDD0D View picture',privLink:'Privacy Policy',swHint:'← Swipe to switch modes →',build:'Build',start:'Start!'}
 };
 let lang=store.get('lang','ko');
 let mode=store.get('mode','kid');
@@ -519,7 +525,7 @@ function applyLang(){
     acctTitle:'acctTitle',acctG:'acctG',acctA:'acctA',acctCancel:'close',
     backBtn:'backBtn',peekBtn:'peekBtn',panicHome:'panicHome',
     winMsg:'winMsg',winAgain:'winAgain',winHome:'winHome',
-    splashName:'appName',titleStart:'start',setTitle:'setTitle',setCancel:'close',packCancel:'close',secColl:'secColl',collCancel:'close',themeCancel:'close',modeKidL:'modeKid',modeAdultL:'modeAdult',swHint:'swHint'};
+    splashName:'appName',titleStart:'start',setTitle:'setTitle',setCancel:'close',privLink:'privLink',packCancel:'close',secColl:'secColl',collCancel:'close',themeCancel:'close',modeKidL:'modeKid',modeAdultL:'modeAdult',swHint:'swHint'};
   for(const id in M){const el=document.getElementById(id);if(el)el.textContent=t(M[id])}
   $('acctNote').innerHTML=t('acctNote');
   $('acctBtn').textContent=t('guest');
@@ -1500,7 +1506,7 @@ if(store.get('modeSw',0)<2)$('home').classList.add('nudge');
 applyLang();
 // 이미지 씬 프리로드 — 도착하는 대로 카드 갱신 (디바운스)
 {let rhq=null;
-[...SCENES,...ARTS].filter(s=>s.img).forEach(s=>ensureImg(s).then(()=>{
+[...SCENES,...THEMES.flatMap(th=>themeArts(th.id).slice(0,4))].filter(s=>s.img).forEach(s=>ensureImg(s).then(()=>{
   clearTimeout(rhq);rhq=setTimeout(renderHome,180)}));}
 addEventListener('pageshow',e=>{if(e.persisted)location.reload()});
 addEventListener('error',ev=>showErr(ev.message+' @'+String(ev.filename||'').split('/').pop()+':'+ev.lineno));

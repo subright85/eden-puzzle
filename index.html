@@ -75,7 +75,10 @@ body.adult .ctab{border:none; border-bottom:2px solid transparent; border-radius
   font-family:var(--body); font-size:13px; letter-spacing:.08em; box-shadow:none; padding:7px 5px}
 body.adult .ctab .tico{display:none}
 body.adult .ctab.on{border-bottom-color:var(--accent); color:var(--accent); background:none; box-shadow:none}
-body.adult .caro .card{width:min(38vw,170px)}
+body.adult .caro .card{width:min(28vw,126px); border:1px solid var(--line); box-shadow:none; border-radius:4px}
+body.adult .caro .card canvas{border-radius:2px}
+body.adult .caro .card .name{font-family:var(--body); font-size:11px}
+body.adult .caro .card .bdg{background:rgba(20,20,20,.8); border-color:#444}
 body.adult .pkchip{border:1px solid var(--line); font-family:var(--body); font-size:12px; letter-spacing:.05em}
 body.adult .pkchip.on{border-color:var(--accent); color:var(--accent); background:none}
 body.adult .playbtn{border-radius:8px; font-family:var(--body); font-weight:600; font-size:16px; letter-spacing:.02em; box-shadow:none; color:#191307}
@@ -193,7 +196,17 @@ body.adult #winwrap h2{color:var(--ink)}
 .caro{display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px;
   -webkit-overflow-scrolling:touch; scrollbar-width:none}
 .caro::-webkit-scrollbar{display:none}
-.caro .card{flex:none; width:min(33vw,142px); scroll-snap-align:start}
+.caro .card{flex:none; width:min(26vw,108px); scroll-snap-align:start; position:relative;
+  padding:5px; gap:4px; border-width:2px; box-shadow:0 2px 0 rgba(58,66,88,.10); border-radius:14px}
+.caro .card canvas,.caro .card .ph{border-radius:9px; border-width:1.5px}
+.caro .card .row{padding:0 2px 1px}
+.caro .card .name{font-family:var(--body); font-size:11.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.caro .card .bdg{position:absolute; top:9px; font-size:12px; line-height:1;
+  background:rgba(255,255,255,.94); border-radius:999px; padding:2px 3px; border:1px solid var(--line)}
+.caro .card .bdg.star{right:9px}
+.caro .card .bdg.prem{left:9px}
+.caro .card .pbar{margin:0 2px 2px; height:5px}
+.caro .photo-card .ph{font-size:30px}
 .pkchips{display:flex; gap:7px; overflow-x:auto; scrollbar-width:none; padding:0 2px}
 .pkchips::-webkit-scrollbar{display:none}
 .pkchip{flex:none; padding:5px 12px; border:2px solid var(--line); border-radius:999px; background:var(--panel);
@@ -508,7 +521,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v35';
+const BUILD='v36';
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
@@ -1561,9 +1574,10 @@ function renderCaro(){
     const cv=document.createElement('canvas');cv.width=360;cv.height=270;
     b.appendChild(cv);
     const row=document.createElement('span');row.className='row';
-    row.innerHTML='<span class="name">'+sceneName(sc)+'</span>'+
-      (done[sc.id]?'<span class="chip star">\u2B50</span>':'')+(chips||'');
+    row.innerHTML='<span class="name">'+sceneName(sc)+'</span>';
     b.appendChild(row);
+    if(done[sc.id]){const g=document.createElement('span');g.className='bdg star';g.textContent='\u2B50';b.appendChild(g)}
+    else if(chips){const g=document.createElement('span');g.className='bdg prem';g.textContent='\uD83C\uDF08';b.appendChild(g)}
     const pg=savedProg(sc.id);
     if(pg&&!done[sc.id]){const pb=document.createElement('span');pb.className='pbar';
       pb.innerHTML='<i style="width:'+Math.round(pg*100)+'%"></i>';b.appendChild(pb)}
@@ -1575,11 +1589,11 @@ function renderCaro(){
   };
   if(curColl==='scenes'){
     $('pkChips').hidden=true;
-    for(const sc of SCENES)addCard(sc,sc.free?'<span class="chip free">'+t('free')+'</span>':'<span class="chip prem">'+t('prem')+'</span>');
+    for(const sc of SCENES)addCard(sc,!sc.free);
   }else if(curColl==='photo'){
     $('pkChips').hidden=true;
     const b=document.createElement('button');b.className='card photo-card';
-    b.innerHTML='<span class="ph">\uD83D\uDCF7</span><span class="row"><span class="name">'+t('photoBtnName')+'</span><span class="chip prem">\uFF0B</span></span>';
+    b.innerHTML='<span class="ph">\uD83D\uDCF7</span><span class="row"><span class="name">'+t('photoBtnName')+'</span></span>';
     b.onclick=()=>$('photoInput').click();
     ca.appendChild(b);
     if(photoImg){
@@ -1587,8 +1601,9 @@ function renderCaro(){
       const cv=document.createElement('canvas');cv.width=360;cv.height=270;
       pb.appendChild(cv);
       const row=document.createElement('span');row.className='row';
-      row.innerHTML='<span class="name">'+t('lastPhotoName')+'</span>'+(done.photo?'<span class="chip star">\u2B50</span>':'');
+      row.innerHTML='<span class="name">'+t('lastPhotoName')+'</span>';
       pb.appendChild(row);
+      if(done.photo){const g=document.createElement('span');g.className='bdg star';g.textContent='\u2B50';pb.appendChild(g)}
       pb.onclick=()=>openSheet('photo',false);
       ca.appendChild(pb);
       paintThumb(cv,'photo');

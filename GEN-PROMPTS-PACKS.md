@@ -34,6 +34,14 @@ no watermark, 4:3 landscape aspect ratio
 | B10 | (새) 요나와 큰 물고기 | — a giant friendly whale-like great fish with a gentle smile in deep teal water, Jonah sitting safe inside its glowing mouth like a cozy cave, schools of colorful fish and bubbles all around |
 | B11 | (새) 아기 모세 | — a woven basket with a peaceful baby floating among tall green reeds and pink lotus flowers on a calm river, a watchful older sister peeking through the reeds, ducks and dragonflies |
 | B12 | (새) 오병이어 | — a hillside picnic with five golden bread loaves and two fish in a basket glowing softly, happy children and families sharing food on colorful blankets, baskets overflowing, sea of Galilee behind |
+| B13 | (새) 다니엘과 사자들 | — a peaceful young man sitting calmly in a stone den surrounded by big friendly lions with soft manes, one lion resting its head on his lap, warm light streaming from an opening above, tiny mice and doves watching |
+| B14 | (새) 홍해 길 | — a wide dry path through a parted sea, tall sparkling walls of turquoise water on both sides FULL of colorful fish, whales and sea turtles swimming inside them, a joyful crowd with children and lambs walking through, sunset sky |
+| B15 | (새) 하늘의 만나 | — soft white bread-like flakes drifting down from a pink morning sky like gentle snow, children in simple robes catching them in baskets with delight, tents and campfires across the camp, quail birds hopping between flowers |
+| B16 | (새) 야곱의 꿈 | — a boy sleeping on a stone pillow under a deep indigo starry sky, a glowing golden staircase rising to fluffy clouds, gentle angels with soft wings walking up and down carrying lanterns, fireflies and desert flowers around |
+| B17 | (새) 잃은 양 | — a kind shepherd joyfully carrying a fluffy little lamb on his shoulders down a hillside at golden hour, the rest of the flock running to greet them, rolling meadows dotted with poppies, birds circling happily |
+| B18 | (새) 착한 사마리아인 | — a kind traveler bandaging another traveler's arm beside a patient donkey loaded with blankets and a water jug, a winding stone road through olive trees, an inn with warm windows ahead, wildflowers along the roadside |
+| B19 | (새) 삭개오의 나무 | — a small cheerful man perched high in a big leafy sycamore tree waving, a friendly crowd walking below on a sunny village street, market stalls with fruit, children pointing up and laughing, doves on rooftops |
+| B20 | (새) 예수님과 아이들 | — a gentle teacher in simple robes sitting on a grassy hill surrounded by happy children of many ages offering flowers and hugs, lambs and puppies playing between them, olive trees and a bright blue lake behind |
 
 ## 테마 2 — 동화 나라 (클래식 동화책 스타일)
 

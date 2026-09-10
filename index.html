@@ -73,18 +73,10 @@ body.adult .statgrp .seg+.seg{border-left:1px solid var(--line)}
 body.adult .statgrp .seg,body.adult .stat{font-family:var(--body); font-size:14px}
 body.adult .modebar .mseg{font-family:var(--body); font-size:14px; letter-spacing:.08em}
 body.adult .modebar .mseg.on{background:var(--ink); color:#141416}
-body.adult .topline{order:1}body.adult .modebar{order:2}body.adult .swhint{order:3}body.adult .daily{order:4}
-body.adult #artsSec{order:5}body.adult .collcard{order:6}body.adult #scenesSec{order:7}body.adult #photoSec{order:8}body.adult .note{order:9}
-body.adult .album{flex-direction:column; align-items:stretch; gap:0; padding:0; overflow:hidden}
-body.adult .album canvas{width:100%; aspect-ratio:21/10; border:0; border-radius:0; border-bottom:1px solid var(--line)}
-body.adult .album .ainfo{padding:13px 16px 15px; gap:3px}
-body.adult .album .aname{font-size:21px}
-body.adult .album .asub{font-size:12px; letter-spacing:.07em}
-body.adult .album .chev{display:none}
-body.adult #gallery{grid-template-columns:repeat(3,1fr); gap:10px}
-body.adult #gallery .card{padding:5px; gap:4px}
-body.adult #gallery .card .name{font-size:13px}
-body.adult #gallery .card .chip{display:none}
+body.adult .ctab{border:1px solid var(--line); background:var(--panel); font-family:var(--body); font-size:13px; letter-spacing:.05em; box-shadow:none}
+body.adult .ctab.on{border-color:var(--accent); color:var(--accent); background:none; box-shadow:none}
+body.adult .caro .card{width:min(56vw,250px)}
+body.adult .caro .plabel{border:1px solid var(--line); border-radius:4px; font-family:var(--disp); font-size:13px; letter-spacing:.12em}
 body.adult .playbtn{border-radius:8px; font-family:var(--body); font-weight:600; font-size:16px; letter-spacing:.02em; box-shadow:none; color:#191307}
 body.adult .eyebrow{color:var(--sub); font-family:var(--body); font-size:11px; letter-spacing:.22em; text-transform:uppercase}
 body.adult .sect small{font-family:var(--body)}
@@ -173,15 +165,20 @@ body.adult #winwrap h2{color:var(--ink)}
 .sect h2{font-size:20px}
 .sect small{color:var(--sub)}
 .sec{display:flex; flex-direction:column; gap:12px}
-.albums{display:flex; flex-direction:column; gap:14px}
-.album{display:flex; align-items:center; gap:14px; padding:10px; background:var(--panel); border:3px solid var(--ink);
-  border-radius:var(--wob); box-shadow:var(--shadow); text-align:left; transition:transform .12s; font:inherit; color:inherit; cursor:pointer}
-.album:active{transform:translateY(2px)}
-.album canvas{width:132px; aspect-ratio:4/3; flex:none; border-radius:12px; border:2px solid var(--line); background:#eee}
-.album .ainfo{flex:1; min-width:0; display:flex; flex-direction:column; gap:4px}
-.album .aname{font-family:var(--disp); font-size:19px}
-.album .asub{color:var(--sub); font-size:13px}
-.album .chev{font-size:26px; color:var(--sub); padding-right:6px}
+.ctabs{display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding:2px 2px 4px}
+.ctabs::-webkit-scrollbar{display:none}
+.ctab{flex:none; display:flex; align-items:center; gap:6px; padding:7px 13px; border:2px solid var(--line);
+  border-radius:999px; background:var(--panel); font-family:var(--disp); font-size:14px; color:var(--sub); transition:transform .1s}
+.ctab .tico{font-size:15px}
+.ctab.on{border-color:var(--ink); color:var(--ink); background:#FFF3E4; box-shadow:var(--shadow)}
+.ctab:active{transform:scale(.96)}
+.caro{display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px;
+  -webkit-overflow-scrolling:touch; scrollbar-width:none}
+.caro::-webkit-scrollbar{display:none}
+.caro .card{flex:none; width:min(46vw,205px); scroll-snap-align:start}
+.caro .plabel{flex:none; display:flex; align-items:center; justify-content:center; width:54px; align-self:stretch;
+  border:2px dashed var(--line); border-radius:14px; color:var(--sub); font-family:var(--disp); font-size:14px;
+  writing-mode:vertical-rl; text-orientation:mixed; padding:10px 0; scroll-snap-align:start}
 .tvsub{margin:-8px 0 0; text-align:center; color:var(--sub); font-size:13px}
 .pksect{display:flex; align-items:baseline; gap:8px; margin:8px 2px 0}
 .pksect b{font-family:var(--disp); font-size:17px}
@@ -358,44 +355,16 @@ body.adult #winwrap h2{color:var(--ink)}
     </div>
   </section>
 
+  <div class="sec" id="pickSec">
+    <div class="ctabs" id="cTabs"></div>
+    <div class="caro" id="caro"></div>
+  </div>
+
   <button class="collcard" id="collCard">
     <span class="collico">🖼️</span>
     <span class="collinfo"><b id="secColl">콜렉션</b><span class="collbar"><i id="collFill"></i></span></span>
     <b class="collnum" id="collCount">0 / 0</b>
   </button>
-
-  <div class="sec" id="scenesSec">
-  <div class="sect">
-    <div class="row"><h2 id="secScenes">그림 고르기</h2><small id="secScenesS">매일 새 그림이 무료로 열려요</small></div>
-    <span class="squig"></span>
-  </div>
-  <div class="grid" id="gallery"></div>
-  </div>
-
-  <div class="sec" id="artsSec">
-  <div class="sect">
-    <div class="row"><h2 id="secArts">명화 퍼즐</h2><span class="chip prem" id="secArtsChip">프리미엄</span><small id="secArtsS">진짜 미술관 그림을 심플하게</small></div>
-    <span class="squig"></span>
-  </div>
-  <div class="albums" id="artGallery"></div>
-  </div>
-
-  <div class="sec" id="photoSec">
-  <div class="sect">
-    <div class="row"><h2 id="secPhoto">사진 퍼즐</h2><span class="chip prem" id="secPhotoChip">프리미엄</span><small id="secPhotoS">그림처럼 바꿔서도 맞출 수 있어요</small></div>
-    <span class="squig"></span>
-  </div>
-  <div class="grid">
-    <button class="card photo-card" id="photoBtn">
-      <span class="ph" id="photoPh">📷</span>
-      <span class="row"><span class="name" id="photoBtnName">사진 고르기</span><span class="chip prem">＋</span></span>
-    </button>
-    <button class="card" id="lastPhotoCard" hidden>
-      <canvas id="lastPhotoThumb" width="400" height="300"></canvas>
-      <span class="row"><span class="name" id="lastPhotoName">마지막 사진</span><span class="chip star" id="photoStar"></span></span>
-    </button>
-  </div>
-  </div>
   <input type="file" id="photoInput" accept="image/*" hidden>
 
   <p class="note" id="footNote">광고 없음 · 사진도 그림 변환도 전부 기기 안에서만 · 출시 준비 중이라 프리미엄이 모두 열려 있어요</p>
@@ -508,14 +477,14 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v29';
+const BUILD='v30';
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
   secArts:'테마 퍼즐',secArtsS:'여러 그림이 팩으로 들어 있어요',secColl:'콜렉션',
   secPhoto:'사진 퍼즐',secPhotoS:'그림처럼 바꿔서도 맞출 수 있어요',
-  photoBtnName:'사진 고르기',lastPhotoName:'마지막 사진',
+  photoBtnName:'사진 고르기',lastPhotoName:'마지막 사진',tabScenes:'그림',tabPhoto:'사진',
   footNote:'광고 없음 · 사진도 그림 변환도 전부 기기 안에서만 · 프리미엄 그림은 무지개코인 🌈 으로 열어요 (매일 3개)',
   sheetRain:'🌈 무지개코인 1개를 써요 · 오늘 {n}개 남았어요',
   rainOut:'오늘 무지개코인을 다 썼어요! 내일 3개가 새로 와요 🌈',
@@ -532,7 +501,7 @@ en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle ·
   secScenes:'Pick a Picture',secScenesS:'A new free picture every day',
   secArts:'Theme Puzzles',secArtsS:'Packs of pictures to explore',
   secPhoto:'Photo Puzzle',secPhotoS:'Turn your photos into drawings too',
-  photoBtnName:'Choose a Photo',lastPhotoName:'Last Photo',
+  photoBtnName:'Choose a Photo',lastPhotoName:'Last Photo',tabScenes:'Pictures',tabPhoto:'Photos',
   footNote:'No ads · Photos never leave your device · Premium pictures open with rainbow coins 🌈 (3 a day)',
   sheetRain:'Uses 1 rainbow coin 🌈 · {n} left today',
   rainOut:'All rainbow coins used today! 3 fresh ones tomorrow 🌈',
@@ -1379,7 +1348,7 @@ function syncStyleChips(){
 }
 function setPhotoStyle(s){
   photoStyle=s;store.set('photoStyle',s);syncStyleChips();
-  if(photoImg){paintThumb($('lastPhotoThumb'),'photo')}
+  if(photoImg&&curColl==='photo')renderCaro();
 }
 $('chipRaw').onclick=()=>setPhotoStyle('raw');
 $('chipArt').onclick=()=>setPhotoStyle('art');
@@ -1454,60 +1423,82 @@ function renderHomeInner(){
   $('dailyDate').textContent=new Date().toLocaleDateString(lang==='en'?'en-US':'ko-KR',
     {month:'long',day:'numeric',weekday:'long'});
   $('dailyPlay').onclick=()=>openSheet(ds.id,true);
+  renderCaro();
+  // 저장된 사진 지연 로드
+  const pd=store.get('photo',null);
+  if(pd&&!photoImg){
+    const img=new Image();
+    img.onload=()=>{photoImg=img;photoArt=null;if(curColl==='photo')renderCaro()};
+    img.src=pd;
+  }
+}
+const CICO={scenes:'\uD83E\uDDF8',fairy:'\uD83D\uDCD6',bible:'\u271D\uFE0F',world:'\uD83C\uDF0D',museum:'\uD83C\uDFDB\uFE0F',photo:'\uD83D\uDCF7'};
+function collList(){
+  const base=[{id:'scenes',nm:()=>t('tabScenes')},
+    ...THEMES.map(th=>({id:th.id,nm:()=>sceneName(th)})),
+    {id:'photo',nm:()=>t('tabPhoto')}];
+  if(mode==='adult'){const o={museum:0,world:1,fairy:2,bible:3,scenes:4,photo:5};
+    base.sort((a,b)=>(o[a.id]??9)-(o[b.id]??9))}
+  return base;
+}
+let curColl=null;
+function renderCaro(){
+  const colls=collList();
+  curColl=store.get('coll:'+mode,mode==='adult'?'museum':'scenes');
+  if(!colls.find(c=>c.id===curColl))curColl=mode==='adult'?'museum':'scenes';
   const done=store.get('done',{});
-  const g=$('gallery');g.innerHTML='';
-  for(const sc of SCENES){
+  const tb=$('cTabs');tb.innerHTML='';
+  for(const c of colls){
+    const b=document.createElement('button');b.className='ctab'+(c.id===curColl?' on':'');
+    const ic=document.createElement('span');ic.className='tico';ic.textContent=CICO[c.id]||'\uD83D\uDDBC\uFE0F';
+    b.appendChild(ic);b.appendChild(document.createTextNode(c.nm()));
+    b.onclick=()=>{store.set('coll:'+mode,c.id);renderCaro()};
+    tb.appendChild(b);
+  }
+  const on=tb.querySelector('.on');
+  if(on&&on.scrollIntoView)try{on.scrollIntoView({inline:'nearest',block:'nearest'})}catch(e){}
+  const ca=$('caro');ca.innerHTML='';ca.scrollLeft=0;
+  const addCard=(sc,chips)=>{
     const b=document.createElement('button');b.className='card';
     const cv=document.createElement('canvas');cv.width=360;cv.height=270;
     b.appendChild(cv);
     const row=document.createElement('span');row.className='row';
     row.innerHTML='<span class="name">'+sceneName(sc)+'</span>'+
-      (done[sc.id]?'<span class="chip star">⭐</span>':'')+
-      (sc.free?'<span class="chip free">'+t('free')+'</span>':'<span class="chip prem">'+t('prem')+'</span>');
+      (done[sc.id]?'<span class="chip star">\u2B50</span>':'')+(chips||'');
     b.appendChild(row);
     b.onclick=()=>openSheet(sc.id,false);
-    g.appendChild(b);
+    ca.appendChild(b);
     paintThumb(cv,sc.id);
-  }
-  const ag=$('artGallery');ag.innerHTML='';
-  const thOrd={museum:0,world:1,fairy:2,bible:3};
-  const ths=mode==='adult'?[...THEMES].sort((a,b)=>(thOrd[a.id]??9)-(thOrd[b.id]??9)):THEMES;
-  for(const th of ths){
-    const items=themeArts(th.id);
-    const nPacks=PACKS.filter(p=>p.theme===th.id).length;
-    const doneN=items.filter(a=>done[a.id]).length;
-    const b=document.createElement('button');b.className='album';
-    const cv=document.createElement('canvas');
-    cv.width=mode==='adult'?840:360;cv.height=mode==='adult'?400:270;
-    b.appendChild(cv);
-    const info=document.createElement('span');info.className='ainfo';
-    info.innerHTML='<span class="aname">'+sceneName(th)+(items.length&&doneN===items.length?' ⭐':'')+'</span>'+
-      '<span class="asub">'+packLine(nPacks,items.length,doneN)+'</span>';
-    b.appendChild(info);
-    const ch=document.createElement('span');ch.className='chev';ch.textContent='›';
-    b.appendChild(ch);
-    b.onclick=()=>{curTheme=null;openTheme(th.id)};
-    ag.appendChild(b);
-    collage(cv,items);
-  }
-  // 마지막 사진
-  const pd=store.get('photo',null);
-  if(pd&&!photoImg){
-    const img=new Image();
-    img.onload=()=>{photoImg=img;photoArt=null;
-      $('lastPhotoCard').hidden=false;
-      paintThumb($('lastPhotoThumb'),'photo');
-      $('photoStar').textContent=done.photo?'⭐':'';
-    };
-    img.src=pd;
-  }else if(photoImg){
-    $('lastPhotoCard').hidden=false;
-    paintThumb($('lastPhotoThumb'),'photo');
-    $('photoStar').textContent=done.photo?'⭐':'';
+    if(sc.img)ensureImg(sc).then(()=>{if(document.body.contains(cv))paintThumb(cv,sc.id)});
+  };
+  if(curColl==='scenes'){
+    for(const sc of SCENES)addCard(sc,sc.free?'<span class="chip free">'+t('free')+'</span>':'<span class="chip prem">'+t('prem')+'</span>');
+  }else if(curColl==='photo'){
+    const b=document.createElement('button');b.className='card photo-card';
+    b.innerHTML='<span class="ph">\uD83D\uDCF7</span><span class="row"><span class="name">'+t('photoBtnName')+'</span><span class="chip prem">\uFF0B</span></span>';
+    b.onclick=()=>$('photoInput').click();
+    ca.appendChild(b);
+    if(photoImg){
+      const pb=document.createElement('button');pb.className='card';
+      const cv=document.createElement('canvas');cv.width=360;cv.height=270;
+      pb.appendChild(cv);
+      const row=document.createElement('span');row.className='row';
+      row.innerHTML='<span class="name">'+t('lastPhotoName')+'</span>'+(done.photo?'<span class="chip star">\u2B50</span>':'');
+      pb.appendChild(row);
+      pb.onclick=()=>openSheet('photo',false);
+      ca.appendChild(pb);
+      paintThumb(cv,'photo');
+    }
+  }else{
+    for(const pk of PACKS.filter(p=>p.theme===curColl)){
+      const items=ARTS.filter(a=>a.pack===pk.id);
+      if(!items.length)continue;
+      const lb=document.createElement('div');lb.className='plabel';lb.textContent=sceneName(pk);
+      ca.appendChild(lb);
+      for(const sc of items)addCard(sc);
+    }
   }
 }
-$('lastPhotoCard').onclick=()=>{if(photoImg)openSheet('photo',false)};
-$('photoBtn').onclick=()=>$('photoInput').click();
 $('photoInput').addEventListener('change',e=>{
   const f=e.target.files&&e.target.files[0];
   if(!f)return;
@@ -1557,7 +1548,7 @@ $('modeAdult').onclick=()=>setMode('adult');
 {let mx0=null,my0=null,axis=null;
  const h=$('home'),pk=$('modePeek');
  h.addEventListener('touchstart',e=>{
-   if(e.touches.length!==1){mx0=null;return}
+   if(e.touches.length!==1||(e.target.closest&&e.target.closest('.caro,.ctabs'))){mx0=null;return}
    mx0=e.touches[0].clientX;my0=e.touches[0].clientY;axis=null;
  },{passive:true});
  h.addEventListener('touchmove',e=>{

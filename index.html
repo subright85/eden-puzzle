@@ -526,7 +526,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v38';
+const BUILD='v39';
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
@@ -711,16 +711,16 @@ function sceneFirework(ctx,w,h){
     for(let win=0;win<3;win++)ctx.fillRect(i*bw+bw*.2+win*bw*.22,h-h*b+h*.04,bw*.1,h*.03)});
 }
 const SCENES=[
-  {id:'space', name:'우주 여행', en:'Space Trip', draw:sceneSpace, img:'assets/puzzles/space.jpg', free:true},
-  {id:'sea', name:'바닷속 친구들', en:'Under the Sea', draw:sceneSea, img:'assets/puzzles/sea.jpg', free:true},
-  {id:'dino', name:'공룡 나라', en:'Dino Land', draw:sceneDino, img:'assets/puzzles/dino.jpg', free:false},
-  {id:'balloon',name:'하늘 기구', en:'Sky Balloons', draw:sceneBalloon, img:'assets/puzzles/balloon.jpg', free:false},
-  {id:'farm', name:'동물 농장', en:'Animal Farm', draw:sceneFarm, img:'assets/puzzles/farm.jpg', free:false},
-  {id:'fire', name:'불꽃놀이', en:'Fireworks', draw:sceneFirework, img:'assets/puzzles/fire.jpg', free:false},
-  {id:'construction', name:'공사장', en:'Busy Builders', img:'assets/puzzles/construction.jpg', free:false},
-  {id:'train', name:'칙칙폭폭 기차', en:'Choo-Choo Train', img:'assets/puzzles/train.jpg', free:false},
-  {id:'candy', name:'과자 나라', en:'Candy Land', img:'assets/puzzles/candy.jpg', free:false},
-  {id:'safari', name:'사파리 친구들', en:'Safari Friends', img:'assets/puzzles/safari.jpg', free:false},
+  {id:'space', pack:'wild', name:'우주 여행', en:'Space Trip', draw:sceneSpace, img:'assets/puzzles/space.jpg', free:true},
+  {id:'sea', pack:'wild', name:'바닷속 친구들', en:'Under the Sea', draw:sceneSea, img:'assets/puzzles/sea.jpg', free:true},
+  {id:'dino', pack:'wild', name:'공룡 나라', en:'Dino Land', draw:sceneDino, img:'assets/puzzles/dino.jpg', free:false},
+  {id:'balloon',pack:'vroom', name:'하늘 기구', en:'Sky Balloons', draw:sceneBalloon, img:'assets/puzzles/balloon.jpg', free:false},
+  {id:'farm', pack:'party', name:'동물 농장', en:'Animal Farm', draw:sceneFarm, img:'assets/puzzles/farm.jpg', free:false},
+  {id:'fire', pack:'party', name:'불꽃놀이', en:'Fireworks', draw:sceneFirework, img:'assets/puzzles/fire.jpg', free:false},
+  {id:'construction', pack:'vroom', name:'공사장', en:'Busy Builders', img:'assets/puzzles/construction.jpg', free:false},
+  {id:'train', pack:'vroom', name:'칙칙폭폭 기차', en:'Choo-Choo Train', img:'assets/puzzles/train.jpg', free:false},
+  {id:'candy', pack:'party', name:'과자 나라', en:'Candy Land', img:'assets/puzzles/candy.jpg', free:false},
+  {id:'safari', pack:'wild', name:'사파리 친구들', en:'Safari Friends', img:'assets/puzzles/safari.jpg', free:false},
 ];
 /* ── 명화 팩: 퍼블릭 도메인 원작의 심플 버전 (전부 코드 드로잉) ── */
 function artStarry(ctx,w,h){
@@ -798,14 +798,14 @@ const ARTS=[
   {id:'cafeterrace', pack:'gogh', name:'밤의 카페 테라스 · 고흐', en:'Café Terrace at Night · Van Gogh', img:'assets/arts/cafeterrace.jpg'},
   {id:'lilies', pack:'monet', name:'수련 · 모네', en:'Water Lilies · Monet', img:'assets/arts/lilies.jpg'},
   {id:'sunrise', pack:'monet', name:'인상, 해돋이 · 모네', en:'Impression, Sunrise · Monet', img:'assets/arts/sunrise.jpg'},
-  {id:'jatte', pack:'seurat', name:'그랑드 자트 섬 · 쇠라', en:'La Grande Jatte · Seurat', img:'assets/arts/jatte.jpg'},
-  {id:'circus', pack:'seurat', name:'서커스 · 쇠라', en:'The Circus · Seurat', img:'assets/arts/circus.jpg'},
+  {id:'jatte', pack:'impress', name:'그랑드 자트 섬 · 쇠라', en:'La Grande Jatte · Seurat', img:'assets/arts/jatte.jpg'},
+  {id:'circus', pack:'impress', name:'서커스 · 쇠라', en:'The Circus · Seurat', img:'assets/arts/circus.jpg'},
   {id:'dance', pack:'impress', name:'무용 수업 · 드가', en:'The Dance Class · Degas', img:'assets/arts/dance.jpg'},
   {id:'sisters', pack:'impress', name:'테라스의 두 자매 · 르누아르', en:'Two Sisters · Renoir', img:'assets/arts/sisters.jpg'},
-  {id:'wave', pack:'hokusai', name:'큰 파도 · 호쿠사이', en:'The Great Wave · Hokusai', draw:artWave, img:'assets/arts/wave.jpg'},
-  {id:'redfuji', pack:'hokusai', name:'붉은 후지산 · 호쿠사이', en:'Red Fuji · Hokusai', img:'assets/arts/redfuji.jpg'},
-  {id:'shower', pack:'hiroshige', name:'소나기 · 히로시게', en:'Sudden Shower · Hiroshige', img:'assets/arts/shower.jpg'},
-  {id:'plum', pack:'hiroshige', name:'매화 정원 · 히로시게', en:'Plum Garden · Hiroshige', img:'assets/arts/plum.jpg'},
+  {id:'wave', pack:'ukiyoe', name:'큰 파도 · 호쿠사이', en:'The Great Wave · Hokusai', draw:artWave, img:'assets/arts/wave.jpg'},
+  {id:'redfuji', pack:'ukiyoe', name:'붉은 후지산 · 호쿠사이', en:'Red Fuji · Hokusai', img:'assets/arts/redfuji.jpg'},
+  {id:'shower', pack:'ukiyoe', name:'소나기 · 히로시게', en:'Sudden Shower · Hiroshige', img:'assets/arts/shower.jpg'},
+  {id:'plum', pack:'ukiyoe', name:'매화 정원 · 히로시게', en:'Plum Garden · Hiroshige', img:'assets/arts/plum.jpg'},
   {id:'jungle', pack:'rousseau', name:'정글 · 루소', en:'Jungle · Rousseau', draw:artJungle, img:'assets/arts/jungle.jpg'},
   {id:'tiger', pack:'rousseau', name:'호랑이! · 루소', en:'Surprised! · Rousseau', img:'assets/arts/tiger.jpg'},
   {id:'bath', pack:'treasure', name:'아이의 목욕 · 커샛', en:"The Child's Bath · Cassatt", img:'assets/arts/bath.jpg'},
@@ -828,34 +828,34 @@ const ARTS=[
   {id:'hunters', pack:'bruegel', name:'눈 속의 사냥꾼 · 브뤼헐', en:'Hunters in the Snow · Bruegel', img:'assets/arts/hunters.jpg'},
   {id:'vertumnus', pack:'treasure', name:'과일 얼굴 · 아르침볼도', en:'Vertumnus · Arcimboldo', img:'assets/arts/vertumnus.jpg'},
   {id:'parasol', pack:'monet', name:'파라솔 쓴 여인 · 모네', en:'Woman with a Parasol · Monet', img:'assets/arts/parasol.jpg'},
-  {id:'noah', pack:'noahark', name:'노아의 방주 · 힉스', en:"Noah's Ark · Hicks", img:'assets/arts/noah.jpg'},
-  {id:'peaceable', pack:'peace', name:'평화의 왕국 · 힉스', en:'Peaceable Kingdom · Hicks', img:'assets/arts/peaceable.jpg'},
-  {id:'eden', pack:'creation', name:'에덴 동산 · 브뤼헐', en:'Garden of Eden · Brueghel', img:'assets/arts/eden.jpg'},
+  {id:'eden', pack:'begin', name:'에덴 동산 · 브뤼헐', en:'Garden of Eden · Brueghel', img:'assets/arts/eden.jpg'},
+  {id:'noah', pack:'begin', name:'노아의 방주 · 힉스', en:"Noah's Ark · Hicks", img:'assets/arts/noah.jpg'},
+  {id:'peaceable', pack:'begin', name:'평화의 왕국 · 힉스', en:'Peaceable Kingdom · Hicks', img:'assets/arts/peaceable.jpg'},
   {id:'nativity', pack:'christmas', name:'아기 예수 · 혼토르스트', en:'The Nativity · Honthorst', img:'assets/arts/nativity.jpg'},
   {id:'magi', pack:'christmas', name:'동방박사의 경배 · 젠틸레', en:'Adoration of the Magi · Gentile', img:'assets/arts/magi.jpg'},
-  {id:'moses1', pack:'moses', name:'아기 모세 · 알마-타데마', en:'The Finding of Moses · Alma-Tadema', img:'assets/arts/moses.jpg'},
-  {id:'daniel1', pack:'daniel', name:'사자 굴의 다니엘 · 리비에르', en:"Daniel in the Lions' Den · Rivière", img:'assets/arts/daniel.jpg'},
-  {id:'jonah1', pack:'jonah', name:'요나와 큰 물고기 · 라스트만', en:'Jonah and the Whale · Lastman', img:'assets/arts/jonah.jpg'},
-  {id:'jacob1', pack:'jacob', name:'야곱의 꿈 · 블레이크', en:"Jacob's Ladder · Blake", img:'assets/arts/jacob.jpg'},
-  {id:'lostsheep1', pack:'lostsheep', name:'선한 목자 · 플록호르스트', en:'The Good Shepherd · Plockhorst', img:'assets/arts/lostsheep.jpg'},
-  {id:'samaritan1', pack:'samaritan', name:'착한 사마리아인 · 고흐', en:'The Good Samaritan · Van Gogh', img:'assets/arts/samaritan.jpg'},
-  {id:'children1', pack:'children', name:'아이들을 축복하심 · 크라나흐', en:'Christ Blessing the Children · Cranach', img:'assets/arts/children.jpg'},
-  {id:'palace', pack:'kr', name:'경복궁 · 한국', en:'Gyeongbokgung · Korea', img:'assets/arts/palace.jpg'},
-  {id:'bulguksa', pack:'kr', name:'불국사 · 한국', en:'Bulguksa Temple · Korea', img:'assets/arts/bulguksa.jpg'},
-  {id:'eiffel', pack:'fr', name:'에펠탑 · 프랑스', en:'Eiffel Tower · France', img:'assets/arts/eiffel.jpg'},
-  {id:'mont', pack:'fr', name:'몽생미셸 · 프랑스', en:'Mont Saint-Michel · France', img:'assets/arts/mont.jpg'},
-  {id:'colosseum', pack:'it', name:'콜로세움 · 이탈리아', en:'Colosseum · Italy', img:'assets/arts/colosseum.jpg'},
-  {id:'pisa', pack:'it', name:'피사의 사탑 · 이탈리아', en:'Leaning Tower · Italy', img:'assets/arts/pisa.jpg'},
-  {id:'liberty', pack:'us', name:'자유의 여신상 · 미국', en:'Statue of Liberty · USA', img:'assets/arts/liberty.jpg'},
-  {id:'goldengate', pack:'us', name:'금문교 · 미국', en:'Golden Gate Bridge · USA', img:'assets/arts/goldengate.jpg'},
-  {id:'torii', pack:'jp', name:'이쓰쿠시마 신사 · 일본', en:'Itsukushima Shrine · Japan', img:'assets/arts/torii.jpg'},
-  {id:'fujiview', pack:'jp', name:'후지산과 탑 · 일본', en:'Mount Fuji · Japan', img:'assets/arts/fujiview.jpg'},
-  {id:'giza', pack:'eg', name:'피라미드와 낙타 · 이집트', en:'Pyramid & Camel · Egypt', img:'assets/arts/giza.jpg'},
-  {id:'sphinx', pack:'eg', name:'스핑크스 · 이집트', en:'Great Sphinx · Egypt', img:'assets/arts/sphinx.jpg'},
-  {id:'bigben', pack:'uk', name:'빅벤 · 영국', en:'Big Ben · UK', img:'assets/arts/bigben.jpg'},
-  {id:'towerbridge', pack:'uk', name:'타워브리지 · 영국', en:'Tower Bridge · UK', img:'assets/arts/towerbridge.jpg'},
-  {id:'greatwall', pack:'cn', name:'만리장성 · 중국', en:'Great Wall · China', img:'assets/arts/greatwall.jpg'},
-  {id:'heaven', pack:'cn', name:'천단 · 중국', en:'Temple of Heaven · China', img:'assets/arts/heaven.jpg'},
+  {id:'moses1', pack:'heroes', name:'아기 모세 · 알마-타데마', en:'The Finding of Moses · Alma-Tadema', img:'assets/arts/moses.jpg'},
+  {id:'daniel1', pack:'heroes', name:'사자 굴의 다니엘 · 리비에르', en:"Daniel in the Lions' Den · Rivière", img:'assets/arts/daniel.jpg'},
+  {id:'jonah1', pack:'heroes', name:'요나와 큰 물고기 · 라스트만', en:'Jonah and the Whale · Lastman', img:'assets/arts/jonah.jpg'},
+  {id:'jacob1', pack:'heroes', name:'야곱의 꿈 · 블레이크', en:"Jacob's Ladder · Blake", img:'assets/arts/jacob.jpg'},
+  {id:'lostsheep1', pack:'jesus', name:'선한 목자 · 플록호르스트', en:'The Good Shepherd · Plockhorst', img:'assets/arts/lostsheep.jpg'},
+  {id:'samaritan1', pack:'jesus', name:'착한 사마리아인 · 고흐', en:'The Good Samaritan · Van Gogh', img:'assets/arts/samaritan.jpg'},
+  {id:'children1', pack:'jesus', name:'아이들을 축복하심 · 크라나흐', en:'Christ Blessing the Children · Cranach', img:'assets/arts/children.jpg'},
+  {id:'palace', pack:'asia', name:'경복궁 · 한국', en:'Gyeongbokgung · Korea', img:'assets/arts/palace.jpg'},
+  {id:'bulguksa', pack:'asia', name:'불국사 · 한국', en:'Bulguksa Temple · Korea', img:'assets/arts/bulguksa.jpg'},
+  {id:'eiffel', pack:'europe', name:'에펠탑 · 프랑스', en:'Eiffel Tower · France', img:'assets/arts/eiffel.jpg'},
+  {id:'mont', pack:'europe', name:'몽생미셸 · 프랑스', en:'Mont Saint-Michel · France', img:'assets/arts/mont.jpg'},
+  {id:'colosseum', pack:'europe', name:'콜로세움 · 이탈리아', en:'Colosseum · Italy', img:'assets/arts/colosseum.jpg'},
+  {id:'pisa', pack:'europe', name:'피사의 사탑 · 이탈리아', en:'Leaning Tower · Italy', img:'assets/arts/pisa.jpg'},
+  {id:'liberty', pack:'faraway', name:'자유의 여신상 · 미국', en:'Statue of Liberty · USA', img:'assets/arts/liberty.jpg'},
+  {id:'goldengate', pack:'faraway', name:'금문교 · 미국', en:'Golden Gate Bridge · USA', img:'assets/arts/goldengate.jpg'},
+  {id:'torii', pack:'asia', name:'이쓰쿠시마 신사 · 일본', en:'Itsukushima Shrine · Japan', img:'assets/arts/torii.jpg'},
+  {id:'fujiview', pack:'asia', name:'후지산과 탑 · 일본', en:'Mount Fuji · Japan', img:'assets/arts/fujiview.jpg'},
+  {id:'giza', pack:'faraway', name:'피라미드와 낙타 · 이집트', en:'Pyramid & Camel · Egypt', img:'assets/arts/giza.jpg'},
+  {id:'sphinx', pack:'faraway', name:'스핑크스 · 이집트', en:'Great Sphinx · Egypt', img:'assets/arts/sphinx.jpg'},
+  {id:'bigben', pack:'europe', name:'빅벤 · 영국', en:'Big Ben · UK', img:'assets/arts/bigben.jpg'},
+  {id:'towerbridge', pack:'europe', name:'타워브리지 · 영국', en:'Tower Bridge · UK', img:'assets/arts/towerbridge.jpg'},
+  {id:'greatwall', pack:'asia', name:'만리장성 · 중국', en:'Great Wall · China', img:'assets/arts/greatwall.jpg'},
+  {id:'heaven', pack:'asia', name:'천단 · 중국', en:'Temple of Heaven · China', img:'assets/arts/heaven.jpg'},
 ];
 /* 명화 테마 팩 (성철 지시 9/8: 테마별 패키지) */
 const THEMES=[
@@ -865,34 +865,23 @@ const THEMES=[
   {id:'museum', name:'미술관', en:'Museum'},
 ];
 const PACKS=[
+  {id:'wild', theme:'scenes', name:'신나는 탐험', en:'Big Adventures'},
+  {id:'vroom', theme:'scenes', name:'부릉부릉 씽씽', en:'Things That Go'},
+  {id:'party', theme:'scenes', name:'즐거운 하루', en:'Happy Days'},
   {id:'animal', theme:'fairy', name:'알록달록 동물', en:'Colorful Animals'},
   {id:'wonderland', theme:'fairy', name:'이상한 나라의 앨리스', en:'Alice in Wonderland'},
   {id:'oldtales', theme:'fairy', name:'옛날 동화책', en:'Old Storybooks'},
-  {id:'creation', theme:'bible', name:'에덴 동산', en:'Garden of Eden'},
-  {id:'noahark', theme:'bible', name:'노아의 방주', en:"Noah's Ark"},
-  {id:'peace', theme:'bible', name:'평화의 왕국', en:'Peaceable Kingdom'},
+  {id:'begin', theme:'bible', name:'처음 세상', en:'The Beginning'},
+  {id:'heroes', theme:'bible', name:'용감한 친구들', en:'Brave Friends'},
   {id:'christmas', theme:'bible', name:'아기 예수', en:'Baby Jesus'},
-  {id:'moses', theme:'bible', name:'아기 모세', en:'Baby Moses'},
-  {id:'daniel', theme:'bible', name:'다니엘과 사자들', en:'Daniel & the Lions'},
-  {id:'jonah', theme:'bible', name:'요나와 큰 물고기', en:'Jonah & the Great Fish'},
-  {id:'jacob', theme:'bible', name:'야곱의 꿈', en:"Jacob's Dream"},
-  {id:'lostsheep', theme:'bible', name:'잃은 양', en:'The Lost Sheep'},
-  {id:'samaritan', theme:'bible', name:'착한 사마리아인', en:'Good Samaritan'},
-  {id:'children', theme:'bible', name:'예수님과 아이들', en:'Jesus & the Children'},
-  {id:'kr', theme:'world', name:'한국', en:'Korea'},
-  {id:'fr', theme:'world', name:'프랑스', en:'France'},
-  {id:'it', theme:'world', name:'이탈리아', en:'Italy'},
-  {id:'us', theme:'world', name:'미국', en:'USA'},
-  {id:'jp', theme:'world', name:'일본', en:'Japan'},
-  {id:'eg', theme:'world', name:'이집트', en:'Egypt'},
-  {id:'uk', theme:'world', name:'영국', en:'UK'},
-  {id:'cn', theme:'world', name:'중국', en:'China'},
+  {id:'jesus', theme:'bible', name:'예수님 이야기', en:'Stories of Jesus'},
+  {id:'asia', theme:'world', name:'아시아', en:'Asia'},
+  {id:'europe', theme:'world', name:'유럽', en:'Europe'},
+  {id:'faraway', theme:'world', name:'머나먼 나라', en:'Faraway Lands'},
   {id:'gogh', theme:'museum', name:'고흐', en:'Van Gogh'},
   {id:'monet', theme:'museum', name:'모네', en:'Monet'},
-  {id:'seurat', theme:'museum', name:'쇠라', en:'Seurat'},
   {id:'impress', theme:'museum', name:'인상파 친구들', en:'Impressionist Friends'},
-  {id:'hokusai', theme:'museum', name:'호쿠사이', en:'Hokusai'},
-  {id:'hiroshige', theme:'museum', name:'히로시게', en:'Hiroshige'},
+  {id:'ukiyoe', theme:'museum', name:'우키요에', en:'Ukiyo-e'},
   {id:'rousseau', theme:'museum', name:'루소', en:'Rousseau'},
   {id:'bruegel', theme:'museum', name:'브뤼헐', en:'Bruegel'},
   {id:'korea', theme:'museum', name:'한국 옛그림', en:'Korean Classics'},
@@ -1610,10 +1599,7 @@ function renderCaro(){
     paintThumb(cv,sc.id);
     if(sc.img)ensureImg(sc).then(()=>{if(document.body.contains(cv))paintThumb(cv,sc.id)});
   };
-  if(curColl==='scenes'){
-    $('pkChips').hidden=true;
-    for(const sc of SCENES)addCard(sc,!sc.free);
-  }else if(curColl==='photo'){
+  if(curColl==='photo'){
     $('pkChips').hidden=true;
     const b=document.createElement('button');b.className='card photo-card';
     b.innerHTML='<span class="ph">\uD83D\uDCF7</span><span class="row"><span class="name">'+t('photoBtnName')+'</span></span>';
@@ -1632,12 +1618,13 @@ function renderCaro(){
       paintThumb(cv,'photo');
     }
   }else{
-    const packs=PACKS.filter(p=>p.theme===curColl&&ARTS.some(a=>a.pack===p.id));
+    const POOL=curColl==='scenes'?SCENES:ARTS;
+    const packs=PACKS.filter(p=>p.theme===curColl&&POOL.some(a=>a.pack===p.id));
     let curPk=store.get('pk:'+curColl,packs[0]&&packs[0].id);
     if(!packs.find(p=>p.id===curPk))curPk=packs[0]&&packs[0].id;
     const pc=$('pkChips');pc.hidden=false;pc.innerHTML='';
     for(const pk of packs){
-      const items=ARTS.filter(a=>a.pack===pk.id);
+      const items=POOL.filter(a=>a.pack===pk.id);
       const dn=items.filter(a=>done[a.id]).length;
       const b=document.createElement('button');b.className='pkchip'+(pk.id===curPk?' on':'');
       b.innerHTML=sceneName(pk)+'<small>'+(dn===items.length&&items.length?'\u2B50':dn+'/'+items.length)+'</small>';
@@ -1646,7 +1633,7 @@ function renderCaro(){
     }
     const onp=pc.querySelector('.on');
     if(onp&&onp.scrollIntoView)try{onp.scrollIntoView({inline:'nearest',block:'nearest'})}catch(e){}
-    for(const sc of ARTS.filter(a=>a.pack===curPk))addCard(sc);
+    for(const sc of POOL.filter(a=>a.pack===curPk))addCard(sc,curColl==='scenes'&&!sc.free);
   }
 }
 function savedProg(sid){

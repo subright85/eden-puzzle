@@ -389,7 +389,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v20';
+const BUILD='v21';
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
@@ -683,11 +683,28 @@ const ARTS=[
   {id:'eden', pack:'creation', name:'에덴 동산 · 브뤼헐', en:'Garden of Eden · Brueghel', img:'assets/arts/eden.jpg'},
   {id:'nativity', pack:'christmas', name:'아기 예수 · 혼토르스트', en:'The Nativity · Honthorst', img:'assets/arts/nativity.jpg'},
   {id:'magi', pack:'christmas', name:'동방박사의 경배 · 젠틸레', en:'Adoration of the Magi · Gentile', img:'assets/arts/magi.jpg'},
+  {id:'palace', pack:'kr', name:'경복궁 · 한국', en:'Gyeongbokgung · Korea', img:'assets/arts/palace.jpg'},
+  {id:'bulguksa', pack:'kr', name:'불국사 · 한국', en:'Bulguksa Temple · Korea', img:'assets/arts/bulguksa.jpg'},
+  {id:'eiffel', pack:'fr', name:'에펠탑 · 프랑스', en:'Eiffel Tower · France', img:'assets/arts/eiffel.jpg'},
+  {id:'mont', pack:'fr', name:'몽생미셸 · 프랑스', en:'Mont Saint-Michel · France', img:'assets/arts/mont.jpg'},
+  {id:'colosseum', pack:'it', name:'콜로세움 · 이탈리아', en:'Colosseum · Italy', img:'assets/arts/colosseum.jpg'},
+  {id:'pisa', pack:'it', name:'피사의 사탑 · 이탈리아', en:'Leaning Tower · Italy', img:'assets/arts/pisa.jpg'},
+  {id:'liberty', pack:'us', name:'자유의 여신상 · 미국', en:'Statue of Liberty · USA', img:'assets/arts/liberty.jpg'},
+  {id:'goldengate', pack:'us', name:'금문교 · 미국', en:'Golden Gate Bridge · USA', img:'assets/arts/goldengate.jpg'},
+  {id:'torii', pack:'jp', name:'이쓰쿠시마 신사 · 일본', en:'Itsukushima Shrine · Japan', img:'assets/arts/torii.jpg'},
+  {id:'fujiview', pack:'jp', name:'후지산과 탑 · 일본', en:'Mount Fuji · Japan', img:'assets/arts/fujiview.jpg'},
+  {id:'giza', pack:'eg', name:'피라미드와 낙타 · 이집트', en:'Pyramid & Camel · Egypt', img:'assets/arts/giza.jpg'},
+  {id:'sphinx', pack:'eg', name:'스핑크스 · 이집트', en:'Great Sphinx · Egypt', img:'assets/arts/sphinx.jpg'},
+  {id:'bigben', pack:'uk', name:'빅벤 · 영국', en:'Big Ben · UK', img:'assets/arts/bigben.jpg'},
+  {id:'towerbridge', pack:'uk', name:'타워브리지 · 영국', en:'Tower Bridge · UK', img:'assets/arts/towerbridge.jpg'},
+  {id:'greatwall', pack:'cn', name:'만리장성 · 중국', en:'Great Wall · China', img:'assets/arts/greatwall.jpg'},
+  {id:'heaven', pack:'cn', name:'천단 · 중국', en:'Temple of Heaven · China', img:'assets/arts/heaven.jpg'},
 ];
 /* 명화 테마 팩 (성철 지시 9/8: 테마별 패키지) */
 const THEMES=[
   {id:'fairy', name:'동화 나라', en:'Storybook Land'},
   {id:'bible', name:'성경 이야기', en:'Bible Stories'},
+  {id:'world', name:'세계 여행', en:'Around the World'},
   {id:'museum', name:'미술관', en:'Museum'},
 ];
 const PACKS=[
@@ -698,6 +715,14 @@ const PACKS=[
   {id:'noahark', theme:'bible', name:'노아의 방주', en:"Noah's Ark"},
   {id:'peace', theme:'bible', name:'평화의 왕국', en:'Peaceable Kingdom'},
   {id:'christmas', theme:'bible', name:'아기 예수', en:'Baby Jesus'},
+  {id:'kr', theme:'world', name:'한국', en:'Korea'},
+  {id:'fr', theme:'world', name:'프랑스', en:'France'},
+  {id:'it', theme:'world', name:'이탈리아', en:'Italy'},
+  {id:'us', theme:'world', name:'미국', en:'USA'},
+  {id:'jp', theme:'world', name:'일본', en:'Japan'},
+  {id:'eg', theme:'world', name:'이집트', en:'Egypt'},
+  {id:'uk', theme:'world', name:'영국', en:'UK'},
+  {id:'cn', theme:'world', name:'중국', en:'China'},
   {id:'gogh', theme:'museum', name:'고흐', en:'Van Gogh'},
   {id:'monet', theme:'museum', name:'모네', en:'Monet'},
   {id:'seurat', theme:'museum', name:'쇠라', en:'Seurat'},

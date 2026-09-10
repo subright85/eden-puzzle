@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="/icon-180.png">
 <link rel="icon" type="image/png" href="/icon-180.png">
 <link rel="manifest" href="/manifest.webmanifest">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=Noto+Serif+KR:wght@400;600&display=swap">
 <style>
 [hidden]{display:none!important}
 .packhead{grid-column:1/-1;font-weight:800;font-size:15px;color:#8A8672;margin:8px 2px -6px}
@@ -43,17 +43,37 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
 #home.slideL{animation:modeL .32s ease}
 #home.slideR{animation:modeR .32s ease}
 body.adult{
-  --bg:#2B2823; --panel:#39352D; --ink:#EDE7DA; --sub:#A79E8C;
-  --accent:#C9A227; --accent-deep:#A8861D; --mint:#8FAF98; --gold:#D9B54A; --line:#544E42;
-  --shadow:0 8px 20px rgba(0,0,0,.35);
-  --wob:14px; --wob-big:18px;
+  --bg:#151517; --panel:#1E1E21; --ink:#EDEAE3; --sub:#8F8D86;
+  --accent:#C8A96C; --accent-deep:#B08F4F; --mint:#8FAF98; --gold:#C8A96C; --line:#2E2F33;
+  --shadow:0 12px 28px rgba(0,0,0,.38);
+  --wob:10px; --wob-big:14px;
+  --disp:'Noto Serif KR','Apple SD Gothic Neo',serif;
+  --body:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Segoe UI',sans-serif;
   background-image:none;
 }
-body.adult .squig{opacity:.25; filter:grayscale(1) invert(.9)}
-body.adult .daily{transform:none}
-body.adult .chip.free{background:#2E4636; color:#9FD8B4; border-color:#3E5A48}
-body.adult .chip.prem{background:#4A3F22; color:#E8CE7A; border-color:#6A5B30}
-body.adult .modebar .mseg.on{color:#241F16}
+body.adult .squig,body.adult .micon{display:none}
+body.adult h2{font-weight:600}
+body.adult .daily{transform:none; border:1px solid var(--line); box-shadow:none}
+body.adult .card,body.adult .collcard{border:1px solid var(--line); box-shadow:none}
+body.adult .statgrp,body.adult .stat,body.adult .modebar,body.adult #panicHome{border:1px solid var(--line); box-shadow:none; background:var(--panel)}
+body.adult .stat.guest{border-style:solid}
+body.adult .statgrp .seg+.seg{border-left:1px solid var(--line)}
+body.adult .statgrp .seg,body.adult .stat{font-family:var(--body); font-size:14px}
+body.adult .modebar .mseg{font-family:var(--body); font-size:14px; letter-spacing:.08em}
+body.adult .modebar .mseg.on{background:var(--ink); color:#141416}
+body.adult .playbtn{border-radius:8px; font-family:var(--body); font-weight:600; font-size:16px; letter-spacing:.02em; box-shadow:none; color:#191307}
+body.adult .eyebrow{color:var(--sub); font-family:var(--body); font-size:11px; letter-spacing:.22em; text-transform:uppercase}
+body.adult .sect small{font-family:var(--body)}
+body.adult .chip{font-family:var(--body); font-size:11px; letter-spacing:.04em}
+body.adult .chip.free{background:transparent; color:#9FBFA8; border-color:#3E5A48}
+body.adult .chip.prem{background:transparent; color:var(--accent); border-color:#57492A}
+body.adult .card .name{font-family:var(--disp); font-size:15px}
+body.adult .collico{filter:grayscale(1); opacity:.75}
+body.adult #sheet .box,body.adult #acct .box,body.adult #settings .box,body.adult #packview .box,body.adult #collview .box,body.adult #themeview .box{border:1px solid var(--line); border-radius:16px 16px 0 0}
+body.adult #sheet .opt{border:1px solid var(--line); border-radius:10px; font-family:var(--body); font-size:16px}
+body.adult #gtop .gbtn{border:1px solid var(--line); border-radius:8px; font-family:var(--body); font-size:14px; box-shadow:none}
+body.adult #winwrap .win{border:1px solid var(--line); box-shadow:none}
+body.adult #winwrap h2{color:var(--ink)}
 
 #panicHome{position:fixed; top:10px; right:10px; z-index:5000; background:var(--panel);
   border:3px solid var(--ink); border-radius:999px; padding:8px 16px; font-family:var(--disp);
@@ -261,8 +281,8 @@ body.adult .modebar .mseg.on{color:#241F16}
   </div>
 
   <div class="modebar" id="modeBar" aria-label="모드 — 좌우로 스와이프해도 바뀌어요">
-    <button class="mseg on" id="modeKid">🧒 <span id="modeKidL">이든</span></button>
-    <button class="mseg" id="modeAdult">🖼️ <span id="modeAdultL">갤러리</span></button>
+    <button class="mseg on" id="modeKid"><span class="micon">🧒 </span><span id="modeKidL">이든</span></button>
+    <button class="mseg" id="modeAdult"><span class="micon">🖼️ </span><span id="modeAdultL">갤러리</span></button>
   </div>
 
   <section class="daily" id="dailyCard">
@@ -415,7 +435,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v22';
+const BUILD='v23';
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
@@ -454,7 +474,14 @@ en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle ·
 };
 let lang=store.get('lang','ko');
 let mode=store.get('mode','kid');
-const t=k=>(L[lang]&&L[lang][k]!==undefined?L[lang][k]:L.ko[k]||k);
+const LA={ko:{dailyPlay:'시작하기',howMany:'조각 수 선택',winMsg:'퍼즐 완성',winAgain:'다시 하기',winHome:'갤러리로',
+  secScenes:'그림',secScenesS:'매일 한 점이 무료로 열립니다',modeKid:'이든',modeAdult:'갤러리'},
+ en:{dailyPlay:'Start',howMany:'Choose piece count',winMsg:'Complete',winAgain:'Play again',winHome:'Back to gallery',
+  secScenes:'Pictures',secScenesS:'One free picture every day',modeKid:'Kids',modeAdult:'Gallery'}};
+const t=k=>{
+  if(mode==='adult'&&LA[lang]&&LA[lang][k]!==undefined)return LA[lang][k];
+  return L[lang]&&L[lang][k]!==undefined?L[lang][k]:L.ko[k]||k;
+};
 const sceneName=sc=>(lang==='en'&&sc.en?sc.en:sc.name);
 function setLang(l){lang=l;store.set('lang',l);applyLang()}
 function applyLang(){
@@ -595,9 +622,13 @@ const SCENES=[
   {id:'space', name:'우주 여행', en:'Space Trip', draw:sceneSpace, img:'assets/puzzles/space.jpg', free:true},
   {id:'sea', name:'바닷속 친구들', en:'Under the Sea', draw:sceneSea, img:'assets/puzzles/sea.jpg', free:true},
   {id:'dino', name:'공룡 나라', en:'Dino Land', draw:sceneDino, img:'assets/puzzles/dino.jpg', free:false},
-  {id:'balloon',name:'하늘 기구', en:'Sky Balloons', draw:sceneBalloon,free:false},
-  {id:'farm', name:'동물 농장', en:'Animal Farm', draw:sceneFarm, free:false},
-  {id:'fire', name:'불꽃놀이', en:'Fireworks', draw:sceneFirework,free:false},
+  {id:'balloon',name:'하늘 기구', en:'Sky Balloons', draw:sceneBalloon, img:'assets/puzzles/balloon.jpg', free:false},
+  {id:'farm', name:'동물 농장', en:'Animal Farm', draw:sceneFarm, img:'assets/puzzles/farm.jpg', free:false},
+  {id:'fire', name:'불꽃놀이', en:'Fireworks', draw:sceneFirework, img:'assets/puzzles/fire.jpg', free:false},
+  {id:'construction', name:'공사장', en:'Busy Builders', img:'assets/puzzles/construction.jpg', free:false},
+  {id:'train', name:'칙칙폭폭 기차', en:'Choo-Choo Train', img:'assets/puzzles/train.jpg', free:false},
+  {id:'candy', name:'과자 나라', en:'Candy Land', img:'assets/puzzles/candy.jpg', free:false},
+  {id:'safari', name:'사파리 친구들', en:'Safari Friends', img:'assets/puzzles/safari.jpg', free:false},
 ];
 /* ── 명화 팩: 퍼블릭 도메인 원작의 심플 버전 (전부 코드 드로잉) ── */
 function artStarry(ctx,w,h){
@@ -1415,7 +1446,7 @@ function setMode(m){
   if(m===mode)return;
   const dir=m==='adult'?'slideL':'slideR';
   mode=m;store.set('mode',m);
-  applyMode();renderHome();
+  applyMode();applyLang();
   const h=$('home');h.classList.remove('slideL','slideR');void h.offsetWidth;h.classList.add(dir);
   beep(m==='adult'?392:523,.09,0,.1);
 }

@@ -41,10 +41,15 @@ h1,h2,h3{font-family:var(--disp); font-weight:400; margin:0; text-wrap:balance}
 .modebar .mseg{padding:5px 18px; font-family:var(--disp); font-size:15px; color:var(--sub)}
 .modebar .mseg.on{background:var(--accent); color:#fff}
 .modebar .mseg+.mseg{border-left:2px solid var(--line)}
-@keyframes modeL{from{opacity:.25; transform:translateX(46px)}to{opacity:1; transform:none}}
-@keyframes modeR{from{opacity:.25; transform:translateX(-46px)}to{opacity:1; transform:none}}
-#home.slideL{animation:modeL .32s ease}
-#home.slideR{animation:modeR .32s ease}
+@keyframes modeL{from{opacity:0; transform:translateX(64px) scale(.985)}60%{opacity:1}to{opacity:1; transform:none}}
+@keyframes modeR{from{opacity:0; transform:translateX(-64px) scale(.985)}60%{opacity:1}to{opacity:1; transform:none}}
+#home.slideL{animation:modeL .42s cubic-bezier(.22,.9,.3,1)}
+#home.slideR{animation:modeR .42s cubic-bezier(.22,.9,.3,1)}
+#home.dragging{transition:none}
+#home.snap{transition:transform .24s cubic-bezier(.22,.9,.3,1)}
+#modePeek{position:fixed; top:50%; transform:translateY(-50%); z-index:40; background:var(--ink); color:var(--panel);
+  padding:12px 15px; border-radius:16px; font-family:var(--disp); font-size:16px; opacity:0; pointer-events:none; transition:opacity .15s}
+#modePeek.rt{right:10px} #modePeek.lt{left:10px}
 .swhint{text-align:center; font-size:13px; color:var(--sub); margin-top:7px; font-family:var(--body); animation:hintpulse 2.4s ease infinite}
 @keyframes hintpulse{0%,100%{opacity:.55}50%{opacity:1}}
 @keyframes nudge{0%,100%{transform:none}30%{transform:translateX(-12px)}60%{transform:translateX(9px)}}
@@ -68,6 +73,18 @@ body.adult .statgrp .seg+.seg{border-left:1px solid var(--line)}
 body.adult .statgrp .seg,body.adult .stat{font-family:var(--body); font-size:14px}
 body.adult .modebar .mseg{font-family:var(--body); font-size:14px; letter-spacing:.08em}
 body.adult .modebar .mseg.on{background:var(--ink); color:#141416}
+body.adult .topline{order:1}body.adult .modebar{order:2}body.adult .swhint{order:3}body.adult .daily{order:4}
+body.adult #artsSec{order:5}body.adult .collcard{order:6}body.adult #scenesSec{order:7}body.adult #photoSec{order:8}body.adult .note{order:9}
+body.adult .album{flex-direction:column; align-items:stretch; gap:0; padding:0; overflow:hidden}
+body.adult .album canvas{width:100%; aspect-ratio:21/10; border:0; border-radius:0; border-bottom:1px solid var(--line)}
+body.adult .album .ainfo{padding:13px 16px 15px; gap:3px}
+body.adult .album .aname{font-size:21px}
+body.adult .album .asub{font-size:12px; letter-spacing:.07em}
+body.adult .album .chev{display:none}
+body.adult #gallery{grid-template-columns:repeat(3,1fr); gap:10px}
+body.adult #gallery .card{padding:5px; gap:4px}
+body.adult #gallery .card .name{font-size:13px}
+body.adult #gallery .card .chip{display:none}
 body.adult .playbtn{border-radius:8px; font-family:var(--body); font-weight:600; font-size:16px; letter-spacing:.02em; box-shadow:none; color:#191307}
 body.adult .eyebrow{color:var(--sub); font-family:var(--body); font-size:11px; letter-spacing:.22em; text-transform:uppercase}
 body.adult .sect small{font-family:var(--body)}
@@ -155,6 +172,22 @@ body.adult #winwrap h2{color:var(--ink)}
 .sect .row{display:flex; align-items:baseline; gap:10px}
 .sect h2{font-size:20px}
 .sect small{color:var(--sub)}
+.sec{display:flex; flex-direction:column; gap:12px}
+.albums{display:flex; flex-direction:column; gap:14px}
+.album{display:flex; align-items:center; gap:14px; padding:10px; background:var(--panel); border:3px solid var(--ink);
+  border-radius:var(--wob); box-shadow:var(--shadow); text-align:left; transition:transform .12s; font:inherit; color:inherit; cursor:pointer}
+.album:active{transform:translateY(2px)}
+.album canvas{width:132px; aspect-ratio:4/3; flex:none; border-radius:12px; border:2px solid var(--line); background:#eee}
+.album .ainfo{flex:1; min-width:0; display:flex; flex-direction:column; gap:4px}
+.album .aname{font-family:var(--disp); font-size:19px}
+.album .asub{color:var(--sub); font-size:13px}
+.album .chev{font-size:26px; color:var(--sub); padding-right:6px}
+.tvsub{margin:-8px 0 0; text-align:center; color:var(--sub); font-size:13px}
+.pksect{display:flex; align-items:baseline; gap:8px; margin:8px 2px 0}
+.pksect b{font-family:var(--disp); font-size:17px}
+.pksect small{color:var(--sub)}
+#themeGrid{display:flex; flex-direction:column; gap:10px}
+.grid.sub{grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px}
 .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:16px}
 .card{background:var(--panel); border-radius:var(--wob); border:3px solid var(--ink);
   box-shadow:var(--shadow); padding:9px; display:flex; flex-direction:column; gap:8px;
@@ -313,6 +346,7 @@ body.adult #winwrap h2{color:var(--ink)}
     <button class="mseg" id="modeAdult"><span class="micon">🖼️ </span><span id="modeAdultL">갤러리</span></button>
   </div>
   <div class="swhint" id="swHint">← 옆으로 밀면 모드가 바뀌어요 →</div>
+  <div id="modePeek" hidden><span id="modePeekL"></span></div>
 
   <section class="daily" id="dailyCard">
     <canvas id="dailyThumb" width="400" height="300"></canvas>
@@ -330,18 +364,23 @@ body.adult #winwrap h2{color:var(--ink)}
     <b class="collnum" id="collCount">0 / 0</b>
   </button>
 
+  <div class="sec" id="scenesSec">
   <div class="sect">
     <div class="row"><h2 id="secScenes">그림 고르기</h2><small id="secScenesS">매일 새 그림이 무료로 열려요</small></div>
     <span class="squig"></span>
   </div>
   <div class="grid" id="gallery"></div>
+  </div>
 
+  <div class="sec" id="artsSec">
   <div class="sect">
     <div class="row"><h2 id="secArts">명화 퍼즐</h2><span class="chip prem" id="secArtsChip">프리미엄</span><small id="secArtsS">진짜 미술관 그림을 심플하게</small></div>
     <span class="squig"></span>
   </div>
-  <div class="grid" id="artGallery"></div>
+  <div class="albums" id="artGallery"></div>
+  </div>
 
+  <div class="sec" id="photoSec">
   <div class="sect">
     <div class="row"><h2 id="secPhoto">사진 퍼즐</h2><span class="chip prem" id="secPhotoChip">프리미엄</span><small id="secPhotoS">그림처럼 바꿔서도 맞출 수 있어요</small></div>
     <span class="squig"></span>
@@ -355,6 +394,7 @@ body.adult #winwrap h2{color:var(--ink)}
       <canvas id="lastPhotoThumb" width="400" height="300"></canvas>
       <span class="row"><span class="name" id="lastPhotoName">마지막 사진</span><span class="chip star" id="photoStar"></span></span>
     </button>
+  </div>
   </div>
   <input type="file" id="photoInput" accept="image/*" hidden>
 
@@ -380,7 +420,8 @@ body.adult #winwrap h2{color:var(--ink)}
 <div id="themeview" hidden>
   <div class="box">
     <h3 id="themeTitle"></h3>
-    <div class="grid" id="themeGrid"></div>
+    <p class="tvsub" id="themeSub"></p>
+    <div id="themeGrid"></div>
     <button class="cancel" id="themeCancel">닫기</button>
   </div>
 </div>
@@ -467,12 +508,12 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v28';
+const BUILD='v29';
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
-  secArts:'테마 퍼즐',secArtsS:'동화책부터 미술관까지',secColl:'콜렉션',
+  secArts:'테마 퍼즐',secArtsS:'여러 그림이 팩으로 들어 있어요',secColl:'콜렉션',
   secPhoto:'사진 퍼즐',secPhotoS:'그림처럼 바꿔서도 맞출 수 있어요',
   photoBtnName:'사진 고르기',lastPhotoName:'마지막 사진',
   footNote:'광고 없음 · 사진도 그림 변환도 전부 기기 안에서만 · 프리미엄 그림은 무지개코인 🌈 으로 열어요 (매일 3개)',
@@ -489,7 +530,7 @@ ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPl
   tag6:'아주 쉬움',tag12:'쉬움',tag24:'보통',tag48:'도전!',tag96:'전문가',tag150:'마스터',modeKid:'이든',modeAdult:'갤러리',peekBtn:'\uD83D\uDD0D 원본 보기',privLink:'개인정보 처리방침',swHint:'← 옆으로 밀면 모드가 바뀌어요 →',build:'빌드',start:'시작!'},
 en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle · Free",dailyPlay:"Let's Play!",
   secScenes:'Pick a Picture',secScenesS:'A new free picture every day',
-  secArts:'Theme Puzzles',secArtsS:'From storybooks to the museum',
+  secArts:'Theme Puzzles',secArtsS:'Packs of pictures to explore',
   secPhoto:'Photo Puzzle',secPhotoS:'Turn your photos into drawings too',
   photoBtnName:'Choose a Photo',lastPhotoName:'Last Photo',
   footNote:'No ads · Photos never leave your device · Premium pictures open with rainbow coins 🌈 (3 a day)',
@@ -508,9 +549,9 @@ en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle ·
 let lang=store.get('lang','ko');
 let mode=store.get('mode','kid');
 const LA={ko:{dailyPlay:'시작하기',howMany:'조각 수 선택',winMsg:'퍼즐 완성',winAgain:'다시 하기',winHome:'갤러리로',
-  secScenes:'그림',secScenesS:'매일 한 점이 무료로 열립니다',modeKid:'이든',modeAdult:'갤러리',swHint:'← 밀어서 전환 →'},
+  secScenes:'그림',secScenesS:'키즈 일러스트',secArts:'컬렉션',secArtsS:'작가와 시대로 묶었습니다',modeKid:'이든',modeAdult:'갤러리',swHint:'← 밀어서 전환 →'},
  en:{dailyPlay:'Start',howMany:'Choose piece count',winMsg:'Complete',winAgain:'Play again',winHome:'Back to gallery',
-  secScenes:'Pictures',secScenesS:'One free picture every day',modeKid:'Kids',modeAdult:'Gallery',swHint:'← Swipe to switch →'}};
+  secScenes:'Pictures',secScenesS:'Kids illustrations',secArts:'Collections',secArtsS:'Grouped by artist and era',modeKid:'Kids',modeAdult:'Gallery',swHint:'← Swipe to switch →'}};
 const t=k=>{
   if(mode==='adult'&&LA[lang]&&LA[lang][k]!==undefined)return LA[lang][k];
   return L[lang]&&L[lang][k]!==undefined?L[lang][k]:L.ko[k]||k;
@@ -828,13 +869,17 @@ const PACKS=[
 const packOf=id=>PACKS.find(p=>p.id===id);
 const themeArts=tid=>ARTS.filter(a=>{const p=packOf(a.pack);return p&&p.theme===tid});
 function collage(cv,items){
-  const cx=cv.getContext('2d');cx.fillStyle='#EFE8DA';cx.fillRect(0,0,360,270);
-  const draw=(sc,x,y,w,h)=>{const e=sc.img&&IMGS[sc.id];if(e&&e.ok)cx.drawImage(e.img,x,y,w,h)};
-  if(items.length===1)draw(items[0],0,0,360,270);
-  else if(items.length<4){draw(items[0],0,0,179,270);if(items[1])draw(items[1],181,0,179,270)}
-  else items.slice(0,4).forEach((sc,i)=>draw(sc,(i%2)*181,(i>>1)*136,179,134));
+  const W=cv.width,H=cv.height,cx=cv.getContext('2d');cx.fillStyle='#EFE8DA';cx.fillRect(0,0,W,H);
+  const draw=(sc,x,y,w,h)=>{const e=sc.img&&IMGS[sc.id];if(!(e&&e.ok))return;
+    const iw=e.img.width,ih=e.img.height,r=w/h;let sw=iw,sh=ih,sx=0,sy=0;
+    if(iw/ih>r){sw=ih*r;sx=(iw-sw)/2}else{sh=iw/r;sy=(ih-sh)/2}
+    cx.drawImage(e.img,sx,sy,sw,sh,x,y,w,h)};
+  if(items.length===1)draw(items[0],0,0,W,H);
+  else if(items.length<4){const hw=(W-2)/2;draw(items[0],0,0,hw,H);if(items[1])draw(items[1],hw+2,0,hw,H)}
+  else items.slice(0,4).forEach((sc,i)=>draw(sc,(i%2)*(W/2+1),(i>>1)*(H/2+1),W/2-1,H/2-1));
 }
 const findScene=sid=>SCENES.find(x=>x.id===sid)||ARTS.find(x=>x.id===sid);
+const packLine=(p,n,d)=>(lang==='en'?p+' packs · '+n+' pictures':'팩 '+p+'개 · 그림 '+n+'장')+(d?(lang==='en'?' · '+d+' done':' · 완성 '+d):'');
 const COUNTS=[{n:6,c:3,r:2,tag:'아주 쉬움'},{n:12,c:4,r:3,tag:'쉬움'},{n:24,c:6,r:4,tag:'보통'},{n:48,c:8,r:6,tag:'도전!'}];
 const COUNTS_A=[{n:96,c:12,r:8},{n:150,c:15,r:10}];
 
@@ -860,22 +905,30 @@ let curTheme=null;
 function openTheme(tid){
   curTheme=tid;const th=THEMES.find(x=>x.id===tid);
   $('themeTitle').textContent=sceneName(th);
-  const tg=$('themeGrid');tg.innerHTML='';
   const done=store.get('done',{});
-  for(const pk of PACKS.filter(p=>p.theme===tid)){
+  const packs=PACKS.filter(p=>p.theme===tid), all=themeArts(tid);
+  $('themeSub').textContent=packLine(packs.length,all.length,all.filter(a=>done[a.id]).length);
+  const tg=$('themeGrid');tg.innerHTML='';
+  for(const pk of packs){
     const items=ARTS.filter(a=>a.pack===pk.id);
-    const b=document.createElement('button');b.className='card';
-    const cv=document.createElement('canvas');cv.width=360;cv.height=270;
-    b.appendChild(cv);
-    const row=document.createElement('span');row.className='row';
-    row.innerHTML='<span class="name">'+sceneName(pk)+'</span>'+
-      (items.length&&items.every(a=>done[a.id])?'<span class="chip star">⭐</span>':'')+
-      '<span class="chip prem">'+items.length+'</span>';
-    b.appendChild(row);
-    b.onclick=()=>{$('themeview').hidden=true;openPack(pk.id)};
-    tg.appendChild(b);
-    collage(cv,items);
-    items.filter(x=>x.img).forEach(x=>ensureImg(x).then(()=>{if(!$('themeview').hidden)collage(cv,items)}));
+    const hd=document.createElement('div');hd.className='pksect';
+    hd.innerHTML='<b>'+sceneName(pk)+'</b><small>'+items.filter(a=>done[a.id]).length+' / '+items.length+'</small>';
+    tg.appendChild(hd);
+    const gd=document.createElement('div');gd.className='grid sub';
+    for(const sc of items){
+      const b=document.createElement('button');b.className='card';
+      const cv=document.createElement('canvas');cv.width=360;cv.height=270;
+      b.appendChild(cv);
+      const row=document.createElement('span');row.className='row';
+      row.innerHTML='<span class="name">'+sceneName(sc)+'</span>'+
+        (done[sc.id]?'<span class="chip star">⭐</span>':'');
+      b.appendChild(row);
+      b.onclick=()=>{$('themeview').hidden=true;openSheet(sc.id,false)};
+      gd.appendChild(b);
+      paintThumb(cv,sc.id);
+      if(sc.img)ensureImg(sc).then(()=>{if(!$('themeview').hidden)paintThumb(cv,sc.id)});
+    }
+    tg.appendChild(gd);
   }
   pushUI('themeview');$('themeview').hidden=false;
 }
@@ -1417,17 +1470,22 @@ function renderHomeInner(){
     paintThumb(cv,sc.id);
   }
   const ag=$('artGallery');ag.innerHTML='';
-  for(const th of THEMES){
+  const thOrd={museum:0,world:1,fairy:2,bible:3};
+  const ths=mode==='adult'?[...THEMES].sort((a,b)=>(thOrd[a.id]??9)-(thOrd[b.id]??9)):THEMES;
+  for(const th of ths){
     const items=themeArts(th.id);
     const nPacks=PACKS.filter(p=>p.theme===th.id).length;
-    const b=document.createElement('button');b.className='card';
-    const cv=document.createElement('canvas');cv.width=360;cv.height=270;
+    const doneN=items.filter(a=>done[a.id]).length;
+    const b=document.createElement('button');b.className='album';
+    const cv=document.createElement('canvas');
+    cv.width=mode==='adult'?840:360;cv.height=mode==='adult'?400:270;
     b.appendChild(cv);
-    const row=document.createElement('span');row.className='row';
-    row.innerHTML='<span class="name">'+sceneName(th)+'</span>'+
-      (items.length&&items.every(a=>done[a.id])?'<span class="chip star">⭐</span>':'')+
-      '<span class="chip prem">'+nPacks+' · '+items.length+'</span>';
-    b.appendChild(row);
+    const info=document.createElement('span');info.className='ainfo';
+    info.innerHTML='<span class="aname">'+sceneName(th)+(items.length&&doneN===items.length?' ⭐':'')+'</span>'+
+      '<span class="asub">'+packLine(nPacks,items.length,doneN)+'</span>';
+    b.appendChild(info);
+    const ch=document.createElement('span');ch.className='chev';ch.textContent='›';
+    b.appendChild(ch);
     b.onclick=()=>{curTheme=null;openTheme(th.id)};
     ag.appendChild(b);
     collage(cv,items);
@@ -1496,12 +1554,40 @@ function setMode(m){
 }
 $('modeKid').onclick=()=>setMode('kid');
 $('modeAdult').onclick=()=>setMode('adult');
-{let mx0=null,my0=null;
- $('home').addEventListener('touchstart',e=>{mx0=e.touches[0].clientX;my0=e.touches[0].clientY},{passive:true});
- $('home').addEventListener('touchend',e=>{
+{let mx0=null,my0=null,axis=null;
+ const h=$('home'),pk=$('modePeek');
+ h.addEventListener('touchstart',e=>{
+   if(e.touches.length!==1){mx0=null;return}
+   mx0=e.touches[0].clientX;my0=e.touches[0].clientY;axis=null;
+ },{passive:true});
+ h.addEventListener('touchmove',e=>{
+   if(mx0==null||axis==='v')return;
+   const dx=e.touches[0].clientX-mx0, dy=e.touches[0].clientY-my0;
+   if(!axis){
+     if(Math.abs(dx)<10&&Math.abs(dy)<10)return;
+     axis=Math.abs(dx)>Math.abs(dy)*1.2?'h':'v';
+     if(axis==='v')return;
+     h.classList.add('dragging');h.classList.remove('snap','slideL','slideR');
+   }
+   const tgt=dx<0?'adult':'kid';
+   if(tgt===mode){h.style.transform='translateX('+(dx*.12)+'px)';pk.style.opacity=0;return}
+   h.style.transform='translateX('+Math.max(-100,Math.min(100,dx*.5))+'px)';
+   pk.hidden=false;pk.className=dx<0?'rt':'lt';
+   $('modePeekL').textContent=(tgt==='adult'?'\uD83D\uDDBC\uFE0F ':'\uD83E\uDDD2 ')+t(tgt==='adult'?'modeAdult':'modeKid');
+   pk.style.opacity=Math.min(1,Math.abs(dx)/110);
+ },{passive:true});
+ h.addEventListener('touchend',e=>{
    if(mx0==null)return;
-   const dx=e.changedTouches[0].clientX-mx0, dy=e.changedTouches[0].clientY-my0;mx0=null;
-   if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.6)setMode(dx<0?'adult':'kid');
+   const dx=e.changedTouches[0].clientX-mx0, dy=e.changedTouches[0].clientY-my0;
+   const wasH=axis==='h';mx0=null;axis=null;
+   pk.style.opacity=0;setTimeout(()=>{pk.hidden=true},180);
+   h.classList.remove('dragging');
+   if(wasH&&Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.6){
+     h.style.transform='';setMode(dx<0?'adult':'kid');
+   }else if(wasH){
+     h.classList.add('snap');h.style.transform='';
+     setTimeout(()=>h.classList.remove('snap'),260);
+   }else h.style.transform='';
  },{passive:true});}
 applyMode();
 if(store.get('modeSw',0)<2)$('home').classList.add('nudge');

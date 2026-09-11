@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="/icon-180.png">
 <link rel="icon" type="image/png" href="/icon-180.png">
 <link rel="manifest" href="/manifest.webmanifest">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=Noto+Serif+KR:wght@400;600&display=swap">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
 <style>
 [hidden]{display:none!important}
 .packhead{grid-column:1/-1;font-weight:800;font-size:15px;color:#8A8672;margin:8px 2px -6px}
@@ -354,6 +354,232 @@ body.adult #sheet .opt.resumeBig{background:none; border-color:var(--accent)}
   background:var(--panel); color:var(--sub)}
 #acct .cancel,#settings .cancel,#packview .cancel,#collview .cancel,#themeview .cancel{color:var(--sub); font-size:16px; padding:8px}
 body:not(.adult) .pickbody{border-radius:16px; margin-top:0}
+
+/* Mobile game UI: consistent typography, spacing, and icon geometry. */
+:root{--bg:#F8F7F2;--panel:#FFFFFF;--ink:#292F2D;--sub:#737A74;--line:#E2E5DD;--accent:#D86C3D;--accent-deep:#B34D26;--mint:#567863;--gold:#C29A48;--shadow:0 3px 12px rgba(35,48,36,.04);--wob:16px;--wob-big:24px;--disp:-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Noto Sans',sans-serif;--body:var(--disp)}
+body{margin:0;background-image:none;letter-spacing:-.025em;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-weight:750;letter-spacing:-.04em}
+button{font-weight:650}
+.ui-icon{width:22px;height:22px;display:inline-block;flex:none;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#home{max-width:820px;gap:24px;padding:calc(24px + env(safe-area-inset-top)) calc(24px + env(safe-area-inset-right)) calc(28px + env(safe-area-inset-bottom)) calc(24px + env(safe-area-inset-left))}
+#home .topline{gap:10px;min-height:44px;align-items:center}
+#home .logo{margin:0;gap:8px;font-size:17px;font-weight:800;letter-spacing:-.055em}
+#home .logo svg{width:30px;height:30px;transform:none;color:var(--accent);background:#F9E7DC;border-radius:10px;padding:4px}
+#home .stat{width:40px;height:44px;padding:0;display:grid;place-items:center;border:0;background:transparent;box-shadow:none;border-radius:12px;color:var(--ink)}
+#home .stat:hover{background:var(--line)}
+#home .stat.guest{font-size:0}
+#home .stat.guest:before{content:none}
+#home .statgrp{border:1px solid var(--line);box-shadow:none;background:var(--panel);border-radius:13px;min-height:36px}
+#home .statgrp .seg{gap:5px;padding:5px 9px;font-size:13px;font-weight:700}
+#home .statgrp .seg+.seg{border-left:1px solid var(--line)}
+#home .statgrp .ui-icon{width:17px;height:17px;color:var(--gold)}
+#home .statgrp .seg:last-child .ui-icon{color:var(--mint)}
+#pickSec{gap:14px}
+.picker-heading{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.picker-heading h2{font-size:22px;line-height:1.35}
+.picker-heading p{margin:0;font-size:12px;line-height:1.5;color:var(--sub);white-space:nowrap}
+#home .ctabs{gap:6px;padding:0}
+#home .ctab{min-height:44px;border:1px solid var(--line);border-radius:12px;background:var(--panel);opacity:1;font-size:13px;padding:8px 12px}
+#home .ctab.on{padding:8px 12px;color:var(--accent-deep);background:#F8E8DD;border-color:#E9C3AA}
+#home .pickbody{background:#EEEFE8;border:0;border-radius:22px;padding:0;margin:0;gap:0;overflow:hidden}
+#home .pickbody .caro{margin:0;padding:18px 18px 18px;gap:12px;scroll-padding-inline:18px;align-items:stretch}
+#home .caro .card{width:142px;min-width:0;padding:8px;gap:9px;border:1.5px solid transparent;border-radius:16px;background:var(--panel);box-shadow:0 2px 4px rgba(40,50,35,.04);transform:none;transition:border-color .15s,background .15s}
+#home .caro .card canvas,#home .caro .card .ph{display:block;border:0;border-radius:10px;aspect-ratio:4/3}
+#home .caro .card .row{padding:0 2px 3px;min-height:20px}
+#home .caro .card .name{font-family:var(--body);font-size:12px;line-height:1.5;font-weight:650;color:var(--ink);padding:0}
+#home .caro .card[aria-pressed="true"]{border-color:var(--accent);background:#FFF9F4;box-shadow:inset 0 0 0 .5px var(--accent)}
+#home .caro .card .bdg{top:13px;border:0;background:rgba(255,255,255,.95);padding:4px;display:grid;place-items:center;box-shadow:0 1px 4px #0001}
+#home .caro .card .bdg .ui-icon{width:13px;height:13px;color:var(--mint)}
+#home .caro .card .bdg.prem{left:13px}
+#home .pkchips{padding:14px 18px 0}
+#home .pkchip{min-height:44px;border-width:1px;font-size:12px}
+#home .daily{display:grid;grid-template-columns:76px minmax(0,1fr);gap:7px 16px;border:1px solid var(--line);border-radius:22px;transform:none;box-shadow:var(--shadow);padding:20px;align-items:center;text-align:left}
+#home .daily canvas{grid-column:1;grid-row:1/4;width:76px;height:76px;object-fit:cover;border:0;border-radius:14px;background:var(--panel)}
+#home .daily .info{display:contents}
+#home .daily .eyebrow{grid-column:2;grid-row:1;font-size:11px;line-height:1.3;letter-spacing:.015em;font-weight:650;color:var(--accent-deep);align-self:end}
+#home .daily h2{grid-column:2;grid-row:2;font-size:21px;line-height:1.25}
+#home .daily .date{grid-column:2;grid-row:3;font-size:11px;line-height:1.3;align-self:start}
+.difficulty-label{grid-column:1/-1;font-size:12px;font-weight:650;color:var(--sub);margin-top:13px}
+#home .daily .cntrow{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:0 0 6px}
+#home .cnt{padding:10px 3px;min-width:0;min-height:48px;border:1px solid var(--line);border-radius:11px;background:var(--bg);color:var(--sub);font-size:13px;box-shadow:none}
+#home .cnt.on{background:#FBECE2;border-color:var(--accent);color:var(--accent-deep);font-weight:750}
+#home .daily .playbtn{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:9px;min-height:54px;width:100%;padding:13px 16px;border:0;border-radius:13px;background:var(--accent);box-shadow:0 3px 0 var(--accent-deep);font-size:16px;font-weight:750;align-self:stretch}
+#home .daily .playbtn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--accent-deep)}
+#home .daily .playbtn .ui-icon{width:17px;height:17px;fill:currentColor;stroke-width:1.5}
+#home .daily .resumebtn{background:var(--bg);color:var(--accent-deep);border:1px solid var(--line);box-shadow:none}
+#home .daily .stagecoin{grid-column:1/-1;margin:5px 0 0;font-size:11px;text-align:center}
+#home .daily .backdaily{grid-column:1/-1;justify-self:center;font-size:12px;text-decoration:none;min-height:32px;margin-top:3px}
+#home .collcard{margin:0;padding:16px;border:1px solid var(--line);border-radius:18px;box-shadow:none;gap:13px}
+#home .collico{width:42px;height:42px;border-radius:12px;background:#EDF1E9;display:grid;place-items:center;color:var(--mint)}
+#home .collinfo{gap:8px}#home .collinfo b{font-size:14px;font-weight:700}
+#home .collbar{height:4px;background:var(--line)}#home .collbar i{background:var(--mint)}
+#home .collnum{font-size:12px;font-weight:600;color:var(--sub)}
+#home .note{margin:0;text-align:center;font-size:10px;line-height:1.8;color:var(--sub);padding:0 8px}
+#acct .box,#settings .box,#packview .box,#collview .box,#themeview .box,#sheet .box{border:1px solid var(--line);border-radius:26px 26px 0 0;padding:24px 22px calc(24px + env(safe-area-inset-bottom));box-shadow:0 -12px 50px #0001}
+#acct h3,#settings h3,#packview h3,#collview h3,#themeview h3{font-size:20px}
+.acct-btn,.stylechip,#sheet .opt{border-width:1px;border-radius:12px;font-size:15px;min-height:48px}
+.acct-note{font-size:13px;line-height:1.8}
+#gtop .gbtn,#panicHome{border:1px solid var(--line);border-radius:12px;box-shadow:none;font-size:13px;min-height:44px;background:var(--panel)}
+#winwrap .win{border:1px solid var(--line);border-radius:24px;box-shadow:0 12px 60px #0002;transform:none}
+#splash .tstart{border:0;border-radius:16px;box-shadow:0 4px 0 var(--accent-deep);font-size:22px;font-weight:750;animation:none}
+body.adult #home .pickbody,body.adult #home .cnt,body.adult #home .collico{background:var(--panel)}
+body.adult #home .caro .card[aria-pressed="true"],body.adult #home .cnt.on{background:var(--panel);border-color:var(--accent);color:var(--accent)}
+@media(max-width:560px){
+ #home{gap:18px;padding:calc(16px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right)) calc(24px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left))}
+ #home .topline{gap:4px}#home .logo{font-size:15px;gap:6px}#home .logo span{display:inline}
+ #home .logo svg{width:26px;height:26px;padding:3px}
+ #home .stat{width:34px}#home .statgrp .seg{padding:5px 6px;font-size:12px;gap:4px}
+ #home .statgrp .ui-icon{width:15px;height:15px}
+ .picker-heading h2{font-size:20px}.picker-heading p{font-size:11px}
+ #home .caro .card{width:128px}
+ #home .daily{padding:18px;gap:6px 14px}
+ #home .daily h2{font-size:20px}
+}
+@media(max-width:360px){
+ #home{padding-left:16px;padding-right:16px;gap:15px}
+ #home .logo span{display:none}#home .stat{width:36px}
+ #home .daily{padding:16px;grid-template-columns:64px minmax(0,1fr);gap:5px 12px}
+ #home .daily canvas{width:64px;height:64px;border-radius:11px}
+ #home .daily h2{font-size:18px}
+ #home .caro .card{width:118px}
+ #home .pickbody .caro{padding:16px;scroll-padding-inline:16px;gap:10px}
+ #home .cnt{min-height:44px;padding:9px 2px;font-size:12px}
+ .difficulty-label{margin-top:8px}
+}
+@media(prefers-reduced-motion:reduce){#home.slideL,#home.slideR,#home.nudge,.swhint{animation:none}}
+
+/* Image-generated gouache skin. Original PNG alpha and app-rendered labels are preserved. */
+body:not(.adult){--bg:#FEFCF5;--ink:#3A4258;--sub:#7E7C70;--accent:#F79242;--accent-deep:#B85D28;--mint:#439C85;--gold:#DEAC35;--disp:'Jua','Apple SD Gothic Neo',sans-serif;--body:'Gowun Dodum','Apple SD Gothic Neo',sans-serif;letter-spacing:0;background-image:radial-gradient(#D8D1BD55 .8px,transparent .9px);background-size:18px 18px}
+body:not(.adult) h1,body:not(.adult) h2,body:not(.adult) h3,body:not(.adult) button{font-weight:400;letter-spacing:0}
+body:not(.adult) #home .logo{font-family:var(--disp);font-size:19px;font-weight:400}
+body:not(.adult) #home .logo svg{fill:#FFD26F;stroke:var(--ink);stroke-width:1.5;background:none;padding:2px;transform:rotate(-8deg)}
+body:not(.adult) #home .stat{width:40px;height:44px;background:transparent url('assets/ui/painted/panel-v1.png') center/100% 100% no-repeat;border:0;box-shadow:none;padding-bottom:3px}
+body:not(.adult) #home .stat .ui-icon{width:20px;height:20px;stroke-width:2;color:var(--ink)}
+body:not(.adult) #home .statgrp{background:#FFFDF5;border:2px solid var(--ink);border-radius:18px 15px 17px 16px;box-shadow:0 2px 0 #DCD4C1}
+body:not(.adult) #home .statgrp .seg{font-family:var(--disp);font-weight:400;font-size:14px}
+body:not(.adult) #home .statgrp .seg:first-child .ui-icon{fill:#FFD66C;stroke:#9D7933}
+body:not(.adult) #home .statgrp .seg:last-child .ui-icon{stroke:#5FAD9F;stroke-width:2.4}
+body:not(.adult) .picker-heading h2{font-family:var(--disp);font-size:23px}
+body:not(.adult) .picker-heading p{font-size:12px}
+body:not(.adult) #home .pickbody{background:transparent url('assets/ui/painted/tray-v1.png') center/100% 100% no-repeat;border:0;border-radius:0;overflow:visible}
+body:not(.adult) #home .pickbody .caro{padding:20px;scroll-padding-inline:20px;gap:12px;clip-path:inset(0 5px 0 5px)}
+body:not(.adult) #home .caro .card{background:transparent url('assets/ui/painted/panel-v1.png') center/100% 100% no-repeat;border:0;box-shadow:none;border-radius:0;padding:11px 10px 13px;gap:7px;transform:none}
+body:not(.adult) #home .caro .card[aria-pressed="true"]{background-image:url('assets/ui/painted/panel-v1.png');border:0;box-shadow:none}
+body:not(.adult) #home .caro .card .name{font-family:var(--body);font-size:12px;font-weight:600}
+body:not(.adult) #home .caro .card canvas{border-radius:8px 10px 8px 9px}
+body:not(.adult) #home .caro .card .bdg{top:15px;left:14px;right:auto;border:1px solid #D8CEB5;box-shadow:none}
+body:not(.adult) #home .daily{background:transparent url('assets/ui/painted/panel-v1.png') center/100% 100% no-repeat;border:0;border-radius:0;box-shadow:none;padding:22px 23px;gap:7px 14px}
+body:not(.adult) #home .daily canvas{border:2px solid var(--ink);border-radius:12px 10px 13px 9px}
+body:not(.adult) #home .daily h2{font-family:var(--disp);font-size:24px;font-weight:400}
+body:not(.adult) #home .daily .eyebrow{font-family:var(--disp);font-size:12px;font-weight:400}
+body:not(.adult) .difficulty-label{font-family:var(--disp);font-size:13px;font-weight:400}
+body:not(.adult) #home .cnt{background:transparent url('assets/ui/painted/panel-v1.png') center/100% 100% no-repeat;border:0;border-radius:0;box-shadow:none;min-height:48px;padding:8px 3px 12px;color:#77776E;font-size:15px}
+body:not(.adult) #home .cnt.on{background-image:url('assets/ui/painted/play-v1.png');color:var(--ink);font-weight:400}
+body:not(.adult) #home .daily .playbtn,body:not(.adult) #splash .tstart,body:not(.adult) #winwrap .playbtn{background:transparent url('assets/ui/painted/play-v1.png') center/100% 100% no-repeat;border:0;border-radius:0;box-shadow:none;min-height:62px;padding:12px 18px 18px;font-family:var(--disp);font-size:23px;color:var(--ink);text-shadow:0 1px #FFD8A4}
+body:not(.adult) #home .daily .playbtn:active{transform:translateY(3px);box-shadow:none}
+body:not(.adult) #home .daily .resumebtn{background-image:url('assets/ui/painted/play-v1.png');font-size:18px;min-height:50px}
+body:not(.adult) #home .daily .playbtn .ui-icon{width:19px;height:19px;color:var(--ink)}
+body:not(.adult) #home .daily .backdaily{font-family:var(--body);font-size:12px}
+body:not(.adult) #home .collcard{background:transparent url('assets/ui/painted/tray-v1.png') center/100% 100% no-repeat;border:0;box-shadow:none;border-radius:0;padding:18px 24px 20px 30px;gap:14px}
+body:not(.adult) #home .collico{background:#DCECCF;border-radius:11px 14px 12px 9px;color:#4D7E5B}
+body:not(.adult) #home .collinfo b{font-family:var(--disp);font-size:18px;font-weight:400}
+body:not(.adult) #home .collbar{background:#C9D8C0;height:5px}
+body:not(.adult) #home .collnum{font-family:var(--disp);font-weight:400;font-size:14px}
+body:not(.adult) .acct-btn,body:not(.adult) .stylechip,body:not(.adult) #sheet .opt,body:not(.adult) #gtop .gbtn,body:not(.adult) #panicHome,body:not(.adult) #winwrap .again{background:transparent url('assets/ui/painted/panel-v1.png') center/100% 100% no-repeat;border:0;box-shadow:none;border-radius:0;padding-bottom:13px}
+body:not(.adult) .stylechip.on{background-image:url('assets/ui/painted/play-v1.png')}
+body:not(.adult) #settings .box,body:not(.adult) #acct .box,body:not(.adult) #sheet .box,body:not(.adult) #winwrap .win{background:transparent url('assets/ui/painted/panel-v1.png') center/100% 100% no-repeat;border:0;box-shadow:none;border-radius:0;padding:28px}
+body:not(.adult) #home .ctab,body:not(.adult) #home .pkchip{background:transparent url('assets/ui/painted/panel-v1.png') center/100% 100% no-repeat;border:0;box-shadow:none;border-radius:0;padding:10px 15px 14px}
+body:not(.adult) #home .ctab.on,body:not(.adult) #home .pkchip.on{background-image:url('assets/ui/painted/play-v1.png')}
+body:not(.adult) #packview .box,body:not(.adult) #collview .box,body:not(.adult) #themeview .box{background:transparent url('assets/ui/painted/panel-v1.png') center/100% 100% no-repeat;border:0;box-shadow:none;border-radius:0;padding:28px}
+body:not(.adult) .grid .card{background:transparent url('assets/ui/painted/panel-v1.png') center/100% 100% no-repeat;border:0;border-radius:0;box-shadow:none;padding:13px;transform:none}
+body:not(.adult) #settings .cancel,body:not(.adult) #acct .cancel,body:not(.adult) #sheet .cancel,body:not(.adult) #packview .cancel,body:not(.adult) #collview .cancel,body:not(.adult) #themeview .cancel{min-height:44px}
+@media(max-width:560px){
+ body:not(.adult) #home{gap:16px}
+ body:not(.adult) #home .logo{font-size:17px}
+ body:not(.adult) #home .stat{width:36px}
+ body:not(.adult) #home .statgrp .seg{font-size:12px;padding:5px}
+ body:not(.adult) .picker-heading h2{font-size:21px}
+ body:not(.adult) .picker-heading p{font-size:11px}
+ body:not(.adult) #home .daily h2{font-size:22px}
+}
+@media(max-width:360px){
+ body:not(.adult) #home{gap:12px}
+ body:not(.adult) #home .daily{padding:18px 20px;gap:5px 12px}
+ body:not(.adult) #home .daily h2{font-size:20px}
+ body:not(.adult) #home .pickbody .caro{padding:18px;scroll-padding-inline:18px}
+ body:not(.adult) #home .cnt{font-size:13px;min-height:44px}
+ body:not(.adult) #home .daily .playbtn{min-height:56px;font-size:21px}
+}
+
+/* Fit the painted silhouette, excluding the generated transparent outer margin. */
+body:not(.adult) #home .stat,body:not(.adult) #home .pickbody,body:not(.adult) #home .caro .card,body:not(.adult) #home .daily,body:not(.adult) #home .cnt,body:not(.adult) #home .collcard,body:not(.adult) .acct-btn,body:not(.adult) .stylechip,body:not(.adult) #sheet .opt,body:not(.adult) #gtop .gbtn,body:not(.adult) #panicHome,body:not(.adult) #winwrap .again,body:not(.adult) #settings .box,body:not(.adult) #acct .box,body:not(.adult) #sheet .box,body:not(.adult) #winwrap .win,body:not(.adult) #home .ctab,body:not(.adult) #home .pkchip,body:not(.adult) #packview .box,body:not(.adult) #collview .box,body:not(.adult) #themeview .box,body:not(.adult) .grid .card{background-size:100% 125%;background-position:center}
+body:not(.adult) #home .daily .playbtn,body:not(.adult) #splash .tstart,body:not(.adult) #winwrap .playbtn,body:not(.adult) #home .cnt.on,body:not(.adult) .stylechip.on,body:not(.adult) #home .ctab.on,body:not(.adult) #home .pkchip.on{background-size:100% 131%;background-position:center}
+body:not(.adult) #home .caro .card[aria-pressed="true"]{filter:drop-shadow(0 0 2px #E87D26)}
+body:not(.adult) #home .daily .playbtn{padding-bottom:15px}
+body:not(.adult) #home .pickbody .caro{padding-top:23px;padding-bottom:23px}
+
+/* Adult atelier: original museum art, quiet typography and consistent framing. */
+.adult-intro{display:none}.settings-label{margin:8px 0 0;font-size:12px;color:var(--sub);font-weight:600}
+body.adult{--bg:#191D1C;--panel:#222725;--ink:#F2EFE5;--sub:#AAAFA5;--accent:#D5B77C;--accent-deep:#B69A63;--line:#3B433E;--mint:#A2BCA5;--gold:#D5B77C;background-image:none}
+body.adult #home{max-width:960px;gap:24px}
+body.adult #home .logo{font-family:var(--disp);font-size:18px;letter-spacing:-.045em;font-weight:600}
+body.adult #home .logo svg{background:transparent;color:var(--accent);border:1px solid #756444;border-radius:8px;padding:5px}
+body.adult #home .stat{background:none;border:0;color:var(--sub)}
+body.adult #home .statgrp{background:none;border:1px solid var(--line);border-radius:9px}
+body.adult .adult-intro{display:block;border-top:1px solid var(--line);padding-top:23px}
+body.adult .adult-intro>span{font-size:9px;letter-spacing:.2em;color:var(--accent)}
+body.adult .adult-intro h1{font-family:var(--disp);font-size:29px;line-height:1.5;font-weight:400;margin:8px 0 7px;letter-spacing:-.055em}
+body.adult .adult-intro p{margin:0;font-size:12px;color:var(--sub);line-height:1.7}
+body.adult #pickSec{gap:12px}
+body.adult .picker-heading h2{font-family:var(--body);font-size:14px;font-weight:600;letter-spacing:0}
+body.adult .picker-heading p{font-size:10px;color:var(--sub)}
+body.adult #home .ctabs{gap:16px;border-bottom:1px solid var(--line);padding:0}
+body.adult #home .ctab{border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;padding:7px 0;min-height:40px;font-size:12px;letter-spacing:0;color:var(--sub)}
+body.adult #home .ctab.on{border-bottom-color:var(--accent);color:var(--ink);background:none;padding:7px 0}
+body.adult #home .pickbody{background:transparent;overflow:hidden;border-radius:0}
+body.adult #home .pkchips{padding:0 0 9px;gap:7px}
+body.adult #home .pkchip{background:transparent;border:1px solid var(--line);min-height:36px;padding:7px 12px;border-radius:7px;color:var(--sub);font-size:11px;letter-spacing:0}
+body.adult #home .pkchip.on{background:#343C34;border-color:#66735E;color:var(--ink)}
+body.adult #home .pkchip small{font-size:9px;color:var(--sub)}
+body.adult #home .pickbody .caro{padding:10px 8px 13px;scroll-padding-inline:8px;gap:14px}
+body.adult #home .caro .card{width:158px;background:#242A26;padding:10px;border:1px solid #4B5148;border-radius:5px;box-shadow:0 4px 8px #0002;gap:10px}
+body.adult #home .caro .card canvas{border-radius:1px;border:5px solid #D9D4C5;box-shadow:0 0 0 1px #101410}
+body.adult #home .caro .card[aria-pressed="true"]{background:#31392F;border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+body.adult #home .caro .card .row{display:flex;flex-direction:column;align-items:flex-start;gap:5px;padding:0}
+body.adult #home .caro .card .name{font-family:var(--disp);font-weight:400;font-size:12px;line-height:1.45;max-width:100%;color:var(--ink)}
+body.adult .artist{font-size:10px;color:var(--sub);line-height:1.4}
+body.adult #home .daily{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;grid-template-columns:78px minmax(0,1fr);gap:7px 16px;box-shadow:none}
+body.adult #home .daily canvas{width:78px;height:78px;border:4px solid #D9D4C5;border-radius:1px;grid-row:1/4}
+body.adult #home .daily .eyebrow{color:var(--accent);font-family:var(--body);font-size:10px;letter-spacing:.025em}
+body.adult #home .daily h2{font-family:var(--disp);font-size:21px;font-weight:400;line-height:1.4}
+body.adult #home .daily .date{display:none}
+body.adult .artist-label{grid-column:2;grid-row:3;font-size:11px;line-height:1.4;color:var(--sub)}
+body.adult .difficulty-label{font-size:10px;letter-spacing:.04em;margin-top:12px}
+body.adult #home .cnt{background:#1D221F;border:1px solid var(--line);border-radius:7px;font-size:12px;min-height:44px;color:var(--sub)}
+body.adult #home .cnt.on{border-color:var(--accent);background:#39372C;color:var(--accent)}
+body.adult #home .daily .playbtn{background:var(--accent);color:#272B22;border-radius:8px;box-shadow:none;font-size:15px;font-weight:650;min-height:50px}
+body.adult #home .daily .resumebtn{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+body.adult #home .daily .backdaily{color:var(--sub);font-size:11px}
+body.adult #home .collcard{border-radius:10px;background:transparent;padding:16px;border:1px solid var(--line);box-shadow:none}
+body.adult #home .collico{background:#303A30;border-radius:8px;color:var(--accent);filter:none}
+body.adult #home .collinfo b{font-size:13px;font-weight:500}body.adult #home .collbar i{background:var(--accent)}
+body.adult #home .note{font-size:10px;color:#858D82}
+body.adult #settings .box,body.adult #acct .box,body.adult #sheet .box{background:var(--panel);border:1px solid var(--line);border-radius:20px 20px 0 0}
+body.adult .stylechip{background:#1D221F;border:1px solid var(--line);color:var(--sub);font-size:14px}
+body.adult .stylechip.on{border-color:var(--accent);color:var(--accent);background:#39372C}
+body.adult #splash{background-image:none;background:var(--bg);justify-content:center;align-items:center;padding:32px}
+body.adult #splash .sname{display:block;color:var(--ink);font-size:30px;font-family:var(--disp);font-weight:400}
+body.adult #splash .tstart{background:var(--accent);color:var(--bg);font-size:18px;padding:14px 40px;border-radius:8px;box-shadow:none}
+@media(max-width:560px){body.adult #home{gap:19px}body.adult #home .logo{font-size:15px}body.adult .adult-intro{padding-top:17px}body.adult .adult-intro h1{font-size:25px}body.adult #home .daily{padding:17px}}
+@media(max-width:360px){body.adult .adult-intro h1{font-size:23px}body.adult #home .caro .card{width:145px}body.adult #home .daily h2{font-size:18px}}
+
+/* Slightly strengthen only the artwork silhouette; leave text and art interiors untouched. */
+body:not(.adult) #home .stat,body:not(.adult) #home .caro .card,body:not(.adult) #home .daily,body:not(.adult) #home .cnt,body:not(.adult) .acct-btn,body:not(.adult) .stylechip,body:not(.adult) #sheet .opt,body:not(.adult) #gtop .gbtn,body:not(.adult) #panicHome,body:not(.adult) #winwrap .again,body:not(.adult) #settings .box,body:not(.adult) #acct .box,body:not(.adult) #sheet .box,body:not(.adult) #winwrap .win,body:not(.adult) #home .ctab,body:not(.adult) #home .pkchip,body:not(.adult) #packview .box,body:not(.adult) #collview .box,body:not(.adult) #themeview .box,body:not(.adult) .grid .card{--paint-image:url("assets/ui/painted/panel-v1.png");--paint-size:100% 125%;}
+body:not(.adult) #home .daily .playbtn,body:not(.adult) #splash .tstart,body:not(.adult) #winwrap .playbtn,body:not(.adult) #home .cnt.on,body:not(.adult) .stylechip.on,body:not(.adult) #home .ctab.on,body:not(.adult) #home .pkchip.on{--paint-image:url("assets/ui/painted/play-v1.png");--paint-size:100% 131%;}
+body:not(.adult) #home .pickbody,body:not(.adult) #home .collcard{--paint-image:url("assets/ui/painted/tray-v1.png");--paint-size:100% 125%;}
+body:not(.adult) #home .stat,body:not(.adult) #home .caro .card,body:not(.adult) #home .daily,body:not(.adult) #home .cnt,body:not(.adult) .acct-btn,body:not(.adult) .stylechip,body:not(.adult) #sheet .opt,body:not(.adult) #gtop .gbtn,body:not(.adult) #panicHome,body:not(.adult) #winwrap .again,body:not(.adult) #settings .box,body:not(.adult) #acct .box,body:not(.adult) #sheet .box,body:not(.adult) #winwrap .win,body:not(.adult) #home .ctab,body:not(.adult) #home .pkchip,body:not(.adult) #packview .box,body:not(.adult) #collview .box,body:not(.adult) #themeview .box,body:not(.adult) .grid .card,body:not(.adult) #home .daily .playbtn,body:not(.adult) #splash .tstart,body:not(.adult) #winwrap .playbtn,body:not(.adult) #home .cnt.on,body:not(.adult) .stylechip.on,body:not(.adult) #home .ctab.on,body:not(.adult) #home .pkchip.on,body:not(.adult) #home .pickbody,body:not(.adult) #home .collcard{position:relative;isolation:isolate;background-image:none!important;}
+body:not(.adult) #home .stat::before,body:not(.adult) #home .caro .card::before,body:not(.adult) #home .daily::before,body:not(.adult) #home .cnt::before,body:not(.adult) .acct-btn::before,body:not(.adult) .stylechip::before,body:not(.adult) #sheet .opt::before,body:not(.adult) #gtop .gbtn::before,body:not(.adult) #panicHome::before,body:not(.adult) #winwrap .again::before,body:not(.adult) #settings .box::before,body:not(.adult) #acct .box::before,body:not(.adult) #sheet .box::before,body:not(.adult) #winwrap .win::before,body:not(.adult) #home .ctab::before,body:not(.adult) #home .pkchip::before,body:not(.adult) #packview .box::before,body:not(.adult) #collview .box::before,body:not(.adult) #themeview .box::before,body:not(.adult) .grid .card::before,body:not(.adult) #home .daily .playbtn::before,body:not(.adult) #splash .tstart::before,body:not(.adult) #winwrap .playbtn::before,body:not(.adult) #home .cnt.on::before,body:not(.adult) .stylechip.on::before,body:not(.adult) #home .ctab.on::before,body:not(.adult) #home .pkchip.on::before,body:not(.adult) #home .pickbody::before,body:not(.adult) #home .collcard::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:var(--paint-image) center/var(--paint-size) no-repeat;filter:drop-shadow(.35px 0 0 #33415A) drop-shadow(-.35px 0 0 #33415A) drop-shadow(0 .35px 0 #33415A);}
+body:not(.adult) #panicHome{position:fixed}
 </style>
 
 <div id="splash">
@@ -370,20 +596,23 @@ body:not(.adult) .pickbody{border-radius:16px; margin-top:0}
 <main id="home">
   <div class="topline">
     <div class="logo">
-      <svg viewBox="10 8 72 74" aria-hidden="true"><g stroke="#3A4258" stroke-width="2.5" stroke-linejoin="round"><path fill="#7EC8F0" d="M13 19L43 19L43 31C43 34 45.7 29.8 47.6 29.8C49.8 29.8 51 32 51 34C51 36 49.8 38.2 47.6 38.2C45.7 38.2 43 34 43 37L43 49L31 49C28 49 32.2 46.3 32.2 44.4C32.2 42.3 29.9 41 28 41C26.1 41 23.8 42.3 23.8 44.4C23.8 46.3 28 49 25 49L13 49L13 19Z"/><path fill="#F2B01E" d="M13 49L25 49C28 49 23.8 46.3 23.8 44.4C23.8 42.3 26.1 41 28 41C29.9 41 32.2 42.3 32.2 44.4C32.2 46.3 28 49 31 49L43 49L43 61C43 64 45.7 59.8 47.6 59.8C49.8 59.8 51 62 51 64C51 66 49.8 68.2 47.6 68.2C45.7 68.2 43 64 43 67L43 79L13 79L13 49Z"/><path fill="#3FBF8F" d="M43 49L55 49C58 49 53.8 51.7 53.8 53.6C53.8 55.8 56 57 58 57C60 57 62.2 55.8 62.2 53.6C62.2 51.7 58 49 61 49L73 49L73 79L43 79L43 67C43 64 45.7 68.2 47.6 68.2C49.8 68.2 51 66 51 64C51 62 49.8 59.8 47.6 59.8C45.7 59.8 43 64 43 61L43 49Z"/><path fill="#FF8A3D" d="M49.8 11.3L79.5 16L74.8 45.7L62.9 43.8C60 43.3 63.7 46.6 63.4 48.6C63 50.6 60.6 51.5 58.7 51.2C56.8 50.9 54.7 49.3 55.1 47.3C55.4 45.3 60 43.3 57 42.8L45.1 41L47 29.1C47.5 26.2 49.5 30.7 51.4 31C53.5 31.4 55 29.3 55.3 27.4C55.6 25.5 54.8 23.1 52.7 22.7C50.8 22.4 47.5 26.2 48 23.2L49.8 11.3Z"/></g></svg>
+      <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6a3 3 0 1 1 6 0h4v6a3 3 0 1 0 0 6v4h-6a3 3 0 1 0-6 0H4v-6a3 3 0 1 1 0-6Z"/></svg>
       <span id="logoName">이든의 퍼즐</span>
     </div>
     <div class="spacer"></div>
     <div class="statgrp" aria-label="코인">
-      <span class="seg" title="별코인 — 퍼즐을 맞추면 모여요">⭐ <b id="coinSN">0</b></span>
-      <span class="seg" title="무지개코인 — 매일 3개, 프리미엄 그림을 열어요">🌈 <b id="coinRN">3</b></span>
+      <span class="seg" title="별코인 — 퍼즐을 맞추면 모여요"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></svg> <b id="coinSN">0</b></span>
+      <span class="seg" title="무지개코인 — 매일 3개, 프리미엄 그림을 열어요"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19v-3a9 9 0 0 1 18 0v3M7 19v-3a5 5 0 0 1 10 0v3M11 19v-3a1 1 0 0 1 2 0v3"/></svg> <b id="coinRN">3</b></span>
     </div>
-    <button class="stat" id="setBtn" aria-label="설정">⚙️</button>
+    <button class="stat" id="setBtn" aria-label="설정"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="8" cy="7" r="2.5" fill="var(--bg)"/><circle cx="16" cy="17" r="2.5" fill="var(--bg)"/></svg></button>
     <button class="stat guest" id="acctBtn" aria-label="계정">👤 게스트</button>
   </div>
 
 
+  <section class="adult-intro"><span>EDEN · ART COLLECTION</span><h1 id="adultHeading">그림 속에 머무는 시간</h1><p id="adultSubtitle">좋아하는 작품을 한 조각씩 완성해 보세요.</p></section>
+
   <div class="sec" id="pickSec">
+    <div class="picker-heading"><h2 id="pickHeading">어떤 그림을 맞춰볼까?</h2><p id="pickHint">옆으로 넘겨 골라요</p></div>
     <div class="ctabs" id="cTabs"></div>
     <div class="pickbody">
       <div class="pkchips" id="pkChips" hidden></div>
@@ -397,6 +626,8 @@ body:not(.adult) .pickbody{border-radius:16px; margin-top:0}
       <span class="eyebrow" id="dailyEyebrow">오늘의 퍼즐 · 무료</span>
       <h2 id="dailyName">…</h2>
       <span class="date" id="dailyDate"></span>
+      <span class="artist-label" id="stageArtist" hidden></span>
+      <span class="difficulty-label" id="difficultyLabel">조각 수</span>
       <div class="cntrow" id="stageCnts"></div>
       <button class="playbtn resumebtn" id="stageResume" hidden></button>
       <button class="playbtn" id="dailyPlay">맞추러 가기</button>
@@ -406,7 +637,7 @@ body:not(.adult) .pickbody{border-radius:16px; margin-top:0}
   </section>
 
   <button class="collcard" id="collCard">
-    <span class="collico">🖼️</span>
+    <span class="collico"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="16" height="16" rx="3"/><path d="M2 7v12a3 3 0 0 0 3 3h12M8 15l4-4 3 3 3-2"/><circle cx="16" cy="7" r="1"/></svg></span>
     <span class="collinfo"><b id="secColl">콜렉션</b><span class="collbar"><i id="collFill"></i></span></span>
     <b class="collnum" id="collCount">0 / 0</b>
   </button>
@@ -418,6 +649,11 @@ body:not(.adult) .pickbody{border-radius:16px; margin-top:0}
 <div id="settings" hidden>
   <div class="box">
     <h3 id="setTitle">설정</h3>
+    <p class="settings-label" id="modeLabel">플레이 모드</p>
+    <div class="stylerow">
+      <button class="stylechip" id="modeKid"><span id="modeKidL">이든</span></button>
+      <button class="stylechip" id="modeAdult"><span id="modeAdultL">어른</span></button>
+    </div>
     <div class="stylerow">
       <button class="stylechip" id="langKo">한국어</button>
       <button class="stylechip" id="langEn">English</button>
@@ -460,10 +696,6 @@ body:not(.adult) .pickbody{border-radius:16px; margin-top:0}
   <div class="box">
     <h3 id="acctTitle">계정</h3>
     <p class="acct-note acct-stats"><span title="완성한 퍼즐">🏆 <b id="starN">0</b></span> &nbsp;·&nbsp; <span title="오늘의 퍼즐 연속 기록">🔥 <b id="streakN">0</b></span></p>
-    <div class="stylerow">
-      <button class="stylechip" id="modeKid"><span class="micon">🧒 </span><span id="modeKidL">이든</span></button>
-      <button class="stylechip" id="modeAdult"><span class="micon">🎩 </span><span id="modeAdultL">어른</span></button>
-    </div>
     <p class="acct-note" id="acctNote">지금은 <b>게스트 모드</b> — 진행과 별은 이 기기에 저장돼요.<br>로그인이 열리면 계정으로 이어서 저장할 수 있어요.</p>
     <button class="acct-btn" disabled id="acctG">구글로 계속하기 · 준비 중</button>
     <button class="acct-btn" disabled id="acctA">Apple로 계속하기 · 준비 중</button>
@@ -527,15 +759,15 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v44';
+const BUILD='v50';
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
   secScenes:'그림 고르기',secScenesS:'매일 새 그림이 무료로 열려요',
-  secArts:'테마 퍼즐',secArtsS:'여러 그림이 팩으로 들어 있어요',secColl:'콜렉션',
+  secArts:'테마 퍼즐',secArtsS:'여러 그림이 팩으로 들어 있어요',secColl:'내 컬렉션',
   secPhoto:'사진 퍼즐',secPhotoS:'그림처럼 바꿔서도 맞출 수 있어요',
   photoBtnName:'사진 고르기',lastPhotoName:'마지막 사진',tabScenes:'그림',tabPhoto:'사진',
-  footNote:'광고 없음 · 사진도 그림 변환도 전부 기기 안에서만 · 프리미엄 그림은 무지개코인 🌈 으로 열어요 (매일 3개)',
+  footNote:'광고 없음 · 사진도 그림 변환도 전부 기기 안에서만 · 프리미엄 그림은 무지개코인으로 열어요 (매일 3개)',
   sheetRain:'🌈 무지개코인 1개를 써요 · 오늘 {n}개 남았어요',
   rainOut:'오늘 무지개코인을 다 썼어요! 내일 3개가 새로 와요 🌈',
   chipRaw:'사진 그대로',chipArt:'그림처럼 🖍️',close:'닫기',
@@ -552,7 +784,7 @@ en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle ·
   secArts:'Theme Puzzles',secArtsS:'Packs of pictures to explore',
   secPhoto:'Photo Puzzle',secPhotoS:'Turn your photos into drawings too',
   photoBtnName:'Choose a Photo',lastPhotoName:'Last Photo',tabScenes:'Pictures',tabPhoto:'Photos',
-  footNote:'No ads · Photos never leave your device · Premium pictures open with rainbow coins 🌈 (3 a day)',
+  footNote:'No ads · Photos never leave your device · Premium pictures open with rainbow coins (3 a day)',
   sheetRain:'Uses 1 rainbow coin 🌈 · {n} left today',
   rainOut:'All rainbow coins used today! 3 fresh ones tomorrow 🌈',
   chipRaw:'Original photo',chipArt:'Like a drawing 🖍️',close:'Close',
@@ -567,9 +799,9 @@ en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle ·
 };
 let lang=store.get('lang','ko');
 let mode=store.get('mode','kid');
-const LA={ko:{dailyPlay:'시작하기',howMany:'조각 수 선택',winMsg:'퍼즐 완성',winAgain:'다시 하기',winHome:'홈으로',
+const LA={ko:{appName:'이든 아틀리에',dailyEyebrow:'오늘의 작품 · 무료',secColl:'나의 갤러리',dailyPlay:'시작하기',howMany:'조각 수 선택',winMsg:'퍼즐 완성',winAgain:'다시 하기',winHome:'홈으로',
   secScenes:'그림',secScenesS:'키즈 일러스트',secArts:'컬렉션',secArtsS:'작가와 시대로 묶었습니다',modeKid:'이든',modeAdult:'어른',swHint:'← 밀어서 전환 →'},
- en:{dailyPlay:'Start',howMany:'Choose piece count',winMsg:'Complete',winAgain:'Play again',winHome:'Home',
+ en:{appName:'Eden Atelier',dailyEyebrow:'DAILY ART · FREE',secColl:'My gallery',dailyPlay:'Start',howMany:'Choose piece count',winMsg:'Complete',winAgain:'Play again',winHome:'Home',
   secScenes:'Pictures',secScenesS:'Kids illustrations',secArts:'Collections',secArtsS:'Grouped by artist and era',modeKid:'Kids',modeAdult:'Grown-ups',swHint:'← Swipe to switch →'}};
 const t=k=>{
   if(mode==='adult'&&LA[lang]&&LA[lang][k]!==undefined)return LA[lang][k];
@@ -577,8 +809,15 @@ const t=k=>{
 };
 const sceneName=sc=>(lang==='en'&&sc.en?sc.en:sc.name);
 function setLang(l){lang=l;store.set('lang',l);applyLang()}
+const UI_ICONS={"star": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z\"/></svg>", "rainbow": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 19v-3a9 9 0 0 1 18 0v3M7 19v-3a5 5 0 0 1 10 0v3M11 19v-3a1 1 0 0 1 2 0v3\"/></svg>", "user": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"8\" r=\"3.5\"/><path d=\"M5 21v-2a7 7 0 0 1 14 0v2\"/></svg>", "settings": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 7h16M4 17h16\"/><circle cx=\"8\" cy=\"7\" r=\"2.5\" fill=\"var(--bg)\"/><circle cx=\"16\" cy=\"17\" r=\"2.5\" fill=\"var(--bg)\"/></svg>", "collection": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"5\" y=\"3\" width=\"16\" height=\"16\" rx=\"3\"/><path d=\"M2 7v12a3 3 0 0 0 3 3h12M8 15l4-4 3 3 3-2\"/><circle cx=\"16\" cy=\"7\" r=\"1\"/></svg>", "play": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m8 5 11 7-11 7Z\"/></svg>", "home": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9\"/></svg>", "back": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m10 5-7 7 7 7M3 12h18\"/></svg>", "sound": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 9h4l5-4v14l-5-4H4ZM17 8a6 6 0 0 1 0 8M20 5a10 10 0 0 1 0 14\"/></svg>", "mute": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 9h4l5-4v14l-5-4H4ZM17 9l5 6m0-6-5 6\"/></svg>", "puzzle": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 4h6a3 3 0 1 1 6 0h4v6a3 3 0 1 0 0 6v4h-6a3 3 0 1 0-6 0H4v-6a3 3 0 1 1 0-6Z\"/></svg>", "search": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"10\" cy=\"10\" r=\"6\"/><path d=\"m15 15 6 6\"/></svg>"};
 function applyLang(){
   document.documentElement.lang=lang;
+  $('adultHeading').textContent=lang==='en'?'A moment with art':'그림 속에 머무는 시간';
+  $('adultSubtitle').textContent=lang==='en'?'Discover a painting, one piece at a time.':'좋아하는 작품을 한 조각씩 완성해 보세요.';
+  $('modeLabel').textContent=lang==='en'?'PLAY MODE':'플레이 모드';
+  const homeCopy=lang==='en'?['Choose a picture','Swipe to explore →']:['그림 고르기','옆으로 넘겨보세요 →'];
+  ['pickHeading','pickHint'].forEach((id,i)=>$(id).textContent=homeCopy[i]);
+  if(mode==='adult'){$('pickHeading').textContent=lang==='en'?'Explore the collection':'작품 둘러보기';$('pickHint').textContent=lang==='en'?'Swipe to discover →':'옆으로 감상하기 →';}
   const M={logoName:'appName',dailyEyebrow:'dailyEyebrow',dailyPlay:'dailyPlay',
     secScenes:'secScenes',secScenesS:'secScenesS',secArts:'secArts',secArtsS:'secArtsS',secArtsChip:'prem',
     secPhoto:'secPhoto',secPhotoS:'secPhotoS',secPhotoChip:'prem',
@@ -590,7 +829,14 @@ function applyLang(){
     splashName:'appName',titleStart:'start',setTitle:'setTitle',setCancel:'close',privLink:'privLink',packCancel:'close',secColl:'secColl',collCancel:'close',themeCancel:'close',modeKidL:'modeKid',modeAdultL:'modeAdult',swHint:'swHint'};
   for(const id in M){const el=document.getElementById(id);if(el)el.textContent=t(M[id])}
   $('acctNote').innerHTML=t('acctNote');
-  $('acctBtn').textContent=t('guest');
+  $('acctBtn').innerHTML=UI_ICONS.user;
+  $('acctBtn').setAttribute('aria-label',lang==='en'?'Guest account':'게스트 계정');
+  $('setBtn').setAttribute('aria-label',lang==='en'?'Settings':'설정');
+  $('difficultyLabel').textContent=lang==='en'?'PIECES':'조각 수';
+  $('backDaily').textContent=lang==='en'?'Back to today’s picture':'오늘의 그림으로 돌아가기';
+  $('backBtn').innerHTML=UI_ICONS.back+' '+(lang==='en'?'Quit':'그만하기');
+  $('panicHome').innerHTML=UI_ICONS.home;
+  $('peekBtn').innerHTML=UI_ICONS.search+' '+(lang==='en'?'View picture':'원본 보기');
   $('langKo').classList.toggle('on',lang==='ko');
   $('langEn').classList.toggle('on',lang==='en');
   $('buildLine').textContent=t('build')+' '+BUILD+' · eden-puzzle.vercel.app';
@@ -919,7 +1165,7 @@ function beep(freq,dur,when=0,vol=.15){
 }
 const popSnd=r=>beep(500+320*(r||0),.12,0,.12);   // 진행될수록 음이 올라간다
 const winSnd=()=>[523,659,784,1047].forEach((f,i)=>beep(f,.25,i*.14,.14));
-function syncSndBtn(){$('setSnd').textContent=soundOn?t('sndOn'):t('sndOff')}
+function syncSndBtn(){$('setSnd').innerHTML=UI_ICONS[soundOn?'sound':'mute']+' '+(lang==='en'?(soundOn?'Sound on':'Sound off'):(soundOn?'소리 켜짐':'소리 꺼짐'))}
 $('setSnd').onclick=()=>{soundOn=!soundOn;store.set('snd',soundOn);syncSndBtn();popSnd()};
 $('setBtn').onclick=()=>{pushUI('sheet');$('settings').hidden=false};
 $('setCancel').onclick=()=>{$('settings').hidden=true};
@@ -964,6 +1210,8 @@ function openPack(pid){
   const done=store.get('done',{});
   for(const sc of ARTS.filter(a=>a.pack===pid)){
     const b=document.createElement('button');b.className='card';
+    b.dataset.sceneId=sc.id;
+    b.setAttribute('aria-pressed',String(stageScene().sc.id===sc.id));
     const cv=document.createElement('canvas');cv.width=360;cv.height=270;
     b.appendChild(cv);
     const row=document.createElement('span');row.className='row';
@@ -1464,7 +1712,8 @@ function dayStamp(d){d=d||new Date();
   return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 function todayScene(){
   const d=new Date(), n=Math.floor(d.getTime()/86400000);
-  return SCENES[n%SCENES.length];
+  const pool=mode==='adult'?themeArts('museum'):SCENES;
+  return pool[n%pool.length];
 }
 
 /* ── 홈 렌더 ── */
@@ -1485,15 +1734,19 @@ function stageScene(){
 }
 function renderStage(){
   const {sc,isDaily}=stageScene();
+  document.querySelectorAll('#caro [data-scene-id]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sceneId===sc.id)));
   paintThumb($('dailyThumb'),sc.id);
   if(sc.img)ensureImg(sc).then(()=>{if(stageScene().sc.id===sc.id)paintThumb($('dailyThumb'),sc.id)});
-  $('dailyName').textContent=sceneName(sc);
+  const parts=sceneName(sc).split(' · ');
+  $('dailyName').textContent=mode==='adult'?parts[0]:sceneName(sc);
+  $('stageArtist').hidden=mode!=='adult'||parts.length<2;
+  $('stageArtist').textContent=parts.slice(1).join(' · ');
   $('dailyDate').textContent=isDaily?new Date().toLocaleDateString(lang==='en'?'en-US':'ko-KR',
     {month:'long',day:'numeric',weekday:'long'}):'';
   $('dailyDate').hidden=!isDaily;
   $('backDaily').hidden=isDaily;
   const prem=isPrem(sc.id,isDaily);
-  $('dailyEyebrow').textContent=isDaily?t('dailyEyebrow'):(prem?'\uD83C\uDF08 '+t('stagePrem'):t('free'));
+  $('dailyEyebrow').textContent=isDaily?t('dailyEyebrow'):(prem?(mode==='adult'?'':'\uD83C\uDF08 ')+t('stagePrem'):t('free'));
   const list=(mode==='adult'?COUNTS.filter(c=>c.n>=24).concat(COUNTS_A):COUNTS);
   const defN=mode==='adult'?48:12;
   let curN=store.get('cnt:'+mode,defN);
@@ -1503,6 +1756,7 @@ function renderStage(){
   for(const c of list){
     const b=document.createElement('button');b.className='cnt'+(c.n===cur.n?' on':'');
     b.textContent=c.n+t('pcs');
+    b.setAttribute('aria-pressed',String(c.n===cur.n));
     b.onclick=()=>{store.set('cnt:'+mode,c.n);renderStage()};
     cr.appendChild(b);
   }
@@ -1517,7 +1771,7 @@ function renderStage(){
     rb.textContent='\u25B6 '+t('resume')+' \u00B7 '+rc.n+t('pcs')+' ('+rs.placed.length+'/'+rc.n+')';
     rb.onclick=()=>openGame(sc.id,rc,isDaily);
   }else rb.hidden=true;
-  $('dailyPlay').textContent=rs?t('newGame'):t('dailyPlay');
+  $('dailyPlay').innerHTML=UI_ICONS.play+' '+(rs?t('newGame'):(lang==='en'?'Play puzzle':'퍼즐 시작'));
   const co=$('stageCoin');co.classList.remove('deny','shake');
   co.hidden=!prem;
   if(prem)co.textContent=t('sheetRain').replace('{n}',rainState().n);
@@ -1589,18 +1843,22 @@ function renderCaro(){
   const ca=$('caro');ca.innerHTML='';ca.scrollLeft=0;
   const addCard=(sc,chips,into)=>{
     const b=document.createElement('button');b.className='card';
+    b.dataset.sceneId=sc.id;
+    b.setAttribute('aria-pressed',String(stageScene().sc.id===sc.id));
     const cv=document.createElement('canvas');cv.width=360;cv.height=270;
     b.appendChild(cv);
     const row=document.createElement('span');row.className='row';
-    row.innerHTML='<span class="name">'+sceneName(sc)+'</span>';
+    const name=document.createElement('span');name.className='name';
+    const parts=sceneName(sc).split(' · ');name.textContent=mode==='adult'?parts[0]:sceneName(sc);row.appendChild(name);
+    if(mode==='adult'&&parts.length>1){const by=document.createElement('small');by.className='artist';by.textContent=parts.slice(1).join(' · ');row.appendChild(by);}
     b.appendChild(row);
-    if(done[sc.id]){const g=document.createElement('span');g.className='bdg star';g.textContent='\u2B50';b.appendChild(g)}
-    else if(chips){const g=document.createElement('span');g.className='bdg prem';g.textContent='\uD83C\uDF08';b.appendChild(g)}
+    if(done[sc.id]){const g=document.createElement('span');g.className='bdg star';g.innerHTML=UI_ICONS.star;g.setAttribute('aria-label',lang==='en'?'Completed':'완성');b.appendChild(g)}
+    else if(chips){const g=document.createElement('span');g.className='bdg prem';g.innerHTML=UI_ICONS.rainbow;g.setAttribute('aria-label',lang==='en'?'Premium':'프리미엄');b.appendChild(g)}
     const pg=savedProg(sc.id);
     if(pg&&!done[sc.id]){const pb=document.createElement('span');pb.className='pbar';
       pb.innerHTML='<i style="width:'+Math.round(pg*100)+'%"></i>';b.appendChild(pb)}
     b.onclick=()=>{selSid=sc.id;renderStage();
-      try{$('dailyCard').scrollIntoView({behavior:'smooth',block:'nearest'})}catch(e){}};
+      try{$('dailyCard').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'nearest'})}catch(e){}};
     (into||ca).appendChild(b);
     paintThumb(cv,sc.id);
     if(sc.img)ensureImg(sc).then(()=>{if(document.body.contains(cv))paintThumb(cv,sc.id)});
@@ -1624,7 +1882,7 @@ function renderCaro(){
       const row=document.createElement('span');row.className='row';
       row.innerHTML='<span class="name">'+t('lastPhotoName')+'</span>';
       pb.appendChild(row);
-      if(done.photo){const g=document.createElement('span');g.className='bdg star';g.textContent='\u2B50';pb.appendChild(g)}
+      if(done.photo){const g=document.createElement('span');g.className='bdg star';g.innerHTML=UI_ICONS.star;pb.appendChild(g)}
       pb.onclick=()=>openSheet('photo',false);
       ca.appendChild(pb);
       paintThumb(cv,'photo');
@@ -1689,12 +1947,14 @@ function applyMode(){
   document.body.classList.toggle('adult',mode==='adult');
   $('modeKid').classList.toggle('on',mode!=='adult');
   $('modeAdult').classList.toggle('on',mode==='adult');
+  $('modeKid').setAttribute('aria-pressed',String(mode!=='adult'));
+  $('modeAdult').setAttribute('aria-pressed',String(mode==='adult'));
 }
 function setMode(m){
   if(m===mode)return;
   const dir=m==='adult'?'slideL':'slideR';
-  mode=m;store.set('mode',m);
-  $('acct').hidden=true;
+  mode=m;selSid=null;store.set('mode',m);
+  $('acct').hidden=true;$('settings').hidden=true;
   applyMode();applyLang();
   const h=$('home');h.classList.remove('slideL','slideR');void h.offsetWidth;h.classList.add(dir);
   beep(m==='adult'?392:523,.09,0,.1);

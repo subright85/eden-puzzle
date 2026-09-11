@@ -1,7 +1,8 @@
-const C = 'eden-v43';
+const C = 'eden-v49';
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(C)
-    .then(c => c.addAll(['/', '/manifest.webmanifest', '/icon-180.png', '/icon-512.png', '/assets/title.jpg',
+    .then(c => c.addAll(['/', '/manifest.webmanifest', '/icon-180.png', '/icon-512.png', '/assets/title.jpg', '/assets/ui/painted/play-v1.png', '/assets/ui/painted/panel-v1.png', '/assets/ui/painted/tray-v1.png',
+      '/assets/ui/kid/album.svg', '/assets/ui/kid/card-selected.svg', '/assets/ui/kid/card.svg', '/assets/ui/kid/chip-selected.svg', '/assets/ui/kid/chip.svg', '/assets/ui/kid/icon-button.svg', '/assets/ui/kid/panel.svg', '/assets/ui/kid/play.svg', '/assets/ui/kid/tray.svg',
       '/assets/puzzles/space.kid.jpg', '/assets/puzzles/sea.kid.jpg', '/assets/puzzles/dino.kid.jpg',
       '/assets/puzzles/balloon.kid.jpg', '/assets/puzzles/farm.kid.jpg', '/assets/puzzles/fire.kid.jpg',
       '/assets/puzzles/construction.kid.jpg', '/assets/puzzles/train.kid.jpg', '/assets/puzzles/candy.kid.jpg', '/assets/puzzles/safari.kid.jpg',

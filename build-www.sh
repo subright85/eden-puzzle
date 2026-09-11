@@ -9,7 +9,7 @@ rsync -a --exclude='puzzles/[0-9][0-9]_*.jpg' assets www/
 python3 - <<'EOF'
 s=open('www/index.html').read()
 cdn='<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&family=Gowun+Dodum&family=Noto+Serif+KR:wght@400;600&display=swap">'
-assert s.count(cdn)==1, 'fonts link not found'
+assert s.count(cdn)==1 or 'href="assets/fonts/fonts.css"' in s, 'fonts link not found'
 s=s.replace(cdn,'<link rel="stylesheet" href="assets/fonts/fonts.css">')
 assert s.count('</style>')>=1
 s=s.replace('</style>','#acctBtn{display:none!important}\n</style>',1)

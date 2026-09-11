@@ -679,6 +679,26 @@ body:is(.adult,:not(.adult)) #peekpop canvas{width:auto;height:auto;object-fit:c
 body:is(.adult,:not(.adult)) #collview .box,body:is(.adult,:not(.adult)) #packview .box,body:is(.adult,:not(.adult)) #themeview .box{overflow:hidden}
 body:is(.adult,:not(.adult)) .grid .card .name{word-break:keep-all}
 @media(min-width:1000px){body:is(.adult,:not(.adult)) #home{grid-template-rows:auto min-content min-content 1fr}body.adult #home{grid-template-rows:auto auto min-content min-content 1fr}}
+
+/* Compact header: brand and mode remain visible on every phone. */
+body:is(.adult,:not(.adult)) #home .topline{display:grid;grid-template-columns:minmax(0,1fr) auto auto 36px 36px;gap:8px;align-items:center}
+body:is(.adult,:not(.adult)) #home .logo span{display:inline}
+body:is(.adult,:not(.adult)) #home .logo{font-size:18px;gap:7px;white-space:nowrap}
+body:is(.adult,:not(.adult)) #home .logo .brand-puzzle{width:36px;height:36px;flex:none;background:none;border:0;border-radius:0;padding:0;transform:none;fill:none;color:var(--ink);stroke:none}
+body:is(.adult,:not(.adult)) #home .mode-toggle{display:flex;position:relative;isolation:isolate;gap:2px;padding:3px;border:1px solid var(--line);border-radius:24px;background:rgba(58,66,88,.06);min-width:114px}
+body:is(.adult,:not(.adult)) #home .mode-toggle button{flex:1;min-width:52px;height:38px;padding:0 10px;border:0;border-radius:20px;background:transparent;color:var(--muted);font-family:inherit;font-size:13px;font-weight:700;white-space:nowrap;cursor:pointer}
+body:is(.adult,:not(.adult)) #home .mode-toggle button.on{background:var(--panel);color:var(--ink);box-shadow:0 1px 4px #00000018}
+body.adult #home .mode-toggle button.on{background:#DCC493;color:#252620}
+body:is(.adult,:not(.adult)) #home .mode-toggle button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media(max-width:560px){
+ body:is(.adult,:not(.adult)) #home .topline{grid-template-columns:minmax(0,1fr) 36px 36px;row-gap:10px}
+ body:is(.adult,:not(.adult)) #home .logo{grid-column:1;grid-row:1;font-size:17px}
+ body:is(.adult,:not(.adult)) #home .mode-toggle{grid-column:2/4;grid-row:1;justify-self:end}
+ body:is(.adult,:not(.adult)) #home .statgrp{grid-column:1;grid-row:2;justify-self:start}
+ body:is(.adult,:not(.adult)) #home #setBtn{grid-column:2;grid-row:2}
+ body:is(.adult,:not(.adult)) #home #acctBtn{grid-column:3;grid-row:2}
+}
+@media(max-width:360px){body:is(.adult,:not(.adult)) #home .logo{font-size:15px;gap:4px}body:is(.adult,:not(.adult)) #home .logo .brand-puzzle{width:30px;height:30px}}
 </style>
 
 <div id="splash">
@@ -695,10 +715,13 @@ body:is(.adult,:not(.adult)) .grid .card .name{word-break:keep-all}
 <main id="home">
   <div class="topline">
     <div class="logo">
-      <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h6a3 3 0 1 1 6 0h4v6a3 3 0 1 0 0 6v4h-6a3 3 0 1 0-6 0H4v-6a3 3 0 1 1 0-6Z"/></svg>
+      <svg class="brand-puzzle" viewBox="0 0 40 40" aria-hidden="true"><g stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path fill="#F7C969" d="M8 8h10v5c0 1.4 1.3 1.6 2.2.6a3.1 3.1 0 1 1 0 4.8c-.9-1-2.2-.8-2.2.6v5h-5c-1.4 0-1.6 1.3-.6 2.2a3.1 3.1 0 1 1-4.8 0c1-.9.8-2.2-.6-2.2H4V12a4 4 0 0 1 4-4Z"/><path fill="#83BDA9" d="M24 16v-4c0-1.4 1.3-1.6 2.2-.6a3.1 3.1 0 1 0 4.8 0c-1-.9-.8-2.2.6-2.2H36v12a4 4 0 0 1-4 4h-8v-3c0-1.4-1.3-1.6-2.2-.6a3.1 3.1 0 1 1 0-4.8c.9 1 2.2.8 2.2-.6Z" transform="rotate(12 28 18) translate(0 3)"/></g></svg>
       <span id="logoName">이든의 퍼즐</span>
     </div>
-    <div class="spacer"></div>
+    <div class="mode-toggle" role="group" aria-label="플레이 모드" id="modeToggle">
+      <button id="modeKid"><span id="modeKidL">아이</span></button>
+      <button id="modeAdult"><span id="modeAdultL">어른</span></button>
+    </div>
     <div class="statgrp" aria-label="코인">
       <span class="seg" title="별코인 — 퍼즐을 맞추면 모여요"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></svg> <b id="coinSN">0</b></span>
       <span class="seg" title="무지개코인 — 매일 3개, 프리미엄 그림을 열어요"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19v-3a9 9 0 0 1 18 0v3M7 19v-3a5 5 0 0 1 10 0v3M11 19v-3a1 1 0 0 1 2 0v3"/></svg> <b id="coinRN">3</b></span>
@@ -752,11 +775,6 @@ body:is(.adult,:not(.adult)) .grid .card .name{word-break:keep-all}
 <div id="settings" hidden>
   <div class="box">
     <h3 id="setTitle">설정</h3>
-    <p class="settings-label" id="modeLabel">플레이 모드</p>
-    <div class="stylerow">
-      <button class="stylechip" id="modeKid"><span id="modeKidL">이든</span></button>
-      <button class="stylechip" id="modeAdult"><span id="modeAdultL">어른</span></button>
-    </div>
     <div class="stylerow">
       <button class="stylechip" id="langKo">한국어</button>
       <button class="stylechip" id="langEn">English</button>
@@ -862,7 +880,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v52';
+const BUILD='v53';
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
@@ -881,7 +899,7 @@ ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPl
   setTitle:'설정',sndOn:'\uD83D\uDD0A 소리 켜짐',sndOff:'\uD83D\uDD07 소리 꺼짐',
   free:'무료',prem:'프리미엄',photoName:'사진 퍼즐',photoArt:'사진 퍼즐 · 그림처럼',
   todayPrefix:'오늘의 퍼즐 · ',howMany:'몇 조각으로 할까?',resume:'이어서 하기',newGame:'새로 시작',stagePrem:'프리미엄 그림',pcs:'조각',
-  tag6:'아주 쉬움',tag12:'쉬움',tag24:'보통',tag48:'도전!',tag96:'전문가',tag150:'마스터',modeKid:'이든',modeAdult:'어른',peekBtn:'\uD83D\uDD0D 원본 보기',privLink:'개인정보 처리방침',swHint:'← 옆으로 밀면 모드가 바뀌어요 →',build:'빌드',start:'시작!'},
+  tag6:'아주 쉬움',tag12:'쉬움',tag24:'보통',tag48:'도전!',tag96:'전문가',tag150:'마스터',modeKid:'아이',modeAdult:'어른',peekBtn:'\uD83D\uDD0D 원본 보기',privLink:'개인정보 처리방침',swHint:'← 옆으로 밀면 모드가 바뀌어요 →',build:'빌드',start:'시작!'},
 en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle · Free",dailyPlay:"Let's Play!",
   secScenes:'Pick a Picture',secScenesS:'A new free picture every day',
   secArts:'Theme Puzzles',secArtsS:'Packs of pictures to explore',
@@ -898,14 +916,14 @@ en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle ·
   setTitle:'Settings',sndOn:'\uD83D\uDD0A Sound on',sndOff:'\uD83D\uDD07 Sound off',
   free:'Free',prem:'Premium',photoName:'Photo Puzzle',photoArt:'Photo Puzzle · Drawing',
   todayPrefix:"Today's Puzzle · ",howMany:'How many pieces?',resume:'Continue',newGame:'Start fresh',stagePrem:'Premium picture',pcs:' pcs',
-  tag6:'Super easy',tag12:'Easy',tag24:'Medium',tag48:'Challenge!',tag96:'Expert',tag150:'Master',modeKid:'Kids',modeAdult:'Grown-ups',peekBtn:'\uD83D\uDD0D View picture',privLink:'Privacy Policy',swHint:'← Swipe to switch modes →',build:'Build',start:'Start!'}
+  tag6:'Super easy',tag12:'Easy',tag24:'Medium',tag48:'Challenge!',tag96:'Expert',tag150:'Master',modeKid:'Kids',modeAdult:'Adults',peekBtn:'\uD83D\uDD0D View picture',privLink:'Privacy Policy',swHint:'← Swipe to switch modes →',build:'Build',start:'Start!'}
 };
 let lang=store.get('lang','ko');
 let mode=store.get('mode','kid');
 const LA={ko:{appName:'이든 아틀리에',dailyEyebrow:'오늘의 작품 · 무료',secColl:'나의 갤러리',dailyPlay:'시작하기',howMany:'조각 수 선택',winMsg:'퍼즐 완성',winAgain:'다시 하기',winHome:'홈으로',
-  secScenes:'그림',secScenesS:'키즈 일러스트',secArts:'컬렉션',secArtsS:'작가와 시대로 묶었습니다',modeKid:'이든',modeAdult:'어른',swHint:'← 밀어서 전환 →'},
+  secScenes:'그림',secScenesS:'키즈 일러스트',secArts:'컬렉션',secArtsS:'작가와 시대로 묶었습니다',modeKid:'아이',modeAdult:'어른',swHint:'← 밀어서 전환 →'},
  en:{appName:'Eden Atelier',dailyEyebrow:'DAILY ART · FREE',secColl:'My gallery',dailyPlay:'Start',howMany:'Choose piece count',winMsg:'Complete',winAgain:'Play again',winHome:'Home',
-  secScenes:'Pictures',secScenesS:'Kids illustrations',secArts:'Collections',secArtsS:'Grouped by artist and era',modeKid:'Kids',modeAdult:'Grown-ups',swHint:'← Swipe to switch →'}};
+  secScenes:'Pictures',secScenesS:'Kids illustrations',secArts:'Collections',secArtsS:'Grouped by artist and era',modeKid:'Kids',modeAdult:'Adults',swHint:'← Swipe to switch →'}};
 const t=k=>{
   if(mode==='adult'&&LA[lang]&&LA[lang][k]!==undefined)return LA[lang][k];
   return L[lang]&&L[lang][k]!==undefined?L[lang][k]:L.ko[k]||k;
@@ -917,7 +935,7 @@ function applyLang(){
   document.documentElement.lang=lang;
   $('adultHeading').textContent=lang==='en'?'A moment with art':'그림 속에 머무는 시간';
   $('adultSubtitle').textContent=lang==='en'?'Discover a painting, one piece at a time.':'좋아하는 작품을 한 조각씩 완성해 보세요.';
-  $('modeLabel').textContent=lang==='en'?'PLAY MODE':'플레이 모드';
+  $('modeToggle').setAttribute('aria-label',lang==='en'?'Play mode':'플레이 모드');
   const homeCopy=lang==='en'?['Choose a picture','Swipe to explore →']:['그림 고르기','옆으로 넘겨보세요 →'];
   ['pickHeading','pickHint'].forEach((id,i)=>$(id).textContent=homeCopy[i]);
   if(mode==='adult'){$('pickHeading').textContent=lang==='en'?'Explore the collection':'작품 둘러보기';$('pickHint').textContent=lang==='en'?'Swipe to discover →':'옆으로 감상하기 →';}
@@ -1154,20 +1172,20 @@ const ARTS=[
   {id:'wave', pack:'ukiyoe', name:'큰 파도 · 호쿠사이', en:'The Great Wave · Hokusai', draw:artWave, img:'assets/arts/wave.jpg', kimg:'assets/arts/wave.kid.jpg'},
   {id:'redfuji', pack:'ukiyoe', name:'붉은 후지산 · 호쿠사이', en:'Red Fuji · Hokusai', img:'assets/arts/redfuji.jpg', kimg:'assets/arts/redfuji.kid.jpg'},
   {id:'shower', pack:'ukiyoe', name:'소나기 · 히로시게', en:'Sudden Shower · Hiroshige', img:'assets/arts/shower.jpg', kimg:'assets/arts/shower.kid.jpg'},
-  {id:'plum', pack:'ukiyoe', name:'매화 정원 · 히로시게', en:'Plum Garden · Hiroshige', img:'assets/arts/plum.jpg'},
-  {id:'jungle', pack:'rousseau', name:'정글 · 루소', en:'Jungle · Rousseau', draw:artJungle, img:'assets/arts/jungle.jpg'},
-  {id:'tiger', pack:'rousseau', name:'호랑이! · 루소', en:'Surprised! · Rousseau', img:'assets/arts/tiger.jpg'},
-  {id:'bath', pack:'treasure', name:'아이의 목욕 · 커샛', en:"The Child's Bath · Cassatt", img:'assets/arts/bath.jpg'},
-  {id:'milkmaid', pack:'treasure', name:'우유 따르는 여인 · 페르메이르', en:'The Milkmaid · Vermeer', img:'assets/arts/milkmaid.jpg'},
-  {id:'games', pack:'bruegel', name:'아이들의 놀이 · 브뤼헐', en:"Children's Games · Bruegel", img:'assets/arts/games.jpg'},
-  {id:'bluehorse', pack:'animal', name:'파란 말 · 마르크', en:'Blue Horse I · Franz Marc', img:'assets/arts/bluehorse.jpg'},
-  {id:'yellowcow', pack:'animal', name:'노란 소 · 마르크', en:'The Yellow Cow · Franz Marc', img:'assets/arts/yellowcow.jpg'},
-  {id:'bluehorses', pack:'animal', name:'커다란 파란 말들 · 마르크', en:'The Large Blue Horses · Franz Marc', img:'assets/arts/bluehorses.jpg'},
-  {id:'flamingos', pack:'animal', name:'플라밍고 · 루소', en:'The Flamingoes · Rousseau', img:'assets/arts/flamingos.jpg'},
-  {id:'audubon', pack:'animal', name:'홍학 · 오듀본', en:'American Flamingo · Audubon', img:'assets/arts/audubon.jpg'},
-  {id:'whiterabbit', pack:'wonderland', name:'하얀 토끼 · 테니얼', en:'The White Rabbit · Tenniel', img:'assets/arts/whiterabbit.jpg'},
-  {id:'alice', pack:'wonderland', name:'앨리스 · 테니얼', en:'Alice · Tenniel', img:'assets/arts/alice.jpg'},
-  {id:'peterrabbit', pack:'oldtales', name:'피터 래빗 · 포터', en:'Peter Rabbit · Potter', img:'assets/arts/peterrabbit.jpg'},
+  {id:'plum', pack:'ukiyoe', name:'매화 정원 · 히로시게', en:'Plum Garden · Hiroshige', img:'assets/arts/plum.jpg', kimg:'assets/arts/plum.kid.jpg'},
+  {id:'jungle', pack:'rousseau', name:'정글 · 루소', en:'Jungle · Rousseau', draw:artJungle, img:'assets/arts/jungle.jpg', kimg:'assets/arts/jungle.kid.jpg'},
+  {id:'tiger', pack:'rousseau', name:'호랑이! · 루소', en:'Surprised! · Rousseau', img:'assets/arts/tiger.jpg', kimg:'assets/arts/tiger.kid.jpg'},
+  {id:'bath', pack:'treasure', name:'아이의 목욕 · 커샛', en:"The Child's Bath · Cassatt", img:'assets/arts/bath.jpg', kimg:'assets/arts/bath.kid.jpg'},
+  {id:'milkmaid', pack:'treasure', name:'우유 따르는 여인 · 페르메이르', en:'The Milkmaid · Vermeer', img:'assets/arts/milkmaid.jpg', kimg:'assets/arts/milkmaid.kid.jpg'},
+  {id:'games', pack:'bruegel', name:'아이들의 놀이 · 브뤼헐', en:"Children's Games · Bruegel", img:'assets/arts/games.jpg', kimg:'assets/arts/games.kid.jpg'},
+  {id:'bluehorse', pack:'animal', name:'파란 말 · 마르크', en:'Blue Horse I · Franz Marc', img:'assets/arts/bluehorse.jpg', kimg:'assets/arts/bluehorse.kid.jpg'},
+  {id:'yellowcow', pack:'animal', name:'노란 소 · 마르크', en:'The Yellow Cow · Franz Marc', img:'assets/arts/yellowcow.jpg', kimg:'assets/arts/yellowcow.kid.jpg'},
+  {id:'bluehorses', pack:'animal', name:'커다란 파란 말들 · 마르크', en:'The Large Blue Horses · Franz Marc', img:'assets/arts/bluehorses.jpg', kimg:'assets/arts/bluehorses.kid.jpg'},
+  {id:'flamingos', pack:'animal', name:'플라밍고 · 루소', en:'The Flamingoes · Rousseau', img:'assets/arts/flamingos.jpg', kimg:'assets/arts/flamingos.kid.jpg'},
+  {id:'audubon', pack:'animal', name:'홍학 · 오듀본', en:'American Flamingo · Audubon', img:'assets/arts/audubon.jpg', kimg:'assets/arts/audubon.kid.jpg'},
+  {id:'whiterabbit', pack:'wonderland', name:'하얀 토끼 · 테니얼', en:'The White Rabbit · Tenniel', img:'assets/arts/whiterabbit.jpg', kimg:'assets/arts/whiterabbit.kid.jpg'},
+  {id:'alice', pack:'wonderland', name:'앨리스 · 테니얼', en:'Alice · Tenniel', img:'assets/arts/alice.jpg', kimg:'assets/arts/alice.kid.jpg'},
+  {id:'peterrabbit', pack:'oldtales', name:'피터 래빗 · 포터', en:'Peter Rabbit · Potter', img:'assets/arts/peterrabbit.jpg', kimg:'assets/arts/peterrabbit.kid.jpg'},
   {id:'frogprince', pack:'oldtales', name:'개구리 왕자 · 크레인', en:'The Frog Prince · Crane', img:'assets/arts/frogprince.jpg'},
   {id:'ssireum', pack:'korea', name:'씨름 · 김홍도', en:'Ssireum Wrestling · Kim Hong-do', img:'assets/arts/ssireum.jpg'},
   {id:'mudong', pack:'korea', name:'무동 · 김홍도', en:'Dancing Boy · Kim Hong-do', img:'assets/arts/mudong.jpg'},

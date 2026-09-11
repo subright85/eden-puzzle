@@ -1143,7 +1143,7 @@ function openGame(sid,cnt,isDaily){
   ensureImg(sc).then(()=>{
     layoutGame();   // 이미지 씬이면 로드 후 컷 (폴백 3초)
     // 3초 타임아웃으로 먼저 시작된 뒤 이미지가 늦게 도착하면 재베이크 (안 하면 게임 내내 플레이스홀더 조각)
-    const e=sc&&sc.img&&IMGS[sc.id];
+    const e=sc&&sc.img&&IMGS[artKey(sc)];
     if(e&&!e.done)e.waiters.push(()=>{if(G.on&&G.sid===sid&&e.ok){
       G.savedPlaced=G.pieces?G.pieces.filter(p=>p.placed).map(p=>p.idx):[];
       layoutGame();

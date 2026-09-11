@@ -527,7 +527,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v41';
+const BUILD='v42';
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
@@ -712,16 +712,16 @@ function sceneFirework(ctx,w,h){
     for(let win=0;win<3;win++)ctx.fillRect(i*bw+bw*.2+win*bw*.22,h-h*b+h*.04,bw*.1,h*.03)});
 }
 const SCENES=[
-  {id:'space', pack:'wild', name:'우주 여행', en:'Space Trip', draw:sceneSpace, img:'assets/puzzles/space.jpg', free:true},
-  {id:'sea', pack:'wild', name:'바닷속 친구들', en:'Under the Sea', draw:sceneSea, img:'assets/puzzles/sea.jpg', free:true},
-  {id:'dino', pack:'wild', name:'공룡 나라', en:'Dino Land', draw:sceneDino, img:'assets/puzzles/dino.jpg', free:false},
-  {id:'balloon',pack:'vroom', name:'하늘 기구', en:'Sky Balloons', draw:sceneBalloon, img:'assets/puzzles/balloon.jpg', free:false},
-  {id:'farm', pack:'party', name:'동물 농장', en:'Animal Farm', draw:sceneFarm, img:'assets/puzzles/farm.jpg', free:false},
-  {id:'fire', pack:'party', name:'불꽃놀이', en:'Fireworks', draw:sceneFirework, img:'assets/puzzles/fire.jpg', free:false},
-  {id:'construction', pack:'vroom', name:'공사장', en:'Busy Builders', img:'assets/puzzles/construction.jpg', free:false},
-  {id:'train', pack:'vroom', name:'칙칙폭폭 기차', en:'Choo-Choo Train', img:'assets/puzzles/train.jpg', free:false},
-  {id:'candy', pack:'party', name:'과자 나라', en:'Candy Land', img:'assets/puzzles/candy.jpg', free:false},
-  {id:'safari', pack:'wild', name:'사파리 친구들', en:'Safari Friends', img:'assets/puzzles/safari.jpg', free:false},
+  {id:'space', pack:'wild', name:'우주 여행', en:'Space Trip', draw:sceneSpace, img:'assets/puzzles/space.kid.jpg', free:true},
+  {id:'sea', pack:'wild', name:'바닷속 친구들', en:'Under the Sea', draw:sceneSea, img:'assets/puzzles/sea.kid.jpg', free:true},
+  {id:'dino', pack:'wild', name:'공룡 나라', en:'Dino Land', draw:sceneDino, img:'assets/puzzles/dino.kid.jpg', free:false},
+  {id:'balloon',pack:'vroom', name:'하늘 기구', en:'Sky Balloons', draw:sceneBalloon, img:'assets/puzzles/balloon.kid.jpg', free:false},
+  {id:'farm', pack:'party', name:'동물 농장', en:'Animal Farm', draw:sceneFarm, img:'assets/puzzles/farm.kid.jpg', free:false},
+  {id:'fire', pack:'party', name:'불꽃놀이', en:'Fireworks', draw:sceneFirework, img:'assets/puzzles/fire.kid.jpg', free:false},
+  {id:'construction', pack:'vroom', name:'공사장', en:'Busy Builders', img:'assets/puzzles/construction.kid.jpg', free:false},
+  {id:'train', pack:'vroom', name:'칙칙폭폭 기차', en:'Choo-Choo Train', img:'assets/puzzles/train.kid.jpg', free:false},
+  {id:'candy', pack:'party', name:'과자 나라', en:'Candy Land', img:'assets/puzzles/candy.kid.jpg', free:false},
+  {id:'safari', pack:'wild', name:'사파리 친구들', en:'Safari Friends', img:'assets/puzzles/safari.kid.jpg', free:false},
 ];
 /* ── 명화 팩: 퍼블릭 도메인 원작의 심플 버전 (전부 코드 드로잉) ── */
 function artStarry(ctx,w,h){
@@ -982,7 +982,7 @@ $('packview').addEventListener('click',e=>{if(e.target===$('packview'))$('packvi
 function openColl(){
   const cg=$('collGrid');cg.innerHTML='';
   const done=store.get('done',{});
-  const all=[...SCENES,...ARTS];let dn=0;
+  const all=collPool();let dn=0;
   for(const sc of all){
     const b=document.createElement('button');b.className='card'+(done[sc.id]?'':' locked');
     const cv=document.createElement('canvas');cv.width=360;cv.height=270;
@@ -1538,8 +1538,9 @@ function renderHomeInner(){
   $('streakN').textContent=store.get('streak',{n:0}).n;
   syncCoins();
   {const done=store.get('done',{});
-   const total=SCENES.length+ARTS.length;
-   const dn=[...SCENES,...ARTS].filter(sc=>done[sc.id]).length;
+   const pool=collPool();
+   const total=pool.length;
+   const dn=pool.filter(sc=>done[sc.id]).length;
    $('collCount').textContent=dn+' / '+total;
    $('collFill').style.width=(total?Math.round(dn/total*100):0)+'%';}
   renderStage();
@@ -1557,6 +1558,7 @@ const CSHORT={ko:{scenes:'그림',fairy:'동화',bible:'성경',world:'세계',m
   en:{scenes:'Pics',fairy:'Tales',bible:'Bible',world:'World',museum:'Museum',photo:'Photos'}};
 const CACC={scenes:['#FF8A3D','#FFF1E6','#C25A14'],fairy:['#F7A8C4','#FDEFF5','#C2517E'],bible:['#F2B01E','#FCF4DC','#A87708'],
   world:['#7EC8F0','#EAF6FD','#2E7FAB'],museum:['#3FBF8F','#E8F8F1','#1F8862'],photo:['#8B93A7','#F0F2F5','#555E73']};
+function collPool(){return mode==='adult'?ARTS.slice():[...SCENES,...ARTS.filter(a=>a.kimg)]}
 function collList(){
   const base=[{id:'scenes',nm:()=>t('tabScenes')},
     ...THEMES.map(th=>({id:th.id,nm:()=>sceneName(th)})),

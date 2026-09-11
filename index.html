@@ -139,7 +139,7 @@ body.adult #winwrap h2{color:var(--ink)}
   .logo span{display:none}
 }
 
-.logo{display:flex; align-items:center; gap:10px; font-family:var(--disp); font-size:28px}
+.logo{display:flex; align-items:center; gap:10px; font-family:var(--disp); font-size:28px; margin-left:8px}
 .logo svg{width:34px; height:34px; transform:rotate(-6deg)}
 .topline .spacer{flex:1}
 .stat{display:flex; align-items:center; gap:5px; background:var(--panel); border:3px solid var(--ink);
@@ -353,6 +353,7 @@ body.adult #sheet .opt.resumeBig{background:none; border-color:var(--accent)}
 .acct-btn{border:3px solid var(--line); border-radius:var(--wob); padding:13px; font-size:18px;
   background:var(--panel); color:var(--sub)}
 #acct .cancel,#settings .cancel,#packview .cancel,#collview .cancel,#themeview .cancel{color:var(--sub); font-size:16px; padding:8px}
+body:not(.adult) .pickbody{border-radius:16px; margin-top:0}
 </style>
 
 <div id="splash">
@@ -526,7 +527,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v39';
+const BUILD='v40';
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
@@ -1556,23 +1557,22 @@ function collList(){
   const base=[{id:'scenes',nm:()=>t('tabScenes')},
     ...THEMES.map(th=>({id:th.id,nm:()=>sceneName(th)})),
     {id:'photo',nm:()=>t('tabPhoto')}];
-  if(mode==='adult'){const o={museum:0,world:1,fairy:2,bible:3,scenes:4,photo:5};
-    base.sort((a,b)=>(o[a.id]??9)-(o[b.id]??9))}
+  if(mode==='adult'){const o={museum:0,world:1,fairy:2,bible:3,photo:4};
+    return base.filter(c=>c.id!=='scenes').sort((a,b)=>(o[a.id]??9)-(o[b.id]??9));}
   return base;
 }
 let curColl=null;
 function renderCaro(){
+  const kid=mode!=='adult';
   const colls=collList();
-  curColl=store.get('coll:'+mode,mode==='adult'?'museum':'scenes');
-  if(!colls.find(c=>c.id===curColl))curColl=mode==='adult'?'museum':'scenes';
+  curColl=kid?'scenes':store.get('coll:'+mode,'museum');
+  if(!colls.find(c=>c.id===curColl))curColl=kid?'scenes':'museum';
   const done=store.get('done',{});
   const cc=CACC[curColl]||CACC.photo, ps=$('pickSec');
   ps.style.setProperty('--cacc',cc[0]);ps.style.setProperty('--ctint',cc[1]);ps.style.setProperty('--cdeep',cc[2]);
-  const tb=$('cTabs');tb.innerHTML='';
-  for(const c of colls){
+  const tb=$('cTabs');tb.innerHTML='';tb.hidden=kid;
+  if(!kid)for(const c of colls){
     const b=document.createElement('button');b.className='ctab'+(c.id===curColl?' on':'');
-    if(mode!=='adult'){const tc=CACC[c.id]||CACC.photo;
-      b.style.background=tc[1];b.style.borderColor=tc[0];b.style.color=tc[2];}
     const ic=document.createElement('span');ic.className='tico';ic.textContent=CICO[c.id]||'\uD83D\uDDBC\uFE0F';
     b.appendChild(ic);b.appendChild(document.createTextNode((CSHORT[lang]||CSHORT.ko)[c.id]||c.nm()));
     b.onclick=()=>{store.set('coll:'+mode,c.id);renderCaro()};
@@ -1599,6 +1599,11 @@ function renderCaro(){
     paintThumb(cv,sc.id);
     if(sc.img)ensureImg(sc).then(()=>{if(document.body.contains(cv))paintThumb(cv,sc.id)});
   };
+  if(kid){
+    $('pkChips').hidden=true;
+    for(const sc of SCENES)addCard(sc,!sc.free);
+    return;
+  }
   if(curColl==='photo'){
     $('pkChips').hidden=true;
     const b=document.createElement('button');b.className='card photo-card';

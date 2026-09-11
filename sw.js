@@ -1,4 +1,4 @@
-const C = 'eden-v50';
+const C = 'eden-v51';
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(C)
     .then(c => c.addAll(['/', '/manifest.webmanifest', '/icon-180.png', '/icon-512.png', '/assets/title.jpg', '/assets/ui/painted/play-v1.png', '/assets/ui/painted/panel-v1.png', '/assets/ui/painted/tray-v1.png',

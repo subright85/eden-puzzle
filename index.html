@@ -580,6 +580,105 @@ body:not(.adult) #home .pickbody,body:not(.adult) #home .collcard{--paint-image:
 body:not(.adult) #home .stat,body:not(.adult) #home .caro .card,body:not(.adult) #home .daily,body:not(.adult) #home .cnt,body:not(.adult) .acct-btn,body:not(.adult) .stylechip,body:not(.adult) #sheet .opt,body:not(.adult) #gtop .gbtn,body:not(.adult) #panicHome,body:not(.adult) #winwrap .again,body:not(.adult) #settings .box,body:not(.adult) #acct .box,body:not(.adult) #sheet .box,body:not(.adult) #winwrap .win,body:not(.adult) #home .ctab,body:not(.adult) #home .pkchip,body:not(.adult) #packview .box,body:not(.adult) #collview .box,body:not(.adult) #themeview .box,body:not(.adult) .grid .card,body:not(.adult) #home .daily .playbtn,body:not(.adult) #splash .tstart,body:not(.adult) #winwrap .playbtn,body:not(.adult) #home .cnt.on,body:not(.adult) .stylechip.on,body:not(.adult) #home .ctab.on,body:not(.adult) #home .pkchip.on,body:not(.adult) #home .pickbody,body:not(.adult) #home .collcard{position:relative;isolation:isolate;background-image:none!important;}
 body:not(.adult) #home .stat::before,body:not(.adult) #home .caro .card::before,body:not(.adult) #home .daily::before,body:not(.adult) #home .cnt::before,body:not(.adult) .acct-btn::before,body:not(.adult) .stylechip::before,body:not(.adult) #sheet .opt::before,body:not(.adult) #gtop .gbtn::before,body:not(.adult) #panicHome::before,body:not(.adult) #winwrap .again::before,body:not(.adult) #settings .box::before,body:not(.adult) #acct .box::before,body:not(.adult) #sheet .box::before,body:not(.adult) #winwrap .win::before,body:not(.adult) #home .ctab::before,body:not(.adult) #home .pkchip::before,body:not(.adult) #packview .box::before,body:not(.adult) #collview .box::before,body:not(.adult) #themeview .box::before,body:not(.adult) .grid .card::before,body:not(.adult) #home .daily .playbtn::before,body:not(.adult) #splash .tstart::before,body:not(.adult) #winwrap .playbtn::before,body:not(.adult) #home .cnt.on::before,body:not(.adult) .stylechip.on::before,body:not(.adult) #home .ctab.on::before,body:not(.adult) #home .pkchip.on::before,body:not(.adult) #home .pickbody::before,body:not(.adult) #home .collcard::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:var(--paint-image) center/var(--paint-size) no-repeat;filter:drop-shadow(.35px 0 0 #33415A) drop-shadow(-.35px 0 0 #33415A) drop-shadow(0 .35px 0 #33415A);}
 body:not(.adult) #panicHome{position:fixed}
+
+/* Geometry is shared by both skins. Decorative artwork never determines layout. */
+body:is(.adult,:not(.adult)) #home{width:100%;max-width:680px;margin-inline:auto;gap:18px;padding:calc(16px + env(safe-area-inset-top)) calc(20px + env(safe-area-inset-right)) calc(24px + env(safe-area-inset-bottom)) calc(20px + env(safe-area-inset-left))}
+body:is(.adult,:not(.adult)) #home>*,body:is(.adult,:not(.adult)) #home .stage-preview,body:is(.adult,:not(.adult)) #home .stage-summary,body:is(.adult,:not(.adult)) #home .stage-controls{min-width:0}
+body:is(.adult,:not(.adult)) #home .topline{width:100%;gap:6px;min-height:44px}
+body:is(.adult,:not(.adult)) #home .topline .logo{min-width:0;flex:0 1 auto}
+body:is(.adult,:not(.adult)) #home .topline .statgrp,body:is(.adult,:not(.adult)) #home .topline .stat{flex-shrink:0}
+body:is(.adult,:not(.adult)) #home .topline .stat{width:36px;height:44px}
+body:is(.adult,:not(.adult)) #home .pickbody{padding:16px;overflow:hidden;isolation:isolate}
+body:is(.adult,:not(.adult)) #home .pickbody .caro{width:100%;margin:0;padding:4px;gap:12px;clip-path:none;scroll-padding-inline:4px;align-items:stretch;min-width:0}
+body:is(.adult,:not(.adult)) #home .caro .card{width:132px;flex:0 0 132px;min-width:0;max-width:none;margin:0;padding:10px;gap:8px;box-sizing:border-box}
+body:is(.adult,:not(.adult)) #home .caro .card canvas,body:is(.adult,:not(.adult)) #home .caro .card .ph{width:100%;height:auto;aspect-ratio:4/3;flex:none;object-fit:contain;display:block}
+body:is(.adult,:not(.adult)) #home .caro .card .row{min-width:0;width:100%;padding:0;min-height:22px}
+body:is(.adult,:not(.adult)) #home .caro .card .name{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.5}
+body:is(.adult,:not(.adult)) #home .pkchips{padding:0 0 10px;margin:0;min-width:0}
+body:is(.adult,:not(.adult)) #home .daily{display:flex;flex-direction:column;align-items:stretch;gap:14px;padding:24px;min-width:0;width:100%;transform:none;text-align:left}
+body:is(.adult,:not(.adult)) #home .stage-preview{display:grid;grid-template-columns:76px minmax(0,1fr);align-items:center;gap:14px}
+body:is(.adult,:not(.adult)) #home .daily canvas{width:76px;height:76px;max-width:100%;max-height:none;grid-area:auto;aspect-ratio:1;object-fit:contain;display:block;flex:none}
+body:is(.adult,:not(.adult)) #home .stage-summary{display:flex;flex-direction:column;align-items:flex-start;gap:5px;overflow:hidden}
+body:is(.adult,:not(.adult)) #home .stage-summary>*{grid-area:auto!important;margin:0;max-width:100%;align-self:auto!important}
+body:is(.adult,:not(.adult)) #home .daily h2{font-size:21px;line-height:1.4;overflow-wrap:anywhere}
+body:is(.adult,:not(.adult)) #home .stage-controls{display:flex;flex-direction:column;align-items:stretch;gap:8px;min-width:0}
+body:is(.adult,:not(.adult)) #home .difficulty-label{margin:0;font-size:12px;line-height:1.5}
+body:is(.adult,:not(.adult)) #home .daily .cntrow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:0;min-width:0}
+body:is(.adult,:not(.adult)) #home .daily .cnt{width:100%;min-width:0;min-height:44px;height:44px;padding:7px 2px 10px;font-size:13px;white-space:nowrap;margin:0}
+body:is(.adult,:not(.adult)) #home .daily .playbtn{width:100%;height:54px;min-height:54px;padding:10px 12px 13px;margin:2px 0 0;font-size:20px;line-height:1.2;align-self:stretch;flex:none}
+body:is(.adult,:not(.adult)) #home .daily .resumebtn{font-size:15px;height:auto;min-height:48px}
+body:is(.adult,:not(.adult)) #home .daily .stagecoin{margin:0;font-size:11px;line-height:1.5}
+body:is(.adult,:not(.adult)) #home .daily .backdaily{min-height:32px;margin:0;padding:5px;align-self:center;line-height:1.4}
+body:is(.adult,:not(.adult)) #home .collcard{width:100%;min-height:76px;height:auto;margin:0;padding:18px 24px;gap:12px;align-items:center}
+body:is(.adult,:not(.adult)) #home .collico{width:36px;height:36px;flex:none}
+body:is(.adult,:not(.adult)) #home .collinfo{min-width:0}body:is(.adult,:not(.adult)) #home .collinfo b{line-height:1.4}
+body:is(.adult,:not(.adult)) #home .collnum{font-size:13px;flex:none}
+body:is(.adult,:not(.adult)) #home .note{margin:0;line-height:1.8}
+/* Nine-slice frames keep illustrated corners at fixed size on tablets. */
+body:not(.adult) #home .daily::before,body:not(.adult) #settings .box::before,body:not(.adult) #acct .box::before,body:not(.adult) #sheet .box::before,body:not(.adult) #packview .box::before,body:not(.adult) #collview .box::before,body:not(.adult) #themeview .box::before,body:not(.adult) #winwrap .win::before{background:none;inset:-18px -6px;border:32px solid transparent;border-image:url('assets/ui/painted/panel-v1.png') 200 fill / 32px stretch;box-sizing:border-box}
+body:not(.adult) #home .pickbody::before,body:not(.adult) #home .collcard::before{background:none;inset:-14px 0;border:24px solid transparent;border-image:url('assets/ui/painted/tray-v1.png') 150 fill / 24px stretch;box-sizing:border-box}
+body:not(.adult) #home .caro .card::before,body:not(.adult) .grid .card::before{background:none;inset:-9px -3px;border:16px solid transparent;border-image:url('assets/ui/painted/panel-v1.png') 200 fill / 16px stretch;box-sizing:border-box}
+body.adult #home .pickbody{padding:0;background:none}
+body.adult #home .pickbody .caro{padding:4px;gap:12px}
+body.adult #home .caro .card{width:150px;flex-basis:150px}
+body.adult #home .daily{padding:20px}
+body.adult #home .daily .playbtn{font-size:15px;padding:10px 12px}
+body.adult #home .adult-intro{padding-top:16px}
+body.adult #home .adult-intro h1{font-size:24px}
+/* Sheets fit the visual viewport; long collections scroll inside the sheet. */
+body:is(.adult,:not(.adult)) #settings,body:is(.adult,:not(.adult)) #acct,body:is(.adult,:not(.adult)) #sheet,body:is(.adult,:not(.adult)) #packview,body:is(.adult,:not(.adult)) #collview,body:is(.adult,:not(.adult)) #themeview{padding:12px 12px calc(12px + env(safe-area-inset-bottom));align-items:flex-end}
+body:is(.adult,:not(.adult)) #settings .box,body:is(.adult,:not(.adult)) #acct .box,body:is(.adult,:not(.adult)) #sheet .box,body:is(.adult,:not(.adult)) #packview .box,body:is(.adult,:not(.adult)) #collview .box,body:is(.adult,:not(.adult)) #themeview .box{width:100%;max-width:520px;max-height:calc(100dvh - 48px - env(safe-area-inset-top) - env(safe-area-inset-bottom));overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:24px;gap:12px;flex-shrink:1}
+body:is(.adult,:not(.adult)) .stylerow{display:flex;flex-wrap:wrap;gap:8px;min-width:0}
+body:is(.adult,:not(.adult)) .stylerow>button{min-width:0;min-height:44px;flex:1 1 100px}
+body:is(.adult,:not(.adult)) #packGrid,body:is(.adult,:not(.adult)) #collGrid,body:is(.adult,:not(.adult)) #themeGrid{min-height:0;max-height:50dvh;padding:5px;flex-shrink:1}
+body:is(.adult,:not(.adult)) .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+body:is(.adult,:not(.adult)) .grid .card{min-width:0;padding:12px;transform:none}
+body:is(.adult,:not(.adult)) .grid .card canvas{display:block;width:100%;height:auto;aspect-ratio:4/3}
+body:is(.adult,:not(.adult)) .grid .card .name{font-size:13px;overflow-wrap:anywhere;line-height:1.5}
+body:is(.adult,:not(.adult)) #gtop{gap:8px;align-items:center;min-width:0;flex-shrink:0}
+body:is(.adult,:not(.adult)) #gtop .gbtn{min-height:44px;padding:8px 10px;font-size:12px;flex:none;white-space:nowrap}
+body:is(.adult,:not(.adult)) #gtitle{font-size:14px;min-width:0;line-height:1.4}
+body:is(.adult,:not(.adult)) #gcount{padding:6px 8px;font-size:12px;flex:none;white-space:nowrap}
+body:is(.adult,:not(.adult)) #arena{min-width:0;min-height:0}
+body:is(.adult,:not(.adult)) #peekpop canvas{width:auto;height:auto;object-fit:contain;max-width:90vw;max-height:80dvh}
+@media(max-width:360px){
+ body:is(.adult,:not(.adult)) #home{padding-left:16px;padding-right:16px;gap:14px}
+ body:is(.adult,:not(.adult)) #home .logo span{display:none}
+ body:is(.adult,:not(.adult)) #home .daily{padding:20px}
+ body:is(.adult,:not(.adult)) #home .daily h2{font-size:19px}
+ body:is(.adult,:not(.adult)) #home .stage-preview{grid-template-columns:64px minmax(0,1fr);gap:12px}
+ body:is(.adult,:not(.adult)) #home .daily canvas{width:64px;height:64px}
+ body:is(.adult,:not(.adult)) #home .pickbody{padding:14px}
+ body:is(.adult,:not(.adult)) #home .caro .card{width:120px;flex-basis:120px}
+ body:is(.adult,:not(.adult)) #home .picker-heading h2{font-size:19px}body:is(.adult,:not(.adult)) #home .picker-heading p{font-size:10px}
+ body:is(.adult,:not(.adult)) #gtop{gap:5px;padding-left:8px;padding-right:8px}body:is(.adult,:not(.adult)) #gtop .gbtn{padding:7px;font-size:11px}
+}
+@media(min-width:700px){
+ body:is(.adult,:not(.adult)) #home{padding-top:calc(28px + env(safe-area-inset-top));gap:24px}
+ body:is(.adult,:not(.adult)) #home .caro .card{width:152px;flex-basis:152px}
+ body:is(.adult,:not(.adult)) #home .daily{flex-direction:row;align-items:center;gap:24px;padding:28px}
+ body:is(.adult,:not(.adult)) #home .stage-preview{flex:1;display:flex;flex-direction:column;align-items:stretch;gap:12px}
+ body:is(.adult,:not(.adult)) #home .daily canvas{width:100%;height:auto;aspect-ratio:4/3;max-height:190px}
+ body:is(.adult,:not(.adult)) #home .stage-controls{width:280px;flex:0 0 280px}
+ body:is(.adult,:not(.adult)) #home .daily .playbtn{height:56px;min-height:56px}
+ body:is(.adult,:not(.adult)) #settings,body:is(.adult,:not(.adult)) #acct,body:is(.adult,:not(.adult)) #sheet,body:is(.adult,:not(.adult)) #packview,body:is(.adult,:not(.adult)) #collview,body:is(.adult,:not(.adult)) #themeview{align-items:center}
+ body:is(.adult,:not(.adult)) #gtop{max-width:1100px;width:100%;margin-inline:auto}
+}
+@media(min-width:1000px){
+ body:is(.adult,:not(.adult)) #home{max-width:1080px;display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;align-items:start}
+ body:is(.adult,:not(.adult)) #home .topline,body:is(.adult,:not(.adult)) #home .adult-intro{grid-column:1/-1}
+ body:is(.adult,:not(.adult)) #home #pickSec{grid-column:1;grid-row:auto}
+ body:is(.adult,:not(.adult)) #home .daily{grid-column:2;grid-row:2/5;display:flex;flex-direction:column;padding:24px;gap:18px}
+ body.adult #home .daily{grid-row:3/6}
+ body:is(.adult,:not(.adult)) #home .stage-preview{width:100%;flex:auto}
+ body:is(.adult,:not(.adult)) #home .daily canvas{width:100%;height:auto;max-height:none;aspect-ratio:4/3}
+ body:is(.adult,:not(.adult)) #home .stage-controls{width:100%;flex:auto}
+ body:is(.adult,:not(.adult)) #home .collcard,body:is(.adult,:not(.adult)) #home .note{grid-column:1}
+}
+
+body:is(.adult,:not(.adult)) #collview .box,body:is(.adult,:not(.adult)) #packview .box,body:is(.adult,:not(.adult)) #themeview .box{overflow:hidden}
+body:is(.adult,:not(.adult)) .grid .card .name{word-break:keep-all}
+@media(min-width:1000px){body:is(.adult,:not(.adult)) #home{grid-template-rows:auto min-content min-content 1fr}body.adult #home{grid-template-rows:auto auto min-content min-content 1fr}}
 </style>
 
 <div id="splash">
@@ -621,12 +720,16 @@ body:not(.adult) #panicHome{position:fixed}
   </div>
 
   <section class="daily" id="dailyCard">
-    <canvas id="dailyThumb" width="400" height="300"></canvas>
-    <div class="info">
+    <div class="stage-preview">
+      <canvas id="dailyThumb" width="400" height="300"></canvas>
+      <div class="stage-summary">
       <span class="eyebrow" id="dailyEyebrow">오늘의 퍼즐 · 무료</span>
       <h2 id="dailyName">…</h2>
       <span class="date" id="dailyDate"></span>
       <span class="artist-label" id="stageArtist" hidden></span>
+      </div>
+    </div>
+    <div class="stage-controls">
       <span class="difficulty-label" id="difficultyLabel">조각 수</span>
       <div class="cntrow" id="stageCnts"></div>
       <button class="playbtn resumebtn" id="stageResume" hidden></button>
@@ -728,7 +831,7 @@ body:not(.adult) #panicHome{position:fixed}
   <div id="peekpop" hidden><canvas id="peekCv" width="800" height="600"></canvas></div>
 </div>
 
-<button id="panicHome" hidden aria-label="홈으로 나가기">🏠 홈으로</button>
+
 
 <div id="winwrap" hidden>
   <div class="win">
@@ -759,7 +862,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v51';
+const BUILD='v52';
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
@@ -824,7 +927,7 @@ function applyLang(){
     photoBtnName:'photoBtnName',lastPhotoName:'lastPhotoName',footNote:'footNote',
     chipRaw:'chipRaw',chipArt:'chipArt',sheetCancel:'close',
     acctTitle:'acctTitle',acctG:'acctG',acctA:'acctA',acctCancel:'close',
-    backBtn:'backBtn',peekBtn:'peekBtn',panicHome:'panicHome',
+    backBtn:'backBtn',peekBtn:'peekBtn',
     winMsg:'winMsg',winAgain:'winAgain',winHome:'winHome',
     splashName:'appName',titleStart:'start',setTitle:'setTitle',setCancel:'close',privLink:'privLink',packCancel:'close',secColl:'secColl',collCancel:'close',themeCancel:'close',modeKidL:'modeKid',modeAdultL:'modeAdult',swHint:'swHint'};
   for(const id in M){const el=document.getElementById(id);if(el)el.textContent=t(M[id])}
@@ -835,7 +938,6 @@ function applyLang(){
   $('difficultyLabel').textContent=lang==='en'?'PIECES':'조각 수';
   $('backDaily').textContent=lang==='en'?'Back to today’s picture':'오늘의 그림으로 돌아가기';
   $('backBtn').innerHTML=UI_ICONS.back+' '+(lang==='en'?'Quit':'그만하기');
-  $('panicHome').innerHTML=UI_ICONS.home;
   $('peekBtn').innerHTML=UI_ICONS.search+' '+(lang==='en'?'View picture':'원본 보기');
   $('langKo').classList.toggle('on',lang==='ko');
   $('langEn').classList.toggle('on',lang==='en');
@@ -1039,19 +1141,19 @@ function artJungle(ctx,w,h){
   for(let i=0;i<22;i++)leaf(w*(i/22),h*1.02,h*.28,(i%2?.25:-.25),greens[(i+1)%4]);
 }
 const ARTS=[
-  {id:'starry', pack:'gogh', name:'별이 빛나는 밤 · 고흐', en:'The Starry Night · Van Gogh', draw:artStarry, img:'assets/arts/starry.jpg'},
-  {id:'sunflower', pack:'gogh', name:'해바라기 · 고흐', en:'Sunflowers · Van Gogh', img:'assets/arts/sunflower.jpg'},
-  {id:'bedroom', pack:'gogh', name:'아를의 침실 · 고흐', en:'The Bedroom · Van Gogh', img:'assets/arts/bedroom.jpg'},
-  {id:'cafeterrace', pack:'gogh', name:'밤의 카페 테라스 · 고흐', en:'Café Terrace at Night · Van Gogh', img:'assets/arts/cafeterrace.jpg'},
-  {id:'lilies', pack:'monet', name:'수련 · 모네', en:'Water Lilies · Monet', img:'assets/arts/lilies.jpg'},
-  {id:'sunrise', pack:'monet', name:'인상, 해돋이 · 모네', en:'Impression, Sunrise · Monet', img:'assets/arts/sunrise.jpg'},
-  {id:'jatte', pack:'impress', name:'그랑드 자트 섬 · 쇠라', en:'La Grande Jatte · Seurat', img:'assets/arts/jatte.jpg'},
-  {id:'circus', pack:'impress', name:'서커스 · 쇠라', en:'The Circus · Seurat', img:'assets/arts/circus.jpg'},
-  {id:'dance', pack:'impress', name:'무용 수업 · 드가', en:'The Dance Class · Degas', img:'assets/arts/dance.jpg'},
-  {id:'sisters', pack:'impress', name:'테라스의 두 자매 · 르누아르', en:'Two Sisters · Renoir', img:'assets/arts/sisters.jpg'},
-  {id:'wave', pack:'ukiyoe', name:'큰 파도 · 호쿠사이', en:'The Great Wave · Hokusai', draw:artWave, img:'assets/arts/wave.jpg'},
-  {id:'redfuji', pack:'ukiyoe', name:'붉은 후지산 · 호쿠사이', en:'Red Fuji · Hokusai', img:'assets/arts/redfuji.jpg'},
-  {id:'shower', pack:'ukiyoe', name:'소나기 · 히로시게', en:'Sudden Shower · Hiroshige', img:'assets/arts/shower.jpg'},
+  {id:'starry', pack:'gogh', name:'별이 빛나는 밤 · 고흐', en:'The Starry Night · Van Gogh', draw:artStarry, img:'assets/arts/starry.jpg', kimg:'assets/arts/starry.kid.jpg'},
+  {id:'sunflower', pack:'gogh', name:'해바라기 · 고흐', en:'Sunflowers · Van Gogh', img:'assets/arts/sunflower.jpg', kimg:'assets/arts/sunflower.kid.jpg'},
+  {id:'bedroom', pack:'gogh', name:'아를의 침실 · 고흐', en:'The Bedroom · Van Gogh', img:'assets/arts/bedroom.jpg', kimg:'assets/arts/bedroom.kid.jpg'},
+  {id:'cafeterrace', pack:'gogh', name:'밤의 카페 테라스 · 고흐', en:'Café Terrace at Night · Van Gogh', img:'assets/arts/cafeterrace.jpg', kimg:'assets/arts/cafeterrace.kid.jpg'},
+  {id:'lilies', pack:'monet', name:'수련 · 모네', en:'Water Lilies · Monet', img:'assets/arts/lilies.jpg', kimg:'assets/arts/lilies.kid.jpg'},
+  {id:'sunrise', pack:'monet', name:'인상, 해돋이 · 모네', en:'Impression, Sunrise · Monet', img:'assets/arts/sunrise.jpg', kimg:'assets/arts/sunrise.kid.jpg'},
+  {id:'jatte', pack:'impress', name:'그랑드 자트 섬 · 쇠라', en:'La Grande Jatte · Seurat', img:'assets/arts/jatte.jpg', kimg:'assets/arts/jatte.kid.jpg'},
+  {id:'circus', pack:'impress', name:'서커스 · 쇠라', en:'The Circus · Seurat', img:'assets/arts/circus.jpg', kimg:'assets/arts/circus.kid.jpg'},
+  {id:'dance', pack:'impress', name:'무용 수업 · 드가', en:'The Dance Class · Degas', img:'assets/arts/dance.jpg', kimg:'assets/arts/dance.kid.jpg'},
+  {id:'sisters', pack:'impress', name:'테라스의 두 자매 · 르누아르', en:'Two Sisters · Renoir', img:'assets/arts/sisters.jpg', kimg:'assets/arts/sisters.kid.jpg'},
+  {id:'wave', pack:'ukiyoe', name:'큰 파도 · 호쿠사이', en:'The Great Wave · Hokusai', draw:artWave, img:'assets/arts/wave.jpg', kimg:'assets/arts/wave.kid.jpg'},
+  {id:'redfuji', pack:'ukiyoe', name:'붉은 후지산 · 호쿠사이', en:'Red Fuji · Hokusai', img:'assets/arts/redfuji.jpg', kimg:'assets/arts/redfuji.kid.jpg'},
+  {id:'shower', pack:'ukiyoe', name:'소나기 · 히로시게', en:'Sudden Shower · Hiroshige', img:'assets/arts/shower.jpg', kimg:'assets/arts/shower.kid.jpg'},
   {id:'plum', pack:'ukiyoe', name:'매화 정원 · 히로시게', en:'Plum Garden · Hiroshige', img:'assets/arts/plum.jpg'},
   {id:'jungle', pack:'rousseau', name:'정글 · 루소', en:'Jungle · Rousseau', draw:artJungle, img:'assets/arts/jungle.jpg'},
   {id:'tiger', pack:'rousseau', name:'호랑이! · 루소', en:'Surprised! · Rousseau', img:'assets/arts/tiger.jpg'},
@@ -1385,7 +1487,7 @@ function openGame(sid,cnt,isDaily){
   const nm=sid==='photo'?(photoStyle==='art'?t('photoArt'):t('photoName')):sceneName(findScene(sid));
   $('gtitle').textContent=(isDaily?t('todayPrefix'):'')+nm;
   $('home').hidden=true;$('game').hidden=false;$('winwrap').hidden=true;$('sheet').hidden=true;$('acct').hidden=true;$('settings').hidden=true;$('packview').hidden=true;$('collview').hidden=true;$('themeview').hidden=true;
-  $('panicHome').hidden=false;pushUI('game');
+  pushUI('game');
   $('peekBtn').hidden=mode!=='adult';$('peekpop').hidden=true;
   const sc=findScene(sid);
   ensureImg(sc).then(()=>{
@@ -1597,12 +1699,10 @@ $('backBtn').onclick=()=>closeGame();
 function goHome(){
   G.on=false;
   for(const id of ['game','winwrap','sheet','acct','settings','packview','collview','themeview','splash'])try{$(id).hidden=true}catch(e){}
-  $('panicHome').hidden=true;
   $('home').hidden=false;
   renderHome();
 }
 function closeGame(){goHome()}
-$('panicHome').onclick=goHome;
 function pushUI(tag){try{history.pushState({ui:tag},'')}catch(e){}}
 addEventListener('popstate',()=>{
   if(!$('sheet').hidden||!$('acct').hidden||!$('settings').hidden||!$('packview').hidden||!$('collview').hidden){$('sheet').hidden=true;$('acct').hidden=true;$('settings').hidden=true;$('packview').hidden=true;$('collview').hidden=true;$('themeview').hidden=true;return}

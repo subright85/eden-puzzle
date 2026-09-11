@@ -104,11 +104,12 @@ body.adult #winwrap h2{color:var(--ink)}
 
 /* ── 타이틀 화면 (시작 버튼 탭으로 진입, 세션당 1회) ── */
 #splash{position:fixed; inset:0; z-index:100; background:var(--bg);
-  background-image:url('assets/title.jpg'); background-size:cover; background-position:center;
-  display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
-  padding-bottom:calc(11vh + env(safe-area-inset-bottom)); gap:18px; overflow:hidden; transition:opacity .4s}
-#splash .tlogo,#splash .sname,#splash .tp{display:none}
-@media (min-aspect-ratio:5/4){#splash{align-items:flex-start; padding-left:10vw; padding-bottom:8vh}}
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding-bottom:env(safe-area-inset-bottom); gap:20px; overflow:hidden; transition:opacity .4s}
+#splash .tlogo,#splash .sname{display:none}
+#splash .tart{width:min(72vw,46vh,340px); filter:drop-shadow(0 12px 26px rgba(58,66,88,.28));
+  animation:tartFloat 2.4s ease-in-out infinite alternate}
+@keyframes tartFloat{from{transform:translateY(-6px)}to{transform:translateY(7px)}}
 #splash.bye{opacity:0; pointer-events:none}
 #splash .tlogo{width:120px; height:120px; transform:rotate(-6deg); animation:swing 1.2s ease-in-out infinite alternate}
 @keyframes swing{from{transform:rotate(-8deg) scale(1)}to{transform:rotate(6deg) scale(1.05)}}
@@ -120,7 +121,7 @@ body.adult #winwrap h2{color:var(--ink)}
 @keyframes pulse{from{transform:scale(1)}to{transform:scale(1.07)}}
 #splash .tp{position:absolute; animation:tfloat ease-in-out infinite alternate; opacity:.9}
 @keyframes tfloat{from{transform:translateY(-9px) rotate(var(--r,0deg))}to{transform:translateY(10px) rotate(calc(var(--r,0deg) + 8deg))}}
-@media (prefers-reduced-motion:reduce){#splash .tlogo,#splash .tstart,#splash .tp{animation:none}}
+@media (prefers-reduced-motion:reduce){#splash .tart,#splash .tstart,#splash .tp{animation:none}}
 
 /* ── 홈 ── */
 #home{max-width:900px; margin:0 auto; display:flex; flex-direction:column; gap:20px;
@@ -363,6 +364,7 @@ body:not(.adult) .pickbody{border-radius:16px; margin-top:0}
   <svg class="tp" style="right:11%;bottom:11%;width:60px;--r:-8deg;animation-duration:3s;animation-delay:.2s" viewBox="0 0 40 40" aria-hidden="true"><path fill="#FF8A3D" stroke="#3A4258" stroke-width="2" d="M6 8h10c-3-6 8-6 5 0h11v10c6-3 6 8 0 5v11H22c3 6-8 6-5 0H6V23c-6 3-6-8 0-5z"/></svg>
   <svg class="tp" style="left:44%;top:6%;width:36px;--r:24deg;animation-duration:2.9s;animation-delay:.8s" viewBox="0 0 40 40" aria-hidden="true"><path fill="#F7A8C4" stroke="#3A4258" stroke-width="2" d="M6 8h10c-3-6 8-6 5 0h11v10c6-3 6 8 0 5v11H22c3 6-8 6-5 0H6V23c-6 3-6-8 0-5z"/></svg>
   <svg class="tlogo" viewBox="10 8 72 74" aria-hidden="true"><g stroke="#3A4258" stroke-width="2.5" stroke-linejoin="round"><path fill="#7EC8F0" d="M13 19L43 19L43 31C43 34 45.7 29.8 47.6 29.8C49.8 29.8 51 32 51 34C51 36 49.8 38.2 47.6 38.2C45.7 38.2 43 34 43 37L43 49L31 49C28 49 32.2 46.3 32.2 44.4C32.2 42.3 29.9 41 28 41C26.1 41 23.8 42.3 23.8 44.4C23.8 46.3 28 49 25 49L13 49L13 19Z"/><path fill="#F2B01E" d="M13 49L25 49C28 49 23.8 46.3 23.8 44.4C23.8 42.3 26.1 41 28 41C29.9 41 32.2 42.3 32.2 44.4C32.2 46.3 28 49 31 49L43 49L43 61C43 64 45.7 59.8 47.6 59.8C49.8 59.8 51 62 51 64C51 66 49.8 68.2 47.6 68.2C45.7 68.2 43 64 43 67L43 79L13 79L13 49Z"/><path fill="#3FBF8F" d="M43 49L55 49C58 49 53.8 51.7 53.8 53.6C53.8 55.8 56 57 58 57C60 57 62.2 55.8 62.2 53.6C62.2 51.7 58 49 61 49L73 49L73 79L43 79L43 67C43 64 45.7 68.2 47.6 68.2C49.8 68.2 51 66 51 64C51 62 49.8 59.8 47.6 59.8C45.7 59.8 43 64 43 61L43 49Z"/><path fill="#FF8A3D" d="M49.8 11.3L79.5 16L74.8 45.7L62.9 43.8C60 43.3 63.7 46.6 63.4 48.6C63 50.6 60.6 51.5 58.7 51.2C56.8 50.9 54.7 49.3 55.1 47.3C55.4 45.3 60 43.3 57 42.8L45.1 41L47 29.1C47.5 26.2 49.5 30.7 51.4 31C53.5 31.4 55 29.3 55.3 27.4C55.6 25.5 54.8 23.1 52.7 22.7C50.8 22.4 47.5 26.2 48 23.2L49.8 11.3Z"/></g></svg>
+  <img class="tart" id="splashArt" src="assets/title-ko.webp" alt="이든의 퍼즐">
   <div class="sname" id="splashName">이든의 퍼즐</div>
   <button class="tstart" id="titleStart">시작!</button>
 </div>
@@ -527,7 +529,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v42';
+const BUILD='v43';
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
@@ -589,6 +591,7 @@ function applyLang(){
     winMsg:'winMsg',winAgain:'winAgain',winHome:'winHome',
     splashName:'appName',titleStart:'start',setTitle:'setTitle',setCancel:'close',privLink:'privLink',packCancel:'close',secColl:'secColl',collCancel:'close',themeCancel:'close',modeKidL:'modeKid',modeAdultL:'modeAdult',swHint:'swHint'};
   for(const id in M){const el=document.getElementById(id);if(el)el.textContent=t(M[id])}
+  {const sa=$('splashArt');if(sa)sa.src='assets/title-'+(lang==='en'?'en':'ko')+'.webp';}
   $('acctNote').innerHTML=t('acctNote');
   $('acctBtn').textContent=t('guest');
   $('langKo').classList.toggle('on',lang==='ko');

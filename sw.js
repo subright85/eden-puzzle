@@ -1,7 +1,7 @@
-const C = 'eden-v41';
+const C = 'eden-v42';
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(C)
-    .then(c => c.addAll(['/', '/manifest.webmanifest', '/icon-180.png', '/icon-512.png', '/assets/title.jpg',
+    .then(c => c.addAll(['/', '/manifest.webmanifest', '/icon-180.png', '/icon-512.png', '/assets/title-ko.webp', '/assets/title-en.webp',
       '/assets/puzzles/space.kid.jpg', '/assets/puzzles/sea.kid.jpg', '/assets/puzzles/dino.kid.jpg',
       '/assets/puzzles/balloon.kid.jpg', '/assets/puzzles/farm.kid.jpg', '/assets/puzzles/fire.kid.jpg',
       '/assets/puzzles/construction.kid.jpg', '/assets/puzzles/train.kid.jpg', '/assets/puzzles/candy.kid.jpg', '/assets/puzzles/safari.kid.jpg',

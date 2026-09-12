@@ -2,3 +2,7 @@ assets/puzzles/[0-9][0-9]_*.jpg
 ios
 node_modules
 www
+
+build/
+tests/
+docs/

@@ -861,6 +861,39 @@ body:is(.adult,:not(.adult)) #collGrid .album-picture .name{font-size:11px;displ
 .album-empty p{font:600 17px/1.5 var(--body);margin:0}.album-empty small{font:12px/1.7 var(--body);color:var(--sub);max-width:260px}
 .album-empty button{margin-top:4px;padding:12px 22px;border-radius:12px;background:var(--accent);color:#fff;font-size:14px;min-height:44px}
 @media(max-width:360px){body:is(.adult,:not(.adult)) #collview .box{padding:20px;gap:12px}body:is(.adult,:not(.adult)) #collGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.frame-shelf{gap:6px;padding:10px 4px}.frame-token b{font-size:10px}}
+
+/* Compact browsing: thumbnails support the selected artwork. */
+body:is(.adult,:not(.adult)) #home .pickbody{padding:10px 12px}
+body:is(.adult,:not(.adult)) #home .pickbody .caro{gap:10px;padding:4px;scroll-padding-inline:4px}
+body:is(.adult,:not(.adult)) #home .caro .card{width:104px;flex-basis:104px;padding:7px;gap:6px}
+body:is(.adult,:not(.adult)) #home .caro .card .name{font:12px/1.4 var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}
+body:is(.adult,:not(.adult)) #home .caro .card .row{gap:2px;min-width:0}
+body:is(.adult,:not(.adult)) #home .caro .card .artist{font-size:10px}
+body:is(.adult,:not(.adult)) #home .photo-entry #photoChoose{min-height:48px;padding:10px 14px;background:#405F4B;border:0;color:#FFFDF5;border-radius:13px;gap:10px}
+body:is(.adult,:not(.adult)) #home .photo-entry #photoChoose>.ui-icon{width:24px;height:24px;color:inherit}
+body:is(.adult,:not(.adult)) #home .photo-entry b{font:600 15px/1.4 var(--body)}
+body:is(.adult,:not(.adult)) #home .photo-entry small{display:none}
+body:is(.adult,:not(.adult)) #home .photo-entry #photoChoose>span:last-child{font:24px/1 var(--body)}
+body:is(.adult,:not(.adult)) #home .photo-entry #photoRecent{min-height:44px;padding:8px 10px}
+@media(max-width:699px){
+ body:is(.adult,:not(.adult)) #home{gap:12px}
+ body:is(.adult,:not(.adult)) #home #pickSec{gap:8px}
+ body:is(.adult,:not(.adult)) #home .daily{padding:18px;gap:12px}
+ body:is(.adult,:not(.adult)) #home .stage-preview{grid-template-columns:124px minmax(0,1fr);gap:12px}
+ body:is(.adult,:not(.adult)) #home .daily canvas{width:124px;height:93px;aspect-ratio:4/3;object-fit:contain}
+ body:is(.adult,:not(.adult)) #home .daily h2{font-size:20px;line-height:1.35}
+ body:is(.adult,:not(.adult)) #home .stage-controls{gap:8px}
+ body:is(.adult,:not(.adult)) #home .difficulty-label{display:none}
+ body:is(.adult,:not(.adult)) #home .cnt{min-height:44px;height:44px;padding:8px 3px;font-size:14px}
+ body:is(.adult,:not(.adult)) #home .daily .playbtn{min-height:48px;height:48px;padding:8px 12px}
+ body.adult #home .adult-intro{display:none}
+}
+@media(max-width:360px){
+ body:is(.adult,:not(.adult)) #home .caro .card{width:92px;flex-basis:92px}
+ body:is(.adult,:not(.adult)) #home .stage-preview{grid-template-columns:108px minmax(0,1fr)}
+ body:is(.adult,:not(.adult)) #home .daily canvas{width:108px;height:81px}
+ body:is(.adult,:not(.adult)) #home .daily h2{font-size:18px}
+}
 </style>
 
 <div id="splash">
@@ -1046,7 +1079,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v55';
+const BUILD='v56';
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',

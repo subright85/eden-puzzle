@@ -699,6 +699,90 @@ body:is(.adult,:not(.adult)) #home .mode-toggle button:focus-visible{outline:2px
  body:is(.adult,:not(.adult)) #home #acctBtn{grid-column:3;grid-row:2}
 }
 @media(max-width:360px){body:is(.adult,:not(.adult)) #home .logo{font-size:15px;gap:4px}body:is(.adult,:not(.adult)) #home .logo .brand-puzzle{width:30px;height:30px}}
+
+/* A single quiet header, even on the smallest phones. */
+body:is(.adult,:not(.adult)) #home .topline{display:grid;grid-template-columns:minmax(0,1fr) auto auto 32px;gap:6px;min-height:44px}
+body:is(.adult,:not(.adult)) #home .topline>*{grid-row:1;grid-column:auto}
+body:is(.adult,:not(.adult)) #home .topline .logo{grid-column:1;font-size:17px;gap:5px;overflow:hidden}
+body:is(.adult,:not(.adult)) #home .logo span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body:is(.adult,:not(.adult)) #home .logo .brand-puzzle{width:30px;height:30px}
+body:is(.adult,:not(.adult)) #home .topline .mode-toggle{grid-column:2;min-width:0;padding:2px;gap:0;justify-self:auto}
+body:is(.adult,:not(.adult)) #home .mode-toggle button{height:40px;min-width:40px;padding:0 8px;font-size:12px;color:var(--sub)}
+body:is(.adult,:not(.adult)) #home .mode-toggle button.on{color:var(--ink)}
+body:is(.adult,:not(.adult)) #home .topline .statgrp{grid-column:3;grid-row:1;margin:0;min-width:38px;border:0;background:transparent;box-shadow:none;justify-self:auto}
+body:is(.adult,:not(.adult)) #home .statgrp .seg{padding:0;gap:3px;min-height:44px;font-size:12px}
+body:is(.adult,:not(.adult)) #home .statgrp svg{width:16px;height:16px;color:#A9782F}
+body:is(.adult,:not(.adult)) #home .topline #setBtn{grid-column:4;grid-row:1;width:32px;height:44px;padding:5px;background:transparent;border:0;box-shadow:none}
+body:is(.adult,:not(.adult)) #home #setBtn::before{display:none}
+body:is(.adult,:not(.adult)) #home #setBtn svg{width:22px;height:22px}
+@media(max-width:390px){
+ body:is(.adult,:not(.adult)) #home .topline{gap:4px}
+ body:is(.adult,:not(.adult)) #home .topline .logo{font-size:14px;gap:3px}
+ body:is(.adult,:not(.adult)) #home .logo .brand-puzzle{width:24px;height:28px}
+ body:is(.adult,:not(.adult)) #home .mode-toggle button{min-width:34px;padding:0 5px;font-size:11px}
+}
+/* Photo entry is available to children and adults, outside category navigation. */
+.photo-entry{display:flex;width:100%;gap:8px;align-items:stretch;min-width:0}
+.photo-entry #photoChoose{flex:1;min-width:0;display:flex;gap:12px;align-items:center;padding:13px 16px;border:1px solid var(--line);border-radius:16px;background:var(--panel);text-align:left}
+.photo-entry #photoChoose>.ui-icon{width:26px;height:26px;flex:none;color:var(--accent-deep)}
+.photo-entry #photoChoose>span:nth-child(2){flex:1;min-width:0}
+.photo-entry b{display:block;font-size:15px;font-weight:600;line-height:1.5}
+.photo-entry small{display:block;font:11px/1.5 var(--body);color:var(--sub)}
+.photo-entry #photoRecent{padding:10px;border:1px solid var(--line);border-radius:14px;font-size:12px;white-space:nowrap;flex-shrink:0}
+body:not(.adult) .photo-entry #photoChoose{background:#F4F7E8;border:2px solid #718869;border-radius:15px 19px 16px 18px}
+/* Warm studio: linen paper, oak edges and a muted evergreen accent. */
+body.adult{--bg:#F3EFE6;--panel:#FFFCF5;--ink:#383E35;--sub:#747769;--accent:#546F5A;--accent-deep:#405946;--line:#D9D5C8;--mint:#9EAD90;--gold:#B39356;--shadow:0 4px 16px #65573A0B;background:var(--bg);background-image:radial-gradient(#92836A0B .7px,transparent .8px);background-size:5px 5px}
+body.adult #home .adult-intro{border:0;padding:5px 0 2px}
+body.adult .adult-intro>span{color:#8A7453;font-size:9px;letter-spacing:.12em}
+body.adult .adult-intro h1{font-size:27px;margin:7px 0 5px;line-height:1.5}
+body.adult #home .mode-toggle{background:#E7E5DA;border-color:#DBD8CC}
+body.adult #home .mode-toggle button.on{background:var(--panel);color:var(--accent-deep);box-shadow:0 1px 5px #5A4C3320}
+body.adult .photo-entry #photoChoose{background:#E9EDE1;border-color:#D5DCCB}
+body.adult #home .pickbody{background:#E8E2D5;border:1px solid #DAD2C2;border-radius:16px;box-shadow:inset 0 -3px 0 #CFC1A977}
+body.adult #home .pkchip{background:transparent;border-color:#CAC6B8;color:#686D60;border-radius:18px}
+body.adult #home .pkchip.on{background:#FFFCF5;border-color:#7D9075;color:var(--accent-deep)}
+body.adult #home .caro .card{background:#FFFCF5;border:1px solid #D7D0BF;border-radius:7px;box-shadow:0 3px 6px #62533812}
+body.adult #home .caro .card canvas{border:4px solid #F5F0E5;box-shadow:0 0 0 1px #D8CCB5;border-radius:0}
+body.adult #home .caro .card[aria-pressed="true"]{background:#F6F8EE;border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+body.adult #home .daily{background:var(--panel);border-color:#D7CBB6;border-radius:18px;box-shadow:0 4px 0 #D9C7AA44}
+body.adult #home .daily canvas{border-color:#E0CFAD;border-radius:2px;box-shadow:0 1px 4px #6753331A}
+body.adult #home .cnt,body.adult .stylechip{background:transparent;border-color:var(--line);color:var(--sub)}
+body.adult #home .cnt.on,body.adult .stylechip.on{background:#E9EEE2;border-color:#6C8262;color:var(--accent-deep)}
+body.adult #home .daily .playbtn,body.adult #splash .tstart,body.adult #winwrap .playbtn{background:var(--accent);color:#FFFDF6;border-radius:12px}
+body.adult #home .collico{background:#E5E9DA;color:var(--accent)}
+body.adult #home .collcard{background:#F8F5ED;border-color:#D9D3C4;border-radius:14px}
+body.adult #home .note{color:var(--sub)}
+body.adult #board{background:#E5DDCD;border:1px solid #C4B28F;box-shadow:0 0 0 5px #DBC7A344}
+body.adult #arena{background:radial-gradient(ellipse at 50% 30%,#FCF9F0,#E7E2D6)}
+body.adult #winwrap .win,body.adult #collview .box,body.adult #packview .box,body.adult #themeview .box{background:var(--panel);border-color:var(--line);border-radius:20px}
+/* Earned frames are real image assets; art stays within the opening. */
+.framed-art{display:block;position:relative;width:100%;aspect-ratio:4/3;flex:none;isolation:isolate}
+body:is(.adult,:not(.adult)) .framed-art>canvas{position:absolute;left:11%;top:14%;width:78%!important;height:72%!important;border:0!important;border-radius:0!important;box-shadow:none!important;object-fit:cover}
+.framed-art>img{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;pointer-events:none}
+#winFrame{width:min(280px,100%);margin:0 auto}
+#winFrameLabel{font:14px/1.6 var(--body);margin:0;color:var(--accent-deep)}
+.frame-guide{font:11px/1.7 var(--body);color:var(--sub);margin:0}
+body:is(.adult,:not(.adult)) #collGrid .card{padding:10px;min-width:0}
+body:is(.adult,:not(.adult)) #collGrid .row{display:flex;flex-direction:column;align-items:flex-start;gap:5px;width:100%;min-width:0}
+body:is(.adult,:not(.adult)) #collGrid .name{font-size:12px;line-height:1.5}
+.frame-caption{font:10px/1.5 var(--body);color:var(--sub)}
+.account-settings{display:flex;flex-direction:column;gap:10px;padding-top:14px;border-top:1px solid var(--line)}
+.account-settings h3{font-size:16px}.account-settings .acct-note{font-size:12px;line-height:1.7;margin:0}
+.account-settings .acct-btn{font-size:13px;min-height:40px;padding:9px 12px}
+@media(min-width:1000px){
+ body:is(.adult,:not(.adult)) #home .photo-entry{grid-column:1;grid-row:2}
+ body:is(.adult,:not(.adult)) #home #pickSec{grid-row:3}
+ body:is(.adult,:not(.adult)) #home #collCard{grid-row:4}
+ body:is(.adult,:not(.adult)) #home .note{grid-row:5}
+ body:is(.adult,:not(.adult)) #home .daily{grid-row:2/6}
+ body.adult #home .photo-entry{grid-row:3}
+ body.adult #home #pickSec{grid-row:4}
+ body.adult #home #collCard{grid-row:5}
+ body.adult #home .note{grid-row:6}
+ body.adult #home .daily{grid-row:3/7}
+ body:is(.adult,:not(.adult)) #home{grid-template-rows:repeat(4,min-content) 1fr}
+ body.adult #home{grid-template-rows:repeat(5,min-content) 1fr}
+}
 </style>
 
 <div id="splash">
@@ -723,16 +807,18 @@ body:is(.adult,:not(.adult)) #home .mode-toggle button:focus-visible{outline:2px
       <button id="modeAdult"><span id="modeAdultL">어른</span></button>
     </div>
     <div class="statgrp" aria-label="코인">
-      <span class="seg" title="별코인 — 퍼즐을 맞추면 모여요"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z"/></svg> <b id="coinSN">0</b></span>
-      <span class="seg" title="무지개코인 — 매일 3개, 프리미엄 그림을 열어요"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19v-3a9 9 0 0 1 18 0v3M7 19v-3a5 5 0 0 1 10 0v3M11 19v-3a1 1 0 0 1 2 0v3"/></svg> <b id="coinRN">3</b></span>
+      <span class="seg" title="코인"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm0 5v8"/></svg> <b id="coinSN">0</b></span>
     </div>
     <button class="stat" id="setBtn" aria-label="설정"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="8" cy="7" r="2.5" fill="var(--bg)"/><circle cx="16" cy="17" r="2.5" fill="var(--bg)"/></svg></button>
-    <button class="stat guest" id="acctBtn" aria-label="계정">👤 게스트</button>
   </div>
 
 
-  <section class="adult-intro"><span>EDEN · ART COLLECTION</span><h1 id="adultHeading">그림 속에 머무는 시간</h1><p id="adultSubtitle">좋아하는 작품을 한 조각씩 완성해 보세요.</p></section>
+  <section class="adult-intro"><span>EDEN · YOUR LITTLE STUDIO</span><h1 id="adultHeading">그림 속에 머무는 시간</h1><p id="adultSubtitle">좋아하는 작품을 한 조각씩 완성해 보세요.</p></section>
 
+  <div id="photoEntry" class="photo-entry">
+    <button id="photoChoose"><svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h4l2-3h6l2 3h4v15H3Z"/><circle cx="12" cy="13" r="4"/></svg><span><b id="photoEntryTitle">내 사진으로 퍼즐</b><small id="photoEntryHint">가족, 반려동물, 좋아하는 순간</small></span><span aria-hidden="true">＋</span></button>
+    <button id="photoRecent" hidden>지난 사진</button>
+  </div>
   <div class="sec" id="pickSec">
     <div class="picker-heading"><h2 id="pickHeading">어떤 그림을 맞춰볼까?</h2><p id="pickHint">옆으로 넘겨 골라요</p></div>
     <div class="ctabs" id="cTabs"></div>
@@ -775,6 +861,8 @@ body:is(.adult,:not(.adult)) #home .mode-toggle button:focus-visible{outline:2px
 <div id="settings" hidden>
   <div class="box">
     <h3 id="setTitle">설정</h3>
+    <p class="acct-note" id="coinHelp"></p>
+
     <div class="stylerow">
       <button class="stylechip" id="langKo">한국어</button>
       <button class="stylechip" id="langEn">English</button>
@@ -782,7 +870,14 @@ body:is(.adult,:not(.adult)) #home .mode-toggle button:focus-visible{outline:2px
     <div class="stylerow">
       <button class="stylechip" id="setSnd">🔊</button>
     </div>
-    <p class="acct-note"><a id="privLink" href="/privacy.html" target="_blank" rel="noopener">개인정보 처리방침</a></p>
+    <section class="account-settings">
+    <h3 id="acctTitle">계정</h3>
+    <p class="acct-note acct-stats"><span title="완성한 퍼즐">🏆 <b id="starN">0</b></span> &nbsp;·&nbsp; <span title="오늘의 퍼즐 연속 기록">🔥 <b id="streakN">0</b></span></p>
+    <p class="acct-note" id="acctNote">지금은 <b>게스트 모드</b> — 진행과 프레임은 이 기기에 저장돼요.<br>로그인이 열리면 계정으로 이어서 저장할 수 있어요.</p>
+    <button class="acct-btn" disabled id="acctG">구글로 계속하기 · 준비 중</button>
+    <button class="acct-btn" disabled id="acctA">Apple로 계속하기 · 준비 중</button>
+    </section>
+    <p class="acct-note"><a id="privLink" href="privacy.html">개인정보 처리방침</a></p>
     <p class="acct-note" id="buildLine"></p>
     <button class="cancel" id="setCancel">닫기</button>
   </div>
@@ -808,19 +903,9 @@ body:is(.adult,:not(.adult)) #home .mode-toggle button:focus-visible{outline:2px
 <div id="collview" hidden>
   <div class="box">
     <h3 id="collTitle"></h3>
+    <p class="frame-guide" id="frameGuide"></p>
     <div class="grid" id="collGrid"></div>
     <button class="cancel" id="collCancel">닫기</button>
-  </div>
-</div>
-
-<div id="acct" hidden>
-  <div class="box">
-    <h3 id="acctTitle">계정</h3>
-    <p class="acct-note acct-stats"><span title="완성한 퍼즐">🏆 <b id="starN">0</b></span> &nbsp;·&nbsp; <span title="오늘의 퍼즐 연속 기록">🔥 <b id="streakN">0</b></span></p>
-    <p class="acct-note" id="acctNote">지금은 <b>게스트 모드</b> — 진행과 별은 이 기기에 저장돼요.<br>로그인이 열리면 계정으로 이어서 저장할 수 있어요.</p>
-    <button class="acct-btn" disabled id="acctG">구글로 계속하기 · 준비 중</button>
-    <button class="acct-btn" disabled id="acctA">Apple로 계속하기 · 준비 중</button>
-    <button class="cancel" id="acctCancel">닫기</button>
   </div>
 </div>
 
@@ -853,9 +938,8 @@ body:is(.adult,:not(.adult)) #home .mode-toggle button:focus-visible{outline:2px
 
 <div id="winwrap" hidden>
   <div class="win">
-    <div class="stars">⭐⭐⭐</div>
-    <canvas id="winPic" width="320" height="240" hidden
-      style="width:200px;border-radius:12px 16px 12px 16px/16px 12px 16px 12px;border:3px solid var(--ink);margin:0 auto"></canvas>
+    <div id="winFrame" class="framed-art"><canvas id="winPic" width="320" height="240" hidden></canvas><img id="winFrameImg" alt=""></div>
+    <p id="winFrameLabel"></p>
     <h2 id="winMsg">와! 다 맞췄어!</h2>
     <div id="winCoins" class="wcoin"></div>
     <div class="wbtns">
@@ -880,7 +964,7 @@ const store={
 };
 
 /* ── 언어 (한국어/영어) ── */
-const BUILD='v53';
+const BUILD='v54';
 ['gesturestart','gesturechange','gestureend'].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
 const L={
 ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPlay:'맞추러 가기',
@@ -888,15 +972,15 @@ ko:{appName:'이든의 퍼즐',dailyEyebrow:'오늘의 퍼즐 · 무료',dailyPl
   secArts:'테마 퍼즐',secArtsS:'여러 그림이 팩으로 들어 있어요',secColl:'내 컬렉션',
   secPhoto:'사진 퍼즐',secPhotoS:'그림처럼 바꿔서도 맞출 수 있어요',
   photoBtnName:'사진 고르기',lastPhotoName:'마지막 사진',tabScenes:'그림',tabPhoto:'사진',
-  footNote:'광고 없음 · 사진도 그림 변환도 전부 기기 안에서만 · 프리미엄 그림은 무지개코인으로 열어요 (매일 3개)',
-  sheetRain:'🌈 무지개코인 1개를 써요 · 오늘 {n}개 남았어요',
-  rainOut:'오늘 무지개코인을 다 썼어요! 내일 3개가 새로 와요 🌈',
+  footNote:'광고 없음 · 사진도 그림 변환도 전부 기기 안에서만 · 완성할수록 갤러리 프레임이 자라요',
+  sheetCost:'코인 1개 · 보유 {n}개',
+  coinOut:'코인이 부족해요. 오늘의 퍼즐이나 사진 퍼즐을 완성해 모아보세요.',
   chipRaw:'사진 그대로',chipArt:'그림처럼 🖍️',close:'닫기',
-  acctTitle:'계정',acctNote:'지금은 <b>게스트 모드</b> — 진행과 별은 이 기기에 저장돼요.<br>로그인이 열리면 계정으로 이어서 저장할 수 있어요.',
+  acctTitle:'계정',acctNote:'지금은 <b>게스트 모드</b> — 진행과 프레임은 이 기기에 저장돼요.<br>로그인이 열리면 계정으로 이어서 저장할 수 있어요.',
   acctG:'구글로 계속하기 · 준비 중',acctA:'Apple로 계속하기 · 준비 중',guest:'\uD83D\uDC64 게스트',
   backBtn:'\u2190 그만하기',panicHome:'\uD83C\uDFE0 홈으로',
   winMsg:'와! 다 맞췄어!',winAgain:'한 번 더',winHome:'다른 그림',
-  setTitle:'설정',sndOn:'\uD83D\uDD0A 소리 켜짐',sndOff:'\uD83D\uDD07 소리 꺼짐',
+  setTitle:'설정 · 내 기록',sndOn:'\uD83D\uDD0A 소리 켜짐',sndOff:'\uD83D\uDD07 소리 꺼짐',
   free:'무료',prem:'프리미엄',photoName:'사진 퍼즐',photoArt:'사진 퍼즐 · 그림처럼',
   todayPrefix:'오늘의 퍼즐 · ',howMany:'몇 조각으로 할까?',resume:'이어서 하기',newGame:'새로 시작',stagePrem:'프리미엄 그림',pcs:'조각',
   tag6:'아주 쉬움',tag12:'쉬움',tag24:'보통',tag48:'도전!',tag96:'전문가',tag150:'마스터',modeKid:'아이',modeAdult:'어른',peekBtn:'\uD83D\uDD0D 원본 보기',privLink:'개인정보 처리방침',swHint:'← 옆으로 밀면 모드가 바뀌어요 →',build:'빌드',start:'시작!'},
@@ -905,15 +989,15 @@ en:{appName:"Eden's Puzzle",secColl:'Collection',dailyEyebrow:"Today's Puzzle ·
   secArts:'Theme Puzzles',secArtsS:'Packs of pictures to explore',
   secPhoto:'Photo Puzzle',secPhotoS:'Turn your photos into drawings too',
   photoBtnName:'Choose a Photo',lastPhotoName:'Last Photo',tabScenes:'Pictures',tabPhoto:'Photos',
-  footNote:'No ads · Photos never leave your device · Premium pictures open with rainbow coins (3 a day)',
-  sheetRain:'Uses 1 rainbow coin 🌈 · {n} left today',
-  rainOut:'All rainbow coins used today! 3 fresh ones tomorrow 🌈',
+  footNote:'No ads · Photos never leave your device · Complete puzzles to upgrade your gallery frames',
+  sheetCost:'1 coin · Balance {n}',
+  coinOut:'Earn coins with the daily puzzle or your own photos.',
   chipRaw:'Original photo',chipArt:'Like a drawing 🖍️',close:'Close',
   acctTitle:'Account',acctNote:"You're in <b>guest mode</b> — progress is saved on this device.<br>Sign-in will sync to your account soon.",
   acctG:'Continue with Google · Coming soon',acctA:'Continue with Apple · Coming soon',guest:'\uD83D\uDC64 Guest',
   backBtn:'\u2190 Quit',panicHome:'\uD83C\uDFE0 Home',
   winMsg:'You did it!',winAgain:'Once More',winHome:'New Picture',
-  setTitle:'Settings',sndOn:'\uD83D\uDD0A Sound on',sndOff:'\uD83D\uDD07 Sound off',
+  setTitle:'Settings & progress',sndOn:'\uD83D\uDD0A Sound on',sndOff:'\uD83D\uDD07 Sound off',
   free:'Free',prem:'Premium',photoName:'Photo Puzzle',photoArt:'Photo Puzzle · Drawing',
   todayPrefix:"Today's Puzzle · ",howMany:'How many pieces?',resume:'Continue',newGame:'Start fresh',stagePrem:'Premium picture',pcs:' pcs',
   tag6:'Super easy',tag12:'Easy',tag24:'Medium',tag48:'Challenge!',tag96:'Expert',tag150:'Master',modeKid:'Kids',modeAdult:'Adults',peekBtn:'\uD83D\uDD0D View picture',privLink:'Privacy Policy',swHint:'← Swipe to switch modes →',build:'Build',start:'Start!'}
@@ -930,11 +1014,11 @@ const t=k=>{
 };
 const sceneName=sc=>(lang==='en'&&sc.en?sc.en:sc.name);
 function setLang(l){lang=l;store.set('lang',l);applyLang()}
-const UI_ICONS={"star": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9Z\"/></svg>", "rainbow": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 19v-3a9 9 0 0 1 18 0v3M7 19v-3a5 5 0 0 1 10 0v3M11 19v-3a1 1 0 0 1 2 0v3\"/></svg>", "user": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"8\" r=\"3.5\"/><path d=\"M5 21v-2a7 7 0 0 1 14 0v2\"/></svg>", "settings": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 7h16M4 17h16\"/><circle cx=\"8\" cy=\"7\" r=\"2.5\" fill=\"var(--bg)\"/><circle cx=\"16\" cy=\"17\" r=\"2.5\" fill=\"var(--bg)\"/></svg>", "collection": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"5\" y=\"3\" width=\"16\" height=\"16\" rx=\"3\"/><path d=\"M2 7v12a3 3 0 0 0 3 3h12M8 15l4-4 3 3 3-2\"/><circle cx=\"16\" cy=\"7\" r=\"1\"/></svg>", "play": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m8 5 11 7-11 7Z\"/></svg>", "home": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9\"/></svg>", "back": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m10 5-7 7 7 7M3 12h18\"/></svg>", "sound": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 9h4l5-4v14l-5-4H4ZM17 8a6 6 0 0 1 0 8M20 5a10 10 0 0 1 0 14\"/></svg>", "mute": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 9h4l5-4v14l-5-4H4ZM17 9l5 6m0-6-5 6\"/></svg>", "puzzle": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 4h6a3 3 0 1 1 6 0h4v6a3 3 0 1 0 0 6v4h-6a3 3 0 1 0-6 0H4v-6a3 3 0 1 1 0-6Z\"/></svg>", "search": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"10\" cy=\"10\" r=\"6\"/><path d=\"m15 15 6 6\"/></svg>"};
+const UI_ICONS={"user": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"8\" r=\"3.5\"/><path d=\"M5 21v-2a7 7 0 0 1 14 0v2\"/></svg>", "settings": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 7h16M4 17h16\"/><circle cx=\"8\" cy=\"7\" r=\"2.5\" fill=\"var(--bg)\"/><circle cx=\"16\" cy=\"17\" r=\"2.5\" fill=\"var(--bg)\"/></svg>", "collection": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"5\" y=\"3\" width=\"16\" height=\"16\" rx=\"3\"/><path d=\"M2 7v12a3 3 0 0 0 3 3h12M8 15l4-4 3 3 3-2\"/><circle cx=\"16\" cy=\"7\" r=\"1\"/></svg>", "play": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m8 5 11 7-11 7Z\"/></svg>", "home": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m3 10 9-7 9 7M5 9v12h5v-7h4v7h5V9\"/></svg>", "back": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m10 5-7 7 7 7M3 12h18\"/></svg>", "sound": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 9h4l5-4v14l-5-4H4ZM17 8a6 6 0 0 1 0 8M20 5a10 10 0 0 1 0 14\"/></svg>", "mute": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 9h4l5-4v14l-5-4H4ZM17 9l5 6m0-6-5 6\"/></svg>", "puzzle": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M4 4h6a3 3 0 1 1 6 0h4v6a3 3 0 1 0 0 6v4h-6a3 3 0 1 0-6 0H4v-6a3 3 0 1 1 0-6Z\"/></svg>", "search": "<svg class=\"ui-icon\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"10\" cy=\"10\" r=\"6\"/><path d=\"m15 15 6 6\"/></svg>"};
 function applyLang(){
   document.documentElement.lang=lang;
-  $('adultHeading').textContent=lang==='en'?'A moment with art':'그림 속에 머무는 시간';
-  $('adultSubtitle').textContent=lang==='en'?'Discover a painting, one piece at a time.':'좋아하는 작품을 한 조각씩 완성해 보세요.';
+  $('adultHeading').textContent=lang==='en'?'Make a little time for yourself':'나를 위한 작은 작업실';
+  $('adultSubtitle').textContent=lang==='en'?'One picture, a quiet moment, a frame to keep.':'한 조각씩 쉬어가고, 완성한 그림은 액자에 담아요.';
   $('modeToggle').setAttribute('aria-label',lang==='en'?'Play mode':'플레이 모드');
   const homeCopy=lang==='en'?['Choose a picture','Swipe to explore →']:['그림 고르기','옆으로 넘겨보세요 →'];
   ['pickHeading','pickHint'].forEach((id,i)=>$(id).textContent=homeCopy[i]);
@@ -950,8 +1034,6 @@ function applyLang(){
     splashName:'appName',titleStart:'start',setTitle:'setTitle',setCancel:'close',privLink:'privLink',packCancel:'close',secColl:'secColl',collCancel:'close',themeCancel:'close',modeKidL:'modeKid',modeAdultL:'modeAdult',swHint:'swHint'};
   for(const id in M){const el=document.getElementById(id);if(el)el.textContent=t(M[id])}
   $('acctNote').innerHTML=t('acctNote');
-  $('acctBtn').innerHTML=UI_ICONS.user;
-  $('acctBtn').setAttribute('aria-label',lang==='en'?'Guest account':'게스트 계정');
   $('setBtn').setAttribute('aria-label',lang==='en'?'Settings':'설정');
   $('difficultyLabel').textContent=lang==='en'?'PIECES':'조각 수';
   $('backDaily').textContent=lang==='en'?'Back to today’s picture':'오늘의 그림으로 돌아가기';
@@ -960,6 +1042,10 @@ function applyLang(){
   $('langKo').classList.toggle('on',lang==='ko');
   $('langEn').classList.toggle('on',lang==='en');
   $('buildLine').textContent=t('build')+' '+BUILD+' · eden-puzzle.vercel.app';
+  $('coinHelp').textContent=lang==='en'?'Coins: 3 each day, +1–3 per completed puzzle. New premium puzzles cost 1; daily and photo puzzles are free.':'코인은 매일 3개, 퍼즐 완성 시 1~3개 모여요. 프리미엄 그림은 1개, 오늘의 퍼즐과 사진 퍼즐은 무료예요.';
+  $('photoEntryTitle').textContent=lang==='en'?'Make a photo puzzle':'내 사진으로 퍼즐';
+  $('photoEntryHint').textContent=lang==='en'?'Family, pets, your favorite moments':'가족, 반려동물, 좋아하는 순간';
+  $('photoRecent').textContent=lang==='en'?'Last photo':'지난 사진';
   syncSndBtn();
   renderHome();
 }
@@ -1186,43 +1272,44 @@ const ARTS=[
   {id:'whiterabbit', pack:'wonderland', name:'하얀 토끼 · 테니얼', en:'The White Rabbit · Tenniel', img:'assets/arts/whiterabbit.jpg', kimg:'assets/arts/whiterabbit.kid.jpg'},
   {id:'alice', pack:'wonderland', name:'앨리스 · 테니얼', en:'Alice · Tenniel', img:'assets/arts/alice.jpg', kimg:'assets/arts/alice.kid.jpg'},
   {id:'peterrabbit', pack:'oldtales', name:'피터 래빗 · 포터', en:'Peter Rabbit · Potter', img:'assets/arts/peterrabbit.jpg', kimg:'assets/arts/peterrabbit.kid.jpg'},
-  {id:'frogprince', pack:'oldtales', name:'개구리 왕자 · 크레인', en:'The Frog Prince · Crane', img:'assets/arts/frogprince.jpg'},
-  {id:'ssireum', pack:'korea', name:'씨름 · 김홍도', en:'Ssireum Wrestling · Kim Hong-do', img:'assets/arts/ssireum.jpg'},
-  {id:'mudong', pack:'korea', name:'무동 · 김홍도', en:'Dancing Boy · Kim Hong-do', img:'assets/arts/mudong.jpg'},
-  {id:'seodang', pack:'korea', name:'서당 · 김홍도', en:'Village School · Kim Hong-do', img:'assets/arts/seodang.jpg'},
-  {id:'minhwa', pack:'korea', name:'까치와 호랑이 · 민화', en:'Magpie and Tiger · Minhwa', img:'assets/arts/minhwa.jpg'},
-  {id:'comp8', pack:'treasure', name:'콤포지션 8 · 칸딘스키', en:'Composition VIII · Kandinsky', img:'assets/arts/comp8.jpg'},
-  {id:'hunters', pack:'bruegel', name:'눈 속의 사냥꾼 · 브뤼헐', en:'Hunters in the Snow · Bruegel', img:'assets/arts/hunters.jpg'},
-  {id:'vertumnus', pack:'treasure', name:'과일 얼굴 · 아르침볼도', en:'Vertumnus · Arcimboldo', img:'assets/arts/vertumnus.jpg'},
-  {id:'parasol', pack:'monet', name:'파라솔 쓴 여인 · 모네', en:'Woman with a Parasol · Monet', img:'assets/arts/parasol.jpg'},
-  {id:'eden', pack:'begin', name:'에덴 동산 · 브뤼헐', en:'Garden of Eden · Brueghel', img:'assets/arts/eden.jpg'},
-  {id:'noah', pack:'begin', name:'노아의 방주 · 힉스', en:"Noah's Ark · Hicks", img:'assets/arts/noah.jpg'},
-  {id:'peaceable', pack:'begin', name:'평화의 왕국 · 힉스', en:'Peaceable Kingdom · Hicks', img:'assets/arts/peaceable.jpg'},
-  {id:'nativity', pack:'christmas', name:'아기 예수 · 혼토르스트', en:'The Nativity · Honthorst', img:'assets/arts/nativity.jpg'},
-  {id:'magi', pack:'christmas', name:'동방박사의 경배 · 젠틸레', en:'Adoration of the Magi · Gentile', img:'assets/arts/magi.jpg'},
-  {id:'moses1', pack:'heroes', name:'아기 모세 · 알마-타데마', en:'The Finding of Moses · Alma-Tadema', img:'assets/arts/moses.jpg'},
-  {id:'daniel1', pack:'heroes', name:'사자 굴의 다니엘 · 리비에르', en:"Daniel in the Lions' Den · Rivière", img:'assets/arts/daniel.jpg'},
-  {id:'jonah1', pack:'heroes', name:'요나와 큰 물고기 · 라스트만', en:'Jonah and the Whale · Lastman', img:'assets/arts/jonah.jpg'},
-  {id:'jacob1', pack:'heroes', name:'야곱의 꿈 · 블레이크', en:"Jacob's Ladder · Blake", img:'assets/arts/jacob.jpg'},
-  {id:'lostsheep1', pack:'jesus', name:'선한 목자 · 플록호르스트', en:'The Good Shepherd · Plockhorst', img:'assets/arts/lostsheep.jpg'},
-  {id:'samaritan1', pack:'jesus', name:'착한 사마리아인 · 고흐', en:'The Good Samaritan · Van Gogh', img:'assets/arts/samaritan.jpg'},
-  {id:'children1', pack:'jesus', name:'아이들을 축복하심 · 크라나흐', en:'Christ Blessing the Children · Cranach', img:'assets/arts/children.jpg'},
-  {id:'palace', pack:'asia', name:'경복궁 · 한국', en:'Gyeongbokgung · Korea', img:'assets/arts/palace.jpg'},
-  {id:'bulguksa', pack:'asia', name:'불국사 · 한국', en:'Bulguksa Temple · Korea', img:'assets/arts/bulguksa.jpg'},
-  {id:'eiffel', pack:'europe', name:'에펠탑 · 프랑스', en:'Eiffel Tower · France', img:'assets/arts/eiffel.jpg'},
-  {id:'mont', pack:'europe', name:'몽생미셸 · 프랑스', en:'Mont Saint-Michel · France', img:'assets/arts/mont.jpg'},
-  {id:'colosseum', pack:'europe', name:'콜로세움 · 이탈리아', en:'Colosseum · Italy', img:'assets/arts/colosseum.jpg'},
-  {id:'pisa', pack:'europe', name:'피사의 사탑 · 이탈리아', en:'Leaning Tower · Italy', img:'assets/arts/pisa.jpg'},
-  {id:'liberty', pack:'faraway', name:'자유의 여신상 · 미국', en:'Statue of Liberty · USA', img:'assets/arts/liberty.jpg'},
-  {id:'goldengate', pack:'faraway', name:'금문교 · 미국', en:'Golden Gate Bridge · USA', img:'assets/arts/goldengate.jpg'},
-  {id:'torii', pack:'asia', name:'이쓰쿠시마 신사 · 일본', en:'Itsukushima Shrine · Japan', img:'assets/arts/torii.jpg'},
-  {id:'fujiview', pack:'asia', name:'후지산과 탑 · 일본', en:'Mount Fuji · Japan', img:'assets/arts/fujiview.jpg'},
-  {id:'giza', pack:'faraway', name:'피라미드와 낙타 · 이집트', en:'Pyramid & Camel · Egypt', img:'assets/arts/giza.jpg'},
-  {id:'sphinx', pack:'faraway', name:'스핑크스 · 이집트', en:'Great Sphinx · Egypt', img:'assets/arts/sphinx.jpg'},
-  {id:'bigben', pack:'europe', name:'빅벤 · 영국', en:'Big Ben · UK', img:'assets/arts/bigben.jpg'},
-  {id:'towerbridge', pack:'europe', name:'타워브리지 · 영국', en:'Tower Bridge · UK', img:'assets/arts/towerbridge.jpg'},
-  {id:'greatwall', pack:'asia', name:'만리장성 · 중국', en:'Great Wall · China', img:'assets/arts/greatwall.jpg'},
-  {id:'heaven', pack:'asia', name:'천단 · 중국', en:'Temple of Heaven · China', img:'assets/arts/heaven.jpg'},
+  {id:'frogprince', pack:'oldtales', name:'개구리 왕자 · 크레인', en:'The Frog Prince · Crane', img:'assets/arts/frogprince.jpg', kimg:'assets/arts/frogprince.kid.jpg'},
+  {id:'ssireum', pack:'korea', name:'씨름 · 김홍도', en:'Ssireum Wrestling · Kim Hong-do', img:'assets/arts/ssireum.jpg', kimg:'assets/arts/ssireum.kid.jpg'},
+  {id:'mudong', pack:'korea', name:'무동 · 김홍도', en:'Dancing Boy · Kim Hong-do', img:'assets/arts/mudong.jpg', kimg:'assets/arts/mudong.kid.jpg'},
+  {id:'seodang', pack:'korea', name:'서당 · 김홍도', en:'Village School · Kim Hong-do', img:'assets/arts/seodang.jpg', kimg:'assets/arts/seodang.kid.jpg'},
+  {id:'minhwa', pack:'korea', name:'까치와 호랑이 · 민화', en:'Magpie and Tiger · Minhwa', img:'assets/arts/minhwa.jpg', kimg:'assets/arts/minhwa.kid.jpg'},
+  {id:'comp8', pack:'treasure', name:'콤포지션 8 · 칸딘스키', en:'Composition VIII · Kandinsky', img:'assets/arts/comp8.jpg', kimg:'assets/arts/comp8.kid.jpg'},
+  {id:'hunters', pack:'bruegel', name:'눈 속의 사냥꾼 · 브뤼헐', en:'Hunters in the Snow · Bruegel', img:'assets/arts/hunters.jpg', kimg:'assets/arts/hunters.kid.jpg'},
+  {id:'vertumnus', pack:'treasure', name:'과일 얼굴 · 아르침볼도', en:'Vertumnus · Arcimboldo', img:'assets/arts/vertumnus.jpg', kimg:'assets/arts/vertumnus.kid.jpg'},
+  {id:'parasol', pack:'monet', name:'파라솔 쓴 여인 · 모네', en:'Woman with a Parasol · Monet', img:'assets/arts/parasol.jpg', kimg:'assets/arts/parasol.kid.jpg'},
+  {id:'eden', pack:'begin', name:'에덴 동산 · 브뤼헐', en:'Garden of Eden · Brueghel', img:'assets/arts/eden.jpg', kimg:'assets/arts/eden.kid.jpg'},
+  {id:'noah', pack:'begin', name:'노아의 방주 · 힉스', en:"Noah's Ark · Hicks", img:'assets/arts/noah.jpg', kimg:'assets/arts/noah.kid.jpg'},
+  {id:'peaceable', pack:'begin', name:'평화의 왕국 · 힉스', en:'Peaceable Kingdom · Hicks', img:'assets/arts/peaceable.jpg', kimg:'assets/arts/peaceable.kid.jpg'},
+  {id:'nativity', pack:'christmas', name:'아기 예수 · 혼토르스트', en:'The Nativity · Honthorst', img:'assets/arts/nativity.jpg', kimg:'assets/arts/nativity.kid.jpg'},
+  {id:'magi', pack:'christmas', name:'동방박사의 경배 · 젠틸레', en:'Adoration of the Magi · Gentile', img:'assets/arts/magi.jpg', kimg:'assets/arts/magi.kid.jpg'},
+  {id:'moses1', pack:'heroes', name:'아기 모세 · 알마-타데마', en:'The Finding of Moses · Alma-Tadema', img:'assets/arts/moses.jpg', kimg:'assets/arts/moses.kid.jpg'},
+  {id:'daniel1', pack:'heroes', name:'사자 굴의 다니엘 · 리비에르', en:"Daniel in the Lions' Den · Rivière", img:'assets/arts/daniel.jpg', kimg:'assets/arts/daniel.kid.jpg'},
+  {id:'jonah1', pack:'heroes', name:'요나와 큰 물고기 · 라스트만', en:'Jonah and the Whale · Lastman', img:'assets/arts/jonah.jpg', kimg:'assets/arts/jonah.kid.jpg'},
+  {id:'jacob1', pack:'heroes', name:'야곱의 꿈 · 블레이크', en:"Jacob's Ladder · Blake", img:'assets/arts/jacob.jpg', kimg:'assets/arts/jacob.kid.jpg'},
+  {id:'lostsheep1', pack:'jesus', name:'선한 목자 · 플록호르스트', en:'The Good Shepherd · Plockhorst', img:'assets/arts/lostsheep.jpg', kimg:'assets/arts/lostsheep.kid.jpg'},
+  {id:'samaritan1', pack:'jesus', name:'착한 사마리아인 · 고흐', en:'The Good Samaritan · Van Gogh', img:'assets/arts/samaritan.jpg', kimg:'assets/arts/samaritan.kid.jpg'},
+  {id:'children1', pack:'jesus', name:'아이들을 축복하심 · 크라나흐', en:'Christ Blessing the Children · Cranach', img:'assets/arts/children.jpg', kimg:'assets/arts/children.kid.jpg'},
+  {id:'palace', pack:'asia', name:'경복궁 · 한국', en:'Gyeongbokgung · Korea', img:'assets/arts/palace.jpg', kimg:'assets/arts/palace.kid.jpg'},
+  {id:'bulguksa', pack:'asia', name:'불국사 · 한국', en:'Bulguksa Temple · Korea', img:'assets/arts/bulguksa.jpg', kimg:'assets/arts/bulguksa.kid.jpg'},
+  {id:'eiffel', pack:'europe', name:'에펠탑 · 프랑스', en:'Eiffel Tower · France', img:'assets/arts/eiffel.jpg', kimg:'assets/arts/eiffel.kid.jpg'},
+  {id:'mont', pack:'europe', name:'몽생미셸 · 프랑스', en:'Mont Saint-Michel · France', img:'assets/arts/mont.jpg', kimg:'assets/arts/mont.kid.jpg'},
+  {id:'colosseum', pack:'europe', name:'콜로세움 · 이탈리아', en:'Colosseum · Italy', img:'assets/arts/colosseum.jpg', kimg:'assets/arts/colosseum.kid.jpg'},
+  {id:'pisa', pack:'europe', name:'피사의 사탑 · 이탈리아', en:'Leaning Tower · Italy', img:'assets/arts/pisa.jpg', kimg:'assets/arts/pisa.kid.jpg'},
+  {id:'liberty', pack:'faraway', name:'자유의 여신상 · 미국', en:'Statue of Liberty · USA', img:'assets/arts/liberty.jpg', kimg:'assets/arts/liberty.kid.jpg'},
+  {id:'goldengate', pack:'faraway', name:'금문교 · 미국', en:'Golden Gate Bridge · USA', img:'assets/arts/goldengate.jpg', kimg:'assets/arts/goldengate.kid.jpg'},
+  {id:'torii', pack:'asia', name:'이쓰쿠시마 신사 · 일본', en:'Itsukushima Shrine · Japan', img:'assets/arts/torii.jpg', kimg:'assets/arts/torii.kid.jpg'},
+  {id:'fuji', pack:'asia', name:'후지산의 봄 · 일본', en:'Spring at Mount Fuji · Japan', img:'assets/arts/fuji.jpg', kimg:'assets/arts/fuji.kid.jpg'},
+  {id:'fujiview', pack:'asia', name:'후지산과 탑 · 일본', en:'Mount Fuji · Japan', img:'assets/arts/fujiview.jpg', kimg:'assets/arts/fujiview.kid.jpg'},
+  {id:'giza', pack:'faraway', name:'피라미드와 낙타 · 이집트', en:'Pyramid & Camel · Egypt', img:'assets/arts/giza.jpg', kimg:'assets/arts/giza.kid.jpg'},
+  {id:'sphinx', pack:'faraway', name:'스핑크스 · 이집트', en:'Great Sphinx · Egypt', img:'assets/arts/sphinx.jpg', kimg:'assets/arts/sphinx.kid.jpg'},
+  {id:'bigben', pack:'europe', name:'빅벤 · 영국', en:'Big Ben · UK', img:'assets/arts/bigben.jpg', kimg:'assets/arts/bigben.kid.jpg'},
+  {id:'towerbridge', pack:'europe', name:'타워브리지 · 영국', en:'Tower Bridge · UK', img:'assets/arts/towerbridge.jpg', kimg:'assets/arts/towerbridge.kid.jpg'},
+  {id:'greatwall', pack:'asia', name:'만리장성 · 중국', en:'Great Wall · China', img:'assets/arts/greatwall.jpg', kimg:'assets/arts/greatwall.kid.jpg'},
+  {id:'heaven', pack:'asia', name:'천단 · 중국', en:'Temple of Heaven · China', img:'assets/arts/heaven.jpg', kimg:'assets/arts/heaven.kid.jpg'},
 ];
 /* 명화 테마 팩 (성철 지시 9/8: 테마별 패키지) */
 const THEMES=[
@@ -1309,7 +1396,7 @@ function openTheme(tid){
       b.appendChild(cv);
       const row=document.createElement('span');row.className='row';
       row.innerHTML='<span class="name">'+sceneName(sc)+'</span>'+
-        (done[sc.id]?'<span class="chip star">⭐</span>':'');
+        (done[sc.id]?'<span class="chip completed">✓</span>':'');
       b.appendChild(row);
       b.onclick=()=>{$('themeview').hidden=true;openSheet(sc.id,false)};
       gd.appendChild(b);
@@ -1336,7 +1423,7 @@ function openPack(pid){
     b.appendChild(cv);
     const row=document.createElement('span');row.className='row';
     row.innerHTML='<span class="name">'+sceneName(sc)+'</span>'+
-      (done[sc.id]?'<span class="chip star">⭐</span>':'');
+      (done[sc.id]?'<span class="chip completed">✓</span>':'');
     b.appendChild(row);
     b.onclick=()=>{$('packview').hidden=true;openSheet(sc.id,false)};
     pg.appendChild(b);
@@ -1351,19 +1438,22 @@ function openColl(){
   const cg=$('collGrid');cg.innerHTML='';
   const done=store.get('done',{});
   const all=collPool();let dn=0;
+  all.sort((a,b)=>Number(!!done[b.id])-Number(!!done[a.id]));
   for(const sc of all){
-    const b=document.createElement('button');b.className='card'+(done[sc.id]?'':' locked');
-    const cv=document.createElement('canvas');cv.width=360;cv.height=270;
-    b.appendChild(cv);
+    const completed=!!done[sc.id],best=bestCount(sc.id),frame=frameFor(best);
+    const b=document.createElement('button');b.className='card'+(completed?'':' locked');b.dataset.sceneId=sc.id;
+    const cv=document.createElement('canvas');cv.width=360;cv.height=270;b.appendChild(cv);
+    if(completed)frameArt(cv,frame);
     const row=document.createElement('span');row.className='row';
-    row.innerHTML='<span class="name">'+sceneName(sc)+'</span>'+
-      (done[sc.id]?'<span class="chip star">⭐</span>':'');
-    b.appendChild(row);
-    b.onclick=()=>{$('collview').hidden=true;openSheet(sc.id,false)};
+    const name=document.createElement('span');name.className='name';name.textContent=sceneName(sc);row.appendChild(name);
+    const detail=document.createElement('small');detail.className='frame-caption';
+    detail.textContent=completed?frameName(frame)+(best?' · '+best+t('pcs'):''):(lang==='en'?'Complete to frame':'완성하면 액자에 담겨요');row.appendChild(detail);
+    b.appendChild(row);b.onclick=()=>{$('collview').hidden=true;openSheet(sc.id,false)};
     cg.appendChild(b);paintThumb(cv,sc.id);
     if(sc.img)ensureImg(sc).then(()=>{if(!$('collview').hidden)paintThumb(cv,sc.id)});
-    if(done[sc.id])dn++;
+    if(completed)dn++;
   }
+  $('frameGuide').textContent=FRAMES.map(f=>f.min+'+'+t('pcs')+' '+frameName(f)).join(' / ');
   $('collTitle').textContent=t('secColl')+' · '+dn+' / '+all.length;
   pushUI('collview');$('collview').hidden=false;
 }
@@ -1375,7 +1465,7 @@ $('langKo').onclick=()=>setLang('ko');
 $('langEn').onclick=()=>setLang('en');
 
 /* ── 사진 → 그림 변환 (전부 기기 안: 포스터라이즈 + 윤곽선) ── */
-let photoImg=null, photoArt=null, photoStyle=store.get('photoStyle','art');
+let photoImg=null, photoArt=null, photoStyle=store.get('photoStyle','raw');
 function cartoonize(img){
   const cv=document.createElement('canvas');cv.width=IW;cv.height=IH;
   const ctx=cv.getContext('2d');
@@ -1504,9 +1594,9 @@ function openGame(sid,cnt,isDaily){
   G.savedPlaced=saved?saved.placed:[];
   const nm=sid==='photo'?(photoStyle==='art'?t('photoArt'):t('photoName')):sceneName(findScene(sid));
   $('gtitle').textContent=(isDaily?t('todayPrefix'):'')+nm;
-  $('home').hidden=true;$('game').hidden=false;$('winwrap').hidden=true;$('sheet').hidden=true;$('acct').hidden=true;$('settings').hidden=true;$('packview').hidden=true;$('collview').hidden=true;$('themeview').hidden=true;
+  $('home').hidden=true;$('game').hidden=false;$('winwrap').hidden=true;$('sheet').hidden=true;$('settings').hidden=true;$('packview').hidden=true;$('collview').hidden=true;$('themeview').hidden=true;
   pushUI('game');
-  $('peekBtn').hidden=mode!=='adult';$('peekpop').hidden=true;
+  $('peekBtn').hidden=false;$('peekpop').hidden=true;
   const sc=findScene(sid);
   ensureImg(sc).then(()=>{
     layoutGame();   // 이미지 씬이면 로드 후 컷 (폴백 3초)
@@ -1696,9 +1786,11 @@ function win(){
   const wp=$('winPic');wp.hidden=false;
   G.render(wp.getContext('2d'),wp.width,wp.height);
   const stars=store.get('stars',0)+1;store.set('stars',stars);$('starN').textContent=stars;
-  const gain=G.pieces.length>=48?3:G.pieces.length>=24?2:1;  // 클수록 별코인 많이
-  addCoinS(gain);$('winCoins').textContent='⭐ +'+gain;
-  const done=store.get('done',{});done[G.sid]=true;store.set('done',done);
+  const gain=G.pieces.length>=48?3:G.pieces.length>=24?2:1;  // Higher piece counts earn more coins
+  addCoinS(gain);$('winCoins').textContent=(lang==='en'?'Coins +':'코인 +')+gain;
+  const reward=recordCompletion(G.sid,G.pieces.length);
+  $('winFrameImg').src=frameSrc(reward.frame);
+  $('winFrameLabel').textContent=frameName(reward.frame)+(lang==='en'?' frame':' 프레임')+' · '+(reward.upgraded?(lang==='en'?'Added to your gallery':'갤러리에 담았어요'):(lang==='en'?'Best: ':'최고 기록: ')+reward.best+t('pcs'));
   if(G.isDaily){
     const today=dayStamp(), st=store.get('streak',{last:'',n:0});
     if(st.last!==today){
@@ -1710,20 +1802,20 @@ function win(){
   winSnd();$('winwrap').hidden=false;confetti();renderHome();
 }
 $('winAgain').onclick=()=>{try{
-  if(G.prem&&!spendRain()){$('winwrap').hidden=true;closeGame();return}  // 새 판도 프리미엄이면 1개
+  if(G.prem&&!spendCoin()){$('winwrap').hidden=true;closeGame();return}  // 새 판도 프리미엄이면 1개
   $('winwrap').hidden=true;G.savedPlaced=[];G.seed=(Math.random()*1e9)|0;layoutGame()}catch(e){closeGame()}};
 $('winHome').onclick=()=>{$('winwrap').hidden=true;closeGame()};
 $('backBtn').onclick=()=>closeGame();
 function goHome(){
   G.on=false;
-  for(const id of ['game','winwrap','sheet','acct','settings','packview','collview','themeview','splash'])try{$(id).hidden=true}catch(e){}
+  for(const id of ['game','winwrap','sheet','settings','packview','collview','themeview','splash'])try{$(id).hidden=true}catch(e){}
   $('home').hidden=false;
   renderHome();
 }
 function closeGame(){goHome()}
 function pushUI(tag){try{history.pushState({ui:tag},'')}catch(e){}}
 addEventListener('popstate',()=>{
-  if(!$('sheet').hidden||!$('acct').hidden||!$('settings').hidden||!$('packview').hidden||!$('collview').hidden){$('sheet').hidden=true;$('acct').hidden=true;$('settings').hidden=true;$('packview').hidden=true;$('collview').hidden=true;$('themeview').hidden=true;return}
+  if(!$('sheet').hidden||!$('settings').hidden||!$('packview').hidden||!$('collview').hidden){$('sheet').hidden=true;$('settings').hidden=true;$('packview').hidden=true;$('collview').hidden=true;$('themeview').hidden=true;return}
   if(!$('winwrap').hidden||G.on)goHome();
 });
 let rsT=null;
@@ -1750,18 +1842,43 @@ function confetti(){
   })(t0);
 }
 
-/* ── 코인: 별코인(완성 보상) + 무지개코인(매일 3개, 프리미엄 입장권) ── */
-const RAIN_DAILY=3;
-function coinS(){return store.get('coinS',0)}
+/* One coin balance. Existing earned coins and today's unspent allowance are preserved. */
+function coinS(){return Math.max(0,Number(store.get('coinS',0))||0)}
 function addCoinS(n){store.set('coinS',coinS()+n)}
-function rainState(){
-  const k=dayStamp();let r=store.get('coinR',null);
-  if(!r||r.d!==k){r={d:k,n:RAIN_DAILY};store.set('coinR',r)}  // 자정 지나면 3개로 리필, 이월 없음
-  return r;
+function dailyCoins(){
+  const today=dayStamp();
+  if(!store.get('singleCoinMigrated',false)){
+    const legacy=store.get('coinR',null);
+    if(legacy&&legacy.d===today){addCoinS(Math.max(0,Number(legacy.n)||0));store.set('coinDay',today)}
+    store.set('singleCoinMigrated',true);store.del('coinR');
+  }
+  if(store.get('coinDay','')!==today){addCoinS(3);store.set('coinDay',today)}
 }
-function spendRain(){const r=rainState();if(r.n<=0)return false;r.n--;store.set('coinR',r);syncCoins();return true}
-function isPrem(sid,isDaily){return !isDaily&&(sid==='photo'||!(findScene(sid)||{}).free)}
-function syncCoins(){$('coinSN').textContent=coinS();$('coinRN').textContent=rainState().n}
+function spendCoin(){if(coinS()<1)return false;store.set('coinS',coinS()-1);syncCoins();return true}
+function isPrem(sid,isDaily){return !isDaily&&sid!=='photo'&&!(findScene(sid)||{}).free}
+function syncCoins(){dailyCoins();const n=coinS();$('coinSN').textContent=n>999?'999+':n;$('coinSN').parentElement.title=(lang==='en'?'Coins: ':'코인: ')+n}
+const FRAMES=[
+  {id:'oak',min:6,ko:'오크',en:'Oak'},
+  {id:'ceramic',min:24,ko:'도자기',en:'Ceramic'},
+  {id:'walnut',min:48,ko:'월넛',en:'Walnut'},
+  {id:'gold',min:96,ko:'골드',en:'Gold'}
+];
+function frameFor(n){return FRAMES.slice().reverse().find(f=>n>=f.min)||FRAMES[0]}
+function frameName(f){return lang==='en'?f.en:f.ko}
+function bestCount(sid){return Number(store.get('bestPieces',{})[sid])||0}
+function recordCompletion(sid,n){
+  const best=store.get('bestPieces',{}),previous=Number(best[sid])||0;
+  const done=store.get('done',{}),first=!done[sid];
+  best[sid]=Math.max(previous,n);store.set('bestPieces',best);
+  done[sid]=true;store.set('done',done);
+  return {best:best[sid],frame:frameFor(best[sid]),upgraded:first||frameFor(best[sid]).id!==frameFor(previous).id};
+}
+function frameSrc(f){return 'assets/ui/frames/'+f.id+'-v1.png'}
+function frameArt(canvas,f){
+  const wrap=document.createElement('span');wrap.className='framed-art';
+  canvas.replaceWith(wrap);wrap.appendChild(canvas);
+  const image=document.createElement('img');image.src=frameSrc(f);image.alt='';wrap.appendChild(image);
+}
 
 /* ── 조각 수 시트 ── */
 let pendingSid=null, pendingDaily=false;
@@ -1785,10 +1902,10 @@ function openSheet(sid,isDaily){
   const prem=isPrem(sid,isDaily), coinEl=$('sheetCoin');
   coinEl.classList.remove('deny','shake');
   coinEl.hidden=!prem;
-  if(prem)coinEl.textContent=t('sheetRain').replace('{n}',rainState().n);
+  if(prem)coinEl.textContent=t('sheetCost').replace('{n}',coinS());
   const box=$('sheetOpts');box.innerHTML='';
   const deny=()=>{
-    coinEl.textContent=t('rainOut');
+    coinEl.textContent=t('coinOut');
     coinEl.classList.add('deny');coinEl.classList.remove('shake');void coinEl.offsetWidth;coinEl.classList.add('shake');
     beep(220,.16,0,.12);beep(180,.2,.13,.12);
   };
@@ -1813,7 +1930,7 @@ function openSheet(sid,isDaily){
       const b=document.createElement('button');b.className='opt';
       b.innerHTML='<span>'+cnt.n+t('pcs')+'</span><small>'+t('tag'+cnt.n)+'</small>';
       b.onclick=()=>{
-        if(prem&&!spendRain()){deny();return}
+        if(prem&&!spendCoin()){deny();return}
         store.del('pp:'+sid+':'+cnt.c+'x'+cnt.r);  // 새로 시작 = 기존 판 버림
         $('sheet').hidden=true;openGame(pendingSid,cnt,pendingDaily);
       };
@@ -1864,7 +1981,7 @@ function renderStage(){
   $('dailyDate').hidden=!isDaily;
   $('backDaily').hidden=isDaily;
   const prem=isPrem(sc.id,isDaily);
-  $('dailyEyebrow').textContent=isDaily?t('dailyEyebrow'):(prem?(mode==='adult'?'':'\uD83C\uDF08 ')+t('stagePrem'):t('free'));
+  $('dailyEyebrow').textContent=isDaily?t('dailyEyebrow'):(prem?t('stagePrem'):t('free'));
   const list=(mode==='adult'?COUNTS.filter(c=>c.n>=24).concat(COUNTS_A):COUNTS);
   const defN=mode==='adult'?48:12;
   let curN=store.get('cnt:'+mode,defN);
@@ -1892,10 +2009,10 @@ function renderStage(){
   $('dailyPlay').innerHTML=UI_ICONS.play+' '+(rs?t('newGame'):(lang==='en'?'Play puzzle':'퍼즐 시작'));
   const co=$('stageCoin');co.classList.remove('deny','shake');
   co.hidden=!prem;
-  if(prem)co.textContent=t('sheetRain').replace('{n}',rainState().n);
+  if(prem)co.textContent=t('sheetCost').replace('{n}',coinS());
   $('dailyPlay').onclick=()=>{
-    if(prem&&!spendRain()){
-      co.textContent=t('rainOut');
+    if(prem&&!spendCoin()){
+      co.textContent=t('coinOut');
       co.classList.add('deny');co.classList.remove('shake');void co.offsetWidth;co.classList.add('shake');
       beep(220,.16,0,.12);beep(180,.2,.13,.12);return;
     }
@@ -1908,7 +2025,7 @@ function renderHome(){try{renderHomeInner()}catch(e){showErr((e&&e.message||e)+'
 function renderHomeInner(){
   $('starN').textContent=store.get('stars',0);
   $('streakN').textContent=store.get('streak',{n:0}).n;
-  syncCoins();
+  syncCoins();$('photoRecent').hidden=!photoImg;
   {const done=store.get('done',{});
    const pool=collPool();
    const total=pool.length;
@@ -1921,7 +2038,7 @@ function renderHomeInner(){
   const pd=store.get('photo',null);
   if(pd&&!photoImg){
     const img=new Image();
-    img.onload=()=>{photoImg=img;photoArt=null;if(curColl==='photo')renderCaro()};
+    img.onload=()=>{photoImg=img;photoArt=null;$('photoRecent').hidden=false;if(curColl==='photo')renderCaro()};
     img.src=pd;
   }
 }
@@ -1930,7 +2047,7 @@ const CSHORT={ko:{scenes:'그림',fairy:'동화',bible:'성경',world:'세계',m
   en:{scenes:'Pics',fairy:'Tales',bible:'Bible',world:'World',museum:'Museum',photo:'Photos'}};
 const CACC={scenes:['#FF8A3D','#FFF1E6','#C25A14'],fairy:['#F7A8C4','#FDEFF5','#C2517E'],bible:['#F2B01E','#FCF4DC','#A87708'],
   world:['#7EC8F0','#EAF6FD','#2E7FAB'],museum:['#3FBF8F','#E8F8F1','#1F8862'],photo:['#8B93A7','#F0F2F5','#555E73']};
-function collPool(){return mode==='adult'?ARTS.slice():[...SCENES,...ARTS.filter(a=>a.kimg)]}
+function collPool(){const pool=mode==='adult'?ARTS.slice():[...SCENES,...ARTS.filter(a=>a.kimg)];if(photoImg)pool.push({id:'photo',name:'내 사진',en:'My photo'});return pool}
 function collList(){
   const base=[{id:'scenes',nm:()=>t('tabScenes')},
     ...THEMES.map(th=>({id:th.id,nm:()=>sceneName(th)})),
@@ -1970,8 +2087,8 @@ function renderCaro(){
     const parts=sceneName(sc).split(' · ');name.textContent=mode==='adult'?parts[0]:sceneName(sc);row.appendChild(name);
     if(mode==='adult'&&parts.length>1){const by=document.createElement('small');by.className='artist';by.textContent=parts.slice(1).join(' · ');row.appendChild(by);}
     b.appendChild(row);
-    if(done[sc.id]){const g=document.createElement('span');g.className='bdg star';g.innerHTML=UI_ICONS.star;g.setAttribute('aria-label',lang==='en'?'Completed':'완성');b.appendChild(g)}
-    else if(chips){const g=document.createElement('span');g.className='bdg prem';g.innerHTML=UI_ICONS.rainbow;g.setAttribute('aria-label',lang==='en'?'Premium':'프리미엄');b.appendChild(g)}
+    if(done[sc.id]){const g=document.createElement('span');g.className='bdg completed';g.textContent='✓';g.setAttribute('aria-label',lang==='en'?'Completed':'완성');b.appendChild(g)}
+
     const pg=savedProg(sc.id);
     if(pg&&!done[sc.id]){const pb=document.createElement('span');pb.className='pbar';
       pb.innerHTML='<i style="width:'+Math.round(pg*100)+'%"></i>';b.appendChild(pb)}
@@ -2000,7 +2117,7 @@ function renderCaro(){
       const row=document.createElement('span');row.className='row';
       row.innerHTML='<span class="name">'+t('lastPhotoName')+'</span>';
       pb.appendChild(row);
-      if(done.photo){const g=document.createElement('span');g.className='bdg star';g.innerHTML=UI_ICONS.star;pb.appendChild(g)}
+      if(done.photo){const g=document.createElement('span');g.className='bdg completed';g.textContent='✓';pb.appendChild(g)}
       pb.onclick=()=>openSheet('photo',false);
       ca.appendChild(pb);
       paintThumb(cv,'photo');
@@ -2015,7 +2132,7 @@ function renderCaro(){
       const items=POOL.filter(a=>a.pack===pk.id);
       const dn=items.filter(a=>done[a.id]).length;
       const b=document.createElement('button');b.className='pkchip'+(pk.id===curPk?' on':'');
-      b.innerHTML=sceneName(pk)+'<small>'+(dn===items.length&&items.length?'\u2B50':dn+'/'+items.length)+'</small>';
+      b.innerHTML=sceneName(pk)+'<small>'+(dn===items.length&&items.length?'✓':dn+'/'+items.length)+'</small>';
       b.onclick=()=>{store.set('pk:'+curColl,pk.id);renderCaro()};
       pc.appendChild(b);
     }
@@ -2032,6 +2149,8 @@ function savedProg(sid){
   }
   return best;
 }
+$('photoChoose').onclick=()=>$('photoInput').click();
+$('photoRecent').onclick=()=>openSheet('photo',false);
 $('photoInput').addEventListener('change',e=>{
   const f=e.target.files&&e.target.files[0];
   if(!f)return;
@@ -2047,7 +2166,9 @@ $('photoInput').addEventListener('change',e=>{
     ctx.drawImage(img,sx,sy,sw,sh,0,0,IW,IH);
     const small=new Image();
     small.onload=()=>{photoImg=small;photoArt=null;store.set('photo',small.src);
-      store.del('pp:photo:3x2');store.del('pp:photo:4x3');store.del('pp:photo:6x4');store.del('pp:photo:8x6');
+      for(const cnt of COUNTS.concat(COUNTS_A))store.del('pp:photo:'+cnt.c+'x'+cnt.r);
+      const done=store.get('done',{});delete done.photo;store.set('done',done);
+      const best=store.get('bestPieces',{});delete best.photo;store.set('bestPieces',best);
       openSheet('photo',false);renderHome()};
     small.src=cv.toDataURL('image/jpeg',.82);
   };
@@ -2055,9 +2176,6 @@ $('photoInput').addEventListener('change',e=>{
   e.target.value='';
 });
 
-$('acctBtn').onclick=()=>{$('acct').hidden=false};
-$('acctCancel').onclick=()=>{$('acct').hidden=true};
-$('acct').addEventListener('click',e=>{if(e.target===$('acct'))$('acct').hidden=true});
 if('serviceWorker' in navigator && location.protocol.indexOf('http')===0){try{navigator.serviceWorker.register('/sw.js').catch(()=>{})}catch(e){}}
 
 /* ── 애기/어른 모드 (홈 스와이프 전환, msg 2112-2113) ── */
@@ -2072,7 +2190,7 @@ function setMode(m){
   if(m===mode)return;
   const dir=m==='adult'?'slideL':'slideR';
   mode=m;selSid=null;store.set('mode',m);
-  $('acct').hidden=true;$('settings').hidden=true;
+  $('settings').hidden=true;
   applyMode();applyLang();
   const h=$('home');h.classList.remove('slideL','slideR');void h.offsetWidth;h.classList.add(dir);
   beep(m==='adult'?392:523,.09,0,.1);

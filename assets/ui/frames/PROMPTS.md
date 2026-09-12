@@ -1,0 +1,19 @@
+# Gallery frames
+
+Generated with the built-in image_gen tool. Original PNG alpha preserved.
+
+## oak-v1.png
+
+Use case: product-mockup. Asset type: collectible picture frame for a mobile puzzle gallery. Generate one EMPTY landscape 4:3 rectangular picture frame, straight front-on orthographic view, completely symmetrical geometry, no perspective. Material: light honey oak, beautifully crafted natural wood grain, simple rounded bevel, calm Scandinavian workshop. The frame fills nearly the entire canvas, with only 3% empty margin outside. Frame molding is 10% of image width thick, so the large rectangular center opening runs from x=14% to86%, y=17% to83%. Both the center opening and outside background must be genuinely transparent alpha, no checkerboard drawn. Beautiful tactile material detail legible when reduced to thumbnail size. Soft bevel highlights integrated into frame. No picture, no mat, no text, no stars, no hanging hardware, no scene, no props. All sides and corners fully visible. This is an isolated functional UI asset.
+
+## ceramic-v1.png
+
+Use case: product-mockup. Asset type: collectible picture frame for a mobile puzzle gallery. Generate one EMPTY landscape 4:3 rectangular picture frame, straight front-on orthographic view, completely symmetrical geometry, no perspective. Material: ivory glazed ceramic, tiny hand-painted sage green leaves at four corners, quiet artisan pottery. The frame fills nearly the entire canvas, with only 3% empty margin outside. Frame molding is 10% of image width thick, so the large rectangular center opening runs from x=14% to86%, y=17% to83%. Both the center opening and outside background must be genuinely transparent alpha, no checkerboard drawn. Beautiful tactile material detail legible when reduced to thumbnail size. Soft bevel highlights integrated into frame. No picture, no mat, no text, no stars, no hanging hardware, no scene, no props. All sides and corners fully visible. This is an isolated functional UI asset.
+
+## walnut-v1.png
+
+Use case: product-mockup. Asset type: collectible picture frame for a mobile puzzle gallery. Generate one EMPTY landscape 4:3 rectangular picture frame, straight front-on orthographic view, completely symmetrical geometry, no perspective. Material: rich dark walnut wood with delicate brass inlay along the inner edge, refined craftsmanship. The frame fills nearly the entire canvas, with only 3% empty margin outside. Frame molding is 10% of image width thick, so the large rectangular center opening runs from x=14% to86%, y=17% to83%. Both the center opening and outside background must be genuinely transparent alpha, no checkerboard drawn. Beautiful tactile material detail legible when reduced to thumbnail size. Soft bevel highlights integrated into frame. No picture, no mat, no text, no stars, no hanging hardware, no scene, no props. All sides and corners fully visible. This is an isolated functional UI asset.
+
+## gold-v1.png
+
+Use case: product-mockup. Asset type: collectible picture frame for a mobile puzzle gallery. Generate one EMPTY landscape 4:3 rectangular picture frame, straight front-on orthographic view, completely symmetrical geometry, no perspective. Material: brushed champagne gold with delicate carved botanical corner flourishes, premium but restrained, warm collectible heirloom. The frame fills nearly the entire canvas, with only 3% empty margin outside. Frame molding is 10% of image width thick, so the large rectangular center opening runs from x=14% to86%, y=17% to83%. Both the center opening and outside background must be genuinely transparent alpha, no checkerboard drawn. Beautiful tactile material detail legible when reduced to thumbnail size. Soft bevel highlights integrated into frame. No picture, no mat, no text, no stars, no hanging hardware, no scene, no props. All sides and corners fully visible. This is an isolated functional UI asset.
